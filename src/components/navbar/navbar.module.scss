@@ -1,0 +1,27 @@
+.navbar {
+  @apply flex flex-row fixed left-0 right-0 top-0 h-10 bg-gray-100 text-cyan-950 font-bold;
+
+  & > ul {
+    @apply flex flex-row justify-center items-center;
+
+    & li {
+      @apply w-36 text-center;
+    }
+  }
+}
+
+.dropdown {
+  @apply relative;
+
+  & > span {
+    @apply flex flex-row justify-center items-center;
+  }
+
+  & > ul {
+    @apply invisible absolute top-2;
+  }
+
+  & > ul[data-open] {
+    @apply visible;
+  }
+}
