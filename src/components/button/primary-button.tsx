@@ -8,7 +8,7 @@ export default function PrimaryButton(props: ButtonProps) {
     return (
         <Button
             {...props}
-            className={"text-white bg-[--primary] hover:bg-[--primary-darker] focus:ring-[--primary-lighter]"}>
+            className={"text-white bg-[--primary] hover:bg-[--primary-darker]"}>
             {props.children}
         </Button>
     )

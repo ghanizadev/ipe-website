@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
-        <footer className="w-[100%] bg-gray-800 text-white">
-            <div className={"max-w-screen-xl mx-auto px-4 py-8 grid grid-cols-2 grid-rows-1 gap-24 h-96"}>
+        <footer className="w-full bg-gray-800 text-white">
+            <div className={"max-w-screen-xl mx-auto px-4 py-8 grid grid-cols-2 grid-rows-1 gap-8 min-h-96 lg:gap-24"}>
                 <div className={"col-span-1 flex flex-col justify-between"}>
                     <div>
                         <p className={"font-bold mb-6"}>IPE - Inclusao pelo esporte</p>
@@ -14,7 +14,7 @@ export default function Footer() {
                             nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.</p>
                         <a href={"#"}>Saiba mais</a>
                     </div>
-                    <div>
+                    <div className={"mt-8"}>
                         <ul>
                             <li className={"mb-2"}>
                                 <a href={"#"}>
@@ -49,21 +49,22 @@ export default function Footer() {
                 <div className={"col-span-1 flex flex-col justify-between"}>
                     <nav>
                         <ul>
-                            <li className={"inline-block text-gray-400 w-min text-nowrap"}>
+                            <li className={"inline-block text-gray-400 w-full underline text-nowrap lg:w-min lg:mr-4"}>
                                 <a href={"#"}>Politicas de privacidade</a>
                             </li>
-                            <li className={"inline-block ml-4 text-gray-400 w-min text-nowrap"}>
+                            <li className={"inline-block text-gray-400 w-full underline text-nowrap lg:w-min lg:mr-4"}>
                                 <a href={"#"}>Termos de uso</a>
                             </li>
-                            <li className={"inline-block ml-4 text-gray-400 w-min text-nowrap"}>
+                            <li className={"inline-block text-gray-400 w-full underline text-nowrap lg:w-min lg:mr-4"}>
                                 <a href={"#"}>Cookies e dados</a>
                             </li>
-                            <li className={"inline-block ml-4 text-gray-400 w-min text-nowrap"}>
+                            <li className={"inline-block text-gray-400 w-full underline text-nowrap lg:w-min lg:mr-4"}>
                                 <a href={"#"}>Contato</a>
                             </li>
                         </ul>
                     </nav>
-                    <div className={"flex flex-row justify-between items-end"}>
+                    <div
+                        className={"flex flex-col mt-8 justify-between items-end lg:text-wrap lg:flex-row"}>
                         <div>
                             <div className={"mb-6"}>
                                 <p className={"font-bold mb-2"}>Instituto Paulo Escobar</p>
@@ -75,7 +76,7 @@ export default function Footer() {
                                 <p className={"text-gray-400"}>Sao Jose - SC, 88.111-380</p>
                             </div>
                         </div>
-                        <div className={"text-right"}>
+                        <div className={"text-right mt-8"}>
                             <small className={'text-gray-400'}>&copy; 2024, IPE - Inclusão Pelo Esporte</small>
                             <br/>
                             <small className={'text-gray-400'}>Todos direitos reservados</small>

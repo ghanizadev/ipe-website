@@ -9,13 +9,13 @@ import Dropdown from "@/components/dropdown";
 import LinkButton from "@/components/link-button";
 import PrimaryButton from "@/components/button/primary-button";
 import getPages from "@/services/get-pages.service";
-import getMe from "@/services/get-me.service";
+import getMeServerService from "@/services/get-me-server.service";
 
 
 export default async function Navbar() {
     const pages = await getPages();
     const cookieStore = await cookies();
-    const me = await getMe(cookieStore.get('payload-token')?.value);
+    const me = await getMeServerService(cookieStore.get('payload-token')?.value);
 
     const navigation = (pages?.docs ?? []).reduce((previous, current) => {
         if (current.category) {
@@ -88,15 +88,15 @@ export default async function Navbar() {
                         <li className={"m-auto"}>
                             <LinkButton href="#">Contato</LinkButton>
                         </li>
-                        {!me &&
+                        {!me.user &&
                             <li className={"m-auto"}>
-                                <PrimaryButton>Entrar</PrimaryButton>
+                                <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
                             </li>
                         }
-                        {me &&
+                        {me.user &&
                             <li className={"m-auto"}>
                                 Olá, <a href={"/conta"}
-                                        className={"text-[--primary-lighter] underline"}>{me.user?.name.split(' ')[0]}</a>
+                                        className={"text-[--primary-lighter] underline"}>{me.user.name.split(' ')[0]}</a>
                             </li>
                         }
                     </ul>

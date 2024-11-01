@@ -24,7 +24,8 @@ const nextConfig: NextConfig = {
     env: {
         CMS_API_URL: process.env.CMS_API_URL,
         CMS_API_KEY: process.env.CMS_API_KEY,
-        NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL
+        NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+        NEXT_PUBLIC_CMS_URL: process.env.NEXT_PUBLIC_CMS_URL
     }
 };
 
