@@ -5,7 +5,11 @@ import getEventBySlug from "@/services/get-event-by-slug.service";
 import RichText from "@/components/rich-text";
 
 
-export default async function EventPage({params}: any) {
+type PageProps = {
+    params: Promise<Record<string, string>>
+}
+
+export default async function EventPage({params}: PageProps) {
     const {slug} = await params;
     const event = await getEventBySlug(slug);
 

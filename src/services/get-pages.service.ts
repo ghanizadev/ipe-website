@@ -1,15 +1,6 @@
 import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
-import {CategoryDTO, PaginatedResponse, PayloadDocument} from "@/types/payload";
-
-type PageDTO = PayloadDocument & {
-    slug: string;
-    title: string;
-    category: CategoryDTO;
-    content: Record<string, any>;
-    shownOnNavbar?: boolean;
-    shownOnDrawer?: boolean;
-    shownOnFooter?: boolean;
-}
+import {PaginatedResponse} from "@/types/payload";
+import {PageDTO} from "@/types/page";
 
 export default async function getPages(): Promise<PaginatedResponse<PageDTO> | null> {
     const url = `${process.env.CMS_API_URL}/api/pages`;

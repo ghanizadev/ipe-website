@@ -11,11 +11,8 @@ type GalleryProps = {
 }
 
 export default function Gallery({photos: init}: GalleryProps) {
-    const [photos, setPhotos] = useState<PhotoDTO[]>(init ?? []);
-    const [page, setPage] = useState<number>(1);
+    const [photos] = useState<PhotoDTO[]>(init ?? []);
     const [preview, setPreview] = useState<PhotoDTO | null>();
-    const [updating, setUpdating] = useState<boolean>(true);
-    const [hasNext, sethasNext] = useState<boolean>(true);
 
     const ref = useRef<HTMLElement>(null);
 

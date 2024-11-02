@@ -2,7 +2,12 @@ import {notFound} from "next/navigation";
 
 import getPageBySlug from "@/services/get-page-by-slug.service";
 
-export default async function CustomPage({params}: any) {
+
+type PageProps = {
+    params: Promise<Record<string, string>>
+}
+
+export default async function CustomPage({params}: PageProps) {
     const {categorySlug} = await params;
     const customPage = await getPageBySlug(categorySlug);
 

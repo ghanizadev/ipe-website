@@ -9,8 +9,13 @@ import formEventParser from "@/helpers/form-event-parser.helper";
 import createAccount from "@/services/create-account.service";
 import {useRouter} from "next/navigation";
 
+type SelectButtonProps = {
+    label: string;
+    onClick: () => void;
+    selected: boolean;
+}
 
-function SelectButton({label, onClick, selected}: any) {
+function SelectButton({label, onClick, selected}: SelectButtonProps) {
     const classes = ["p-8 border-2 border-[--primary] w-full rounded-2xl"];
 
     if (selected) {

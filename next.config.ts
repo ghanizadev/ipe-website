@@ -19,31 +19,31 @@ const nextConfig: NextConfig = {
         afterFiles: [
             {
                 source: "/admin/:path*",
-                destination: process.env.CMS_URL + "/admin/:path*",
+                destination: process.env.CMS_API_URL + "/admin/:path*",
             },
             {
                 source: "/avatars/:path*",
-                destination: process.env.CMS_URL + "/avatars/:path*",
+                destination: process.env.CMS_API_URL + "/avatars/:path*",
             },
             {
                 source: "/media/:path*",
-                destination: process.env.CMS_URL + "/media/:path*",
+                destination: process.env.CMS_API_URL + "/media/:path*",
             },
             {
                 source: "/logos/:path*",
-                destination: process.env.CMS_URL + "/logos/:path*",
+                destination: process.env.CMS_API_URL + "/logos/:path*",
             },
             {
                 source: "/photos/:path*",
-                destination: process.env.CMS_URL + "/photos/:path*",
+                destination: process.env.CMS_API_URL + "/photos/:path*",
             },
             {
                 source: "/graphql/:path*",
-                destination: "http://localhost:3300/graphql/:path*",
+                destination: process.env.CMS_API_URL + "/graphql/:path*",
             },
             {
                 source: "/api/:path*",
-                destination: "http://localhost:3300/api/:path*",
+                destination: process.env.CMS_API_URL + "/api/:path*",
             }
         ],
         beforeFiles: [],
