@@ -1,9 +1,11 @@
-import {ButtonProps} from "@/components/button/props";
-import {useRouter} from "next/navigation";
 import React from "react";
 
+import {useRouter} from "next/navigation";
+import {ButtonProps} from "@/components/button/props";
+
+
 export default function Button(props: ButtonProps) {
-    const {onClick, path, children} = props;
+    const {onClick, path, children, type} = props;
     const router = useRouter()
 
     const handleOnClick = async () => {
@@ -15,6 +17,7 @@ export default function Button(props: ButtonProps) {
 
     return (
         <button
+            type={type}
             onClick={handleOnClick}
             className={classNames.trim()}>
             {children}

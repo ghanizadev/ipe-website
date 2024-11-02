@@ -5,7 +5,7 @@ import getEventBySlug from "@/services/get-event-by-slug.service";
 import RichText from "@/components/rich-text";
 
 
-export default async function Event({params}: any) {
+export default async function EventPage({params}: any) {
     const {slug} = await params;
     const event = await getEventBySlug(slug);
 
@@ -14,7 +14,7 @@ export default async function Event({params}: any) {
     }
 
     return (
-        <div>
+        <div className={"max-w-screen-xl m-auto"}>
             <h1 className={"text-4xl lg:6xl my-8 text-[--primary] font-extrabold text-center"}>{event.title}</h1>
             <div className={"text-center flex justify-center items-center my-16"}>
                 <div className={"w-2/3"}>

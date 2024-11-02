@@ -1,27 +1,109 @@
 "use client"
 
-import React from "react";
+import React, {useState} from "react";
 
 import TextInput from "@/components/input/text-input";
 import PrimaryButton from "@/components/button/primary-button";
-import Link from "next/link";
+import SecondaryButton from "@/components/button/secondary-button";
+import formEventParser from "@/helpers/form-event-parser.helper";
+import createAccount from "@/services/create-account.service";
+import {useRouter} from "next/navigation";
 
+
+function SelectButton({label, onClick, selected}: any) {
+    const classes = ["p-8 border-2 border-[--primary] w-full rounded-2xl"];
+
+    if (selected) {
+        classes.push('bg-[--primary] text-white')
+    } else {
+        classes.push('text-[--primary] scale-90')
+    }
+
+    return (
+        <button type={'button'} onClick={onClick} className={classes.join(" ")}>{label}</button>
+    )
+}
 
 export default function LoginForm() {
-    const handleSubmit = (e: React.FormEvent) => {
-        //
+    const [step, setStep] = useState('first');
+    const [role, setRole] = useState('');
+    const [errors, setErrors] = useState<Record<string, string | boolean>>({});
+    const router = useRouter();
+
+    const handleTypeSelect = (role: string) => () => {
+        setRole(role);
+    }
+
+    const handleSelect = () => {
+        setStep('second');
+    }
+
+    const handleGoBack = () => {
+        setStep('first');
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const data = formEventParser(e);
+        let isOk = true;
+
+        if (!data.email) {
+            setErrors(errors => ({...errors, email: 'E-mail e obrigatorio'}))
+            isOk = false;
+        }
+
+        if (!data.name) {
+            setErrors(errors => ({...errors, name: 'Nome e obrigatorio'}))
+            isOk = false;
+        }
+
+        if (!data.birthday) {
+            setErrors(errors => ({...errors, birthday: 'Data de nascimento e obrigatorio'}))
+            isOk = false;
+        }
+
+        if (data.password !== data['confirm-password']) {
+            setErrors(errors => ({...errors, password: true, 'confirm-password': 'As senhas nao conferem'}))
+            isOk = false;
+        }
+
+        if (!isOk) return;
+
+        const response = await createAccount({...data, role});
+        if (response) router.push('/entrar?create=success');
     }
 
     return (
         <form onSubmit={handleSubmit} className={"flex flex-col"}>
-            <TextInput label={'Nome completo'} name={'name'}/>
-            <TextInput label={'E-mail'} name={'email'}/>
-            <TextInput label={'Data de nascimento'} name={'birthday'}/>
-            <br/>
-            <TextInput label={'Senha'} name={'password'} type={"password"}/>
-            <TextInput label={'Confirmar senha'} name={'confirm-password'} type={"password"}/>
-            <br/>
-            <PrimaryButton>Criar conta</PrimaryButton>
+            {step === "first" &&
+                <>
+                    <p>Eu sou um:</p>
+                    <div className={"grid grid-cols-2 gap-2 my-8"}>
+                        <SelectButton selected={role === 'parathlete'} onClick={handleTypeSelect('parathlete')}
+                                      label={"Paratleta"}/>
+                        <SelectButton selected={role === 'guide'} onClick={handleTypeSelect('guide')}
+                                      label={"Guia"}/>
+                    </div>
+                    <SecondaryButton type={"button"} onClick={handleSelect}>Selecionar</SecondaryButton>
+                </>
+            }
+            {step === "second" &&
+                <>
+                    <p className={"mb-4"}>Você selecionou: <span
+                        className={"text-[--primary-darker]"}>{role === "guide" ? 'Guia' : 'Paratleta'}</span></p>
+                    <TextInput error={errors['name']} label={'Nome completo'} name={'name'}/>
+                    <TextInput error={errors['email']} label={'E-mail'} name={'email'}/>
+                    <TextInput error={errors['birthday']} type={'date'} label={'Data de nascimento'} name={'birthday'}
+                               className={"mb-8"}/>
+                    <TextInput error={errors['password']} label={'Senha'} name={'password'} type={"password"}/>
+                    <TextInput error={errors['confirm-password']} label={'Confirmar senha'} name={'confirm-password'}
+                               type={"password"}
+                               className={"mb-8"}/>
+                    <PrimaryButton type={"submit"} className={"mb-2"}>Criar conta</PrimaryButton>
+                    <SecondaryButton type={"button"} onClick={handleGoBack}>Voltar</SecondaryButton>
+                </>
+            }
         </form>
     )
 }

@@ -6,5 +6,5 @@ async function fetcher(path: string) {
 }
 
 export default function useMe() {
-    return useSWR<{ user: UserDTO }>('/cms/users/me', fetcher);
+    return useSWR<{ user: UserDTO }>('/api/users/me', fetcher);
 }

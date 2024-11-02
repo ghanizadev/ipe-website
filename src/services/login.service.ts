@@ -6,7 +6,7 @@ type LoginOptions = {
 }
 
 export default async function loginService(data: LoginOptions) {
-    const url = `/cms/users/login`;
+    const url = `/api/users/login`;
     const init: RequestInit = {
         method: 'POST',
         headers: {

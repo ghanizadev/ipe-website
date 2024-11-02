@@ -14,10 +14,13 @@ import getMeServerService from "@/services/get-me-server.service";
 
 export default async function Navbar() {
     const pages = await getPages();
+
     const cookieStore = await cookies();
     const me = await getMeServerService(cookieStore.get('payload-token')?.value);
 
     const navigation = (pages?.docs ?? []).reduce((previous, current) => {
+        if (!current.shownOnNavbar) return previous;
+
         if (current.category) {
             return {
                 ...previous,
@@ -45,7 +48,8 @@ export default async function Navbar() {
 
     return (
         <nav className="bg-white border-gray-200">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <div
+                className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <Image src="/logo.png" width={127} height={73} className="h-12 w-auto"
                            alt="Logo instituto IPE"/>
@@ -83,10 +87,13 @@ export default async function Navbar() {
                             )
                         })}
                         <li className={"m-auto"}>
-                            <LinkButton href="#">Loja</LinkButton>
+                            <LinkButton href="/galeria">Galeria de fotos</LinkButton>
                         </li>
                         <li className={"m-auto"}>
-                            <LinkButton href="#">Contato</LinkButton>
+                            <LinkButton href="/loja">Loja</LinkButton>
+                        </li>
+                        <li className={"m-auto"}>
+                            <LinkButton href="/contato">Contato</LinkButton>
                         </li>
                         {!me.user &&
                             <li className={"m-auto"}>

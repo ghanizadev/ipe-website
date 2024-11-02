@@ -1,7 +1,5 @@
-export default async function getMe(token?: string) {
-    const init: RequestInit = {}
-
-    const response = await fetch(process.env.NEXT_PUBLIC_URL + '/cms/users/me', init);
+export default async function getMe() {
+    const response = await fetch(process.env.NEXT_PUBLIC_URL + '/api/users/me');
     if (!response.ok) return;
     return response.json();
 }

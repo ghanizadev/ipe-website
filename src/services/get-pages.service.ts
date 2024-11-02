@@ -6,6 +6,9 @@ type PageDTO = PayloadDocument & {
     title: string;
     category: CategoryDTO;
     content: Record<string, any>;
+    shownOnNavbar?: boolean;
+    shownOnDrawer?: boolean;
+    shownOnFooter?: boolean;
 }
 
 export default async function getPages(): Promise<PaginatedResponse<PageDTO> | null> {

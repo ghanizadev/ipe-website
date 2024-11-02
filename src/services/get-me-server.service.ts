@@ -4,7 +4,7 @@ export default async function getMeServerService(token?: string) {
             'Cookie': `payload-token=${token}`
         }
     }
-    const response = await fetch(process.env.NEXT_PUBLIC_URL + '/cms/users/me', init);
+    const response = await fetch(process.env.NEXT_PUBLIC_URL + '/api/users/me', init);
     if (!response.ok) return;
     return response.json();
 }

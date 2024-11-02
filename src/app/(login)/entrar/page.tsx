@@ -22,7 +22,7 @@ export default async function SignIn() {
                         <span className={"mx-1 text-gray-500"}>ou</span>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                     </div>
-                    <SecondaryButton>Criar um conta</SecondaryButton>
+                    <SecondaryButton path={"/criar-conta"}>Criar um conta</SecondaryButton>
                 </section>
                 <section className={"hidden 2xl:block"}>
                     <Image src={"/hero.jpg"} alt={""} width={1920} height={850}

@@ -5,7 +5,7 @@ import PrimaryButton from "@/components/button/primary-button";
 
 export default async function Hero() {
     return (
-        <div className={"grid lg:grid-cols-12 lg:grid-rows-1 py-24 px-4"}>
+        <div className={"grid lg:grid-cols-12 lg:grid-rows-1 py-18 lg:py-24"}>
             <div className={"p-4 col-span-6"}>
                 <span
                     className={"mb-4 text-lg leading-none tracking-tight text-[--primary] lg:text-xl"}>O mundo não muda com opiniões, muda com exemplos.</span>
@@ -15,9 +15,9 @@ export default async function Hero() {
                     lucrativos, que teve início em 2016 com apenas 4 atletas, e hoje atendemos mais de 60 pessoas,
                     promovendo ações ligadas ao esporte e lazer, com foco a inclusão de pessoas com deficiência e
                     voluntários.</p>
-                <PrimaryButton>Saiba como ajudar</PrimaryButton>
+                <PrimaryButton path={"/como-ajudar"}>Saiba como ajudar</PrimaryButton>
             </div>
-            <div className={"p-4  col-span-6"}>
+            <div className={"p-4 hidden col-span-6 lg:block"}>
                 <Image src={"/hero.jpg"} alt={"descricao"} width={1920} height={850}
                        className={"h-[100%] object-cover rounded-2xl"}/>
             </div>

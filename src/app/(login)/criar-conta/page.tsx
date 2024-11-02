@@ -21,7 +21,8 @@ export default async function SignUp() {
                         <span className={"mx-1 text-gray-500"}>ou</span>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                     </div>
-                    <span>Ja possui uma conta? <Link href={'/entrar'} className={"text-[--primary-lighter] underline"}>Entre com seu e-mail e senha</Link></span>
+                    <span>Ja possui uma conta? <Link href={'/entrar'}
+                                                     className={"text-[--primary-lighter] text-nowrap underline"}>Entre com seu e-mail e senha</Link></span>
                 </section>
                 <section className={"hidden 2xl:block"}>
                     <Image src={"/hero.jpg"} alt={""} width={1920} height={850}
