@@ -7,14 +7,14 @@ export default async function Testimonials() {
         <section className={"my-16 px-4 bg-gray-50"}>
             <div className={"py-16"}>
                 <h2 className={"mb-8 text-2xl font-bold leading-none tracking-tight text-[--primary] md:text-3xl lg:text-4xl"}>O
-                    que as pessoas tem a dizer?</h2>
+                    quê as pessoas têm a dizer?</h2>
                 <div className={"m-auto flex flex-col items-center justify-center max-w-2xl"}>
                     <Image
-                        src={"http://localhost:3300/avatars/background-05-1920x850-64x64.jpg"}
+                        src={"/avatars/068938e1-ef93-40d6-bc7f-b916eaa3e7c3.jpg"}
                         alt={"testimonial"} width={64} height={64}
-                        className={"rounded-[50%] mb-4"}/>
-                    <span className={"text-xl font-bold text-[--primary]"}>Name here</span>
-                    <span className={"text-md text-gray-600"}>Ocupacao</span>
+                        className={"rounded-[50%] mb-4 h-16 w-16"}/>
+                    <span className={"text-xl font-bold text-[--primary]"}>Nome aqui</span>
+                    <span className={"text-md text-gray-600"}>Ocupação</span>
                     <blockquote
                         className={"text-base italic font-semibold text-gray-600 text-justify mb-6"}>
                         <svg className="w-8 h-8 text-[--primary] mb-4 fill-[--primary]" aria-hidden="true"
