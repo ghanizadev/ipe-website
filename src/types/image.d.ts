@@ -15,8 +15,14 @@ declare type ImageUploadDTO = {
     width: number;
     height: number;
     url: string;
+    altText?: string;
     createdAt: string;
     updatedAt: string;
+}
+
+declare type PhotoDTO = ImageUploadDTO & {
+    description?: string;
+    tags?: string[];
 }
 
 declare type LogoDTO = ImageUploadDTO & {

@@ -23,14 +23,4 @@ declare type PaginatedResponse<T> = {
     nextPage: boolean | null;
 }
 
-declare type PhotoDTO = PayloadDocument & {
-    tags: string[];
-    filename: string;
-    mimeType: string;
-    filesize: number;
-    width: number;
-    height: number;
-    url: string;
-}
-
 declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>

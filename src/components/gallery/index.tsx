@@ -94,7 +94,7 @@ export default function Gallery({photos: init}: GalleryProps) {
                             </div>
                             <div
                                 className={"m-auto text-white text-lg font-bold h-min lg:text:2xl"}>
-                                <p>{preview.filename}</p>
+                                <p>{preview.description ?? preview.filename}</p>
                             </div>
                         </div>
                     </div>

@@ -8,11 +8,10 @@ type RichTextProps = {
 }
 
 export default function RichText({html, className}: RichTextProps) {
-    const content = (html ?? '').replaceAll('src="/', `src="${process.env.NEXT_PUBLIC_CMS_URL}/`)
     return (
         <div
-            className={[className].join(' ')}
-            dangerouslySetInnerHTML={{__html: content}}
+            className={['richText', className].join(' ').trim()}
+            dangerouslySetInnerHTML={{__html: html ?? ''}}
         ></div>
     )
 }

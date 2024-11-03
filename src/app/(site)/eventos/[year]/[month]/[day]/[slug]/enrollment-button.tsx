@@ -1,23 +1,31 @@
 "use client"
 
 import useMe from "@/hooks/use-me";
-// import {EnrollmentService} from "@/services/enrollment.service";
+import {useRouter} from "next/navigation";
 
 type EnrollmentButtonProps = {
-    event?: EventDTO;
+    event: EventDTO;
+    createEnrollmentAction: (eventId: string, userId: string) => Promise<void>
 }
 
-export default function EnrollmentButton({event}: EnrollmentButtonProps) {
+
+export default function EnrollmentButton({event, createEnrollmentAction}: EnrollmentButtonProps) {
     const {data: me} = useMe();
+    const router = useRouter();
 
     const handleEnrollment = async () => {
-        // const service = new EnrollmentService();
-
-        if (!me) {
+        if (!event) {
+            router.replace('/')
             return;
         }
 
-        // await service.create({event: event.id, user: me.user.id})
+        if (!me) {
+            router.push('/entrar?redirect=' + encodeURIComponent(window.location.href))
+            return;
+        }
+
+        await createEnrollmentAction(event.id, me.user.id);
+        router.push('/conta?notification=enrollment-success&enrollmentId=' + event.id)
     }
 
     return (
