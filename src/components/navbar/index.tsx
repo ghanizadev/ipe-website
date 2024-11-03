@@ -95,12 +95,12 @@ export default async function Navbar() {
                         <li className={"m-auto"}>
                             <LinkButton href="/contato">Contato</LinkButton>
                         </li>
-                        {!me.user &&
+                        {!me?.user &&
                             <li className={"m-auto"}>
                                 <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
                             </li>
                         }
-                        {me.user &&
+                        {me?.user &&
                             <li className={"m-auto"}>
                                 Olá, <a href={"/conta"}
                                         className={"text-[--primary-lighter] underline"}>{me.user.name.split(' ')[0]}</a>

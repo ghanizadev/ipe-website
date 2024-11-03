@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
                 port: '3300',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'ipe-cms-65f2725a70b5.herokuapp.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
     rewrites: async () => ({
