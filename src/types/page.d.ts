@@ -1,6 +1,4 @@
-import {CategoryDTO, PayloadDocument} from "@/types/payload";
-
-export type PageDTO = PayloadDocument & {
+declare type PageDTO = PayloadDocument & {
     slug: string;
     title: string;
     category: CategoryDTO;

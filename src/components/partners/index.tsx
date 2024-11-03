@@ -20,7 +20,7 @@ export default async function Partners() {
                 {companies.map(partner => (
                     <div key={partner.id} className={"w-36 m-2 lg:m-4"}>
                         <a href={partner.link} target={"_blank"} rel={"noreferrer,noopener"}>
-                            <Image src={`${process.env.CMS_API_URL}${partner.logo.sizes.md?.url ?? ''}`}
+                            <Image src={partner.logo.sizes.md?.url ?? ""}
                                    alt={partner.name + " logo"} width={128} height={128} className={"m-auto"}/>
                         </a>
                     </div>
@@ -31,7 +31,7 @@ export default async function Partners() {
                 {support.map(partner => (
                     <div key={partner.id} className={"w-36 m-2 lg:m-4"}>
                         <a href={partner.link} target={"_blank"} rel={"noreferrer,noopener"}>
-                            <Image src={`${process.env.CMS_API_URL}${partner.logo.sizes.md?.url ?? ''}`}
+                            <Image src={partner.logo.sizes.md?.url ?? ""}
                                    alt={partner.name + " logo"} width={128} height={128} className={"m-auto"}/>
                         </a>
                     </div>

@@ -1,0 +1,36 @@
+declare type PayloadDocument = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+declare type PaginationDTO = {
+    limit?: number;
+    order?: string;
+    where?: Record<string, string>;
+}
+
+declare type PaginatedResponse<T> = {
+    docs: T[];
+    totalDocs: number;
+    limit: number;
+    totalPages: number;
+    page: number;
+    pagingCounter: number;
+    hasPrevPage: boolean | null;
+    hasNextPage: boolean | null;
+    prevPage: boolean | null;
+    nextPage: boolean | null;
+}
+
+declare type PhotoDTO = PayloadDocument & {
+    tags: string[];
+    filename: string;
+    mimeType: string;
+    filesize: number;
+    width: number;
+    height: number;
+    url: string;
+}
+
+declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import SecondaryButton from "@/components/button/secondary-button";
-import {EventDTO} from "@/types/event";
 import Link from "next/link";
 
 type EventProps = {

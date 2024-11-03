@@ -1,4 +1,4 @@
-export type UserDTO = {
+declare type UserDTO = {
     id: string;
     birthday: string;
     cpf: string;

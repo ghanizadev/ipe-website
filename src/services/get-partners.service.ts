@@ -1,5 +1,4 @@
 import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
-import {LogoDTO, PaginatedResponse, PayloadDocument} from "@/types/payload";
 
 type PartnerDTO = PayloadDocument & {
     name: string;

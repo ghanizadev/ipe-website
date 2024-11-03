@@ -1,8 +1,6 @@
 "use server"
 
 import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
-import {PaginatedResponse} from "@/types/payload";
-import {PhotoDTO} from "@/types/photos";
 
 export default async function getPhotos(page: number): Promise<PaginatedResponse<PhotoDTO> | null> {
     const url = `${process.env.CMS_API_URL}/api/photos?page=${page ?? 1}`;

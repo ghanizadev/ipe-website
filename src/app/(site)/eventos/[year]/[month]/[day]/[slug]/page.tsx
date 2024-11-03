@@ -3,6 +3,7 @@ import {notFound} from "next/navigation";
 
 import getEventBySlug from "@/services/get-event-by-slug.service";
 import RichText from "@/components/rich-text";
+import EnrollmentButton from "@/app/(site)/eventos/[year]/[month]/[day]/[slug]/enrollment-button";
 
 
 type PageProps = {
@@ -29,9 +30,7 @@ export default async function EventPage({params}: PageProps) {
                    height={event.image.height}/>
             <RichText html={event.html} className={"my-16"}/>
             <div className={"flex justify-center items-center mb-16"}>
-                <button type={"button"}
-                        className={"bg-[--primary] text-white px-6 py-4 text-2xl rounded-2xl"}>Inscreva-se!
-                </button>
+                <EnrollmentButton event={event}/>
             </div>
         </div>
     )

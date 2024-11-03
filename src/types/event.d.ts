@@ -1,6 +1,4 @@
-import {ImageUploadDTO, PayloadDocument} from "@/types/payload";
-
-export type EventDTO = PayloadDocument & {
+declare type EventDTO = PayloadDocument & {
     title: string;
     date: string;
     slug: string;
