@@ -10,6 +10,7 @@ import LinkButton from "@/components/link-button";
 import PrimaryButton from "@/components/button/primary-button";
 import getPages from "@/services/get-pages.service";
 import getMeServerService from "@/services/get-me-server.service";
+import LogoutButton from "./components/logout-button";
 
 
 export default async function Navbar() {
@@ -100,21 +101,23 @@ export default async function Navbar() {
                                 <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
                             </li>
                         }
-                        <hr className="h-px my-2 bg-gray-200 border-0"/>
+                        <hr className="h-px my-2 bg-gray-200 border-0 md:hidden"/>
                         {me?.user &&
-                            <li className={"m-auto"}>
-                                Olá, <a href={"/conta"}
-                                        className={"text-[--primary-lighter] underline"}>{me.user.name.split(' ')[0]}</a>
-                            </li>
+                            <>
+                                <li className={"m-auto text-[--primary-darker]"}>
+                                    <LinkButton href="/conta">Olá, {me.user.name.split(' ')[0]}</LinkButton>
+                                </li>
+                                <li className={"m-auto md:hidden"}>
+                                    <LinkButton href="/conta/eventos">Meus eventos</LinkButton>
+                                </li>
+                                <li className={"m-auto md:hidden"}>
+                                    <LinkButton href="/conta/dados">Minha conta</LinkButton>
+                                </li>
+                                <li className={"m-auto text-red-700 md:hidden"}>
+                                    <LogoutButton/>
+                                </li>
+                            </>
                         }
-                        <ul className={"md:hidden flex flex-col font-medium p-4 rtl:space-x-reverse"}>
-                            <li className={"m-auto"}>
-                                <LinkButton href="/conta/eventos">Meus eventos</LinkButton>
-                            </li>
-                            <li className={"m-auto"}>
-                                <LinkButton href="/conta/dados">Minha conta</LinkButton>
-                            </li>
-                        </ul>
                     </ul>
                 </div>
             </div>

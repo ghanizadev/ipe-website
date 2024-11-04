@@ -1,5 +1,8 @@
+"use server"
+
 import Link from "next/link";
 import React from "react";
+import LogoutButton from "./components/logout-button";
 
 type AccountLayoutPageProps = {
     children: React.ReactNode
@@ -18,6 +21,12 @@ export default async function AccountLayout({children}: AccountLayoutPageProps) 
                         </li>
                         <li className={"mb-2"}>
                             <Link className={"text-[--primary] underline mb-2"} href={"/conta/dados"}>Minha conta</Link>
+                        </li>
+                        <li>
+                            <hr className="h-px bg-gray-200 my-4 border-0"/>
+                        </li>
+                        <li className={"mb-2"}>
+                            <LogoutButton/>
                         </li>
                     </ul>
                 </nav>

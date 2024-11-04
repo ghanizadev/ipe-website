@@ -1,4 +1,4 @@
-import findEnrollmentsAction from "@/app/(site)/conta/find-enrollments.action";
+import findEnrollmentsAction from "@/app/(site)/conta/eventos/actions/find-enrollments.action";
 import {cookies} from "next/headers";
 import getMeServerService from "@/services/get-me-server.service";
 import {redirect, RedirectType} from "next/navigation";
