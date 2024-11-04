@@ -1,7 +1,8 @@
-import Title from "./title"
+import {redirect} from "next/navigation";
 
-export default async function Account() {
-    return (
-        <Title/>
-    )
+export const dynamic = "force-dynamic";
+
+export default async function AccountPage() {
+    return redirect('/conta/eventos')
 }
+
