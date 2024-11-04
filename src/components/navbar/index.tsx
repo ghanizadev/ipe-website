@@ -100,12 +100,21 @@ export default async function Navbar() {
                                 <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
                             </li>
                         }
+                        <hr className="h-px my-2 bg-gray-200 border-0"/>
                         {me?.user &&
                             <li className={"m-auto"}>
                                 Olá, <a href={"/conta"}
                                         className={"text-[--primary-lighter] underline"}>{me.user.name.split(' ')[0]}</a>
                             </li>
                         }
+                        <ul className={"md:hidden flex flex-col font-medium p-4 rtl:space-x-reverse"}>
+                            <li className={"m-auto"}>
+                                <LinkButton href="/conta/eventos">Meus eventos</LinkButton>
+                            </li>
+                            <li className={"m-auto"}>
+                                <LinkButton href="/conta/dados">Minha conta</LinkButton>
+                            </li>
+                        </ul>
                     </ul>
                 </div>
             </div>

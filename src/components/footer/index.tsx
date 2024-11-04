@@ -32,14 +32,14 @@ export default async function Footer() {
                                             className={"inline-block w-full underline text-nowrap lg:w-min lg:mx-2"}>
                                             <a href={`${page.category?.slug ? '/' + page.category.slug : ''}/${page.slug}`}>{page.title}</a>
                                         </li>
-                                        &bull;
+                                        <div className={"hidden md:inline"}>&bull;</div>
                                     </Fragment>
                                 ))
                         }
                         <li className={"inline-block w-full underline text-nowrap lg:w-min lg:mx-2"}>
                             <a href={"/admin"}>Interno</a>
                         </li>
-                        &bull;
+                        <div className={"hidden md:inline"}>&bull;</div>
                         <li className={"inline-block w-full underline text-nowrap lg:w-min lg:mx-2"}>
                             <a href={"/contato"}>Contato</a>
                         </li>

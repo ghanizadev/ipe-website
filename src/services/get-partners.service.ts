@@ -14,7 +14,6 @@ export default async function getPartners(): Promise<PaginatedResponse<PartnerDT
             ...getPayloadHeaders(),
         }
     }
-    console.log(init)
     const response = await fetch(url, init);
     if (!response.ok) return null
     return response.json()

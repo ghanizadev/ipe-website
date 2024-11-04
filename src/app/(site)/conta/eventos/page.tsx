@@ -41,7 +41,7 @@ export default async function Account() {
     const {myEnrollments} = await findEnrollmentsAction(me.user.id);
 
     return (
-        <div className={"mt-4"}>
+        <div className={"m-4"}>
             <h4 className={"mb-2 font-bold"}>Minhas inscrições</h4>
             {myEnrollments?.map((enrollment) => {
                 const event = enrollment.event;
