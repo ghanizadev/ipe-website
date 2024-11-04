@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 
 type EnrollmentButtonProps = {
     event: EventDTO;
-    createEnrollmentAction: (eventId: string, userId: string) => Promise<void>
+    createEnrollmentAction: (eventId: string, userId: string) => Promise<boolean>
 }
 
 
@@ -24,8 +24,8 @@ export default function EnrollmentButton({event, createEnrollmentAction}: Enroll
             return;
         }
 
-        await createEnrollmentAction(event.id, me.user.id);
-        router.push('/conta?notification=enrollment-success&enrollmentId=' + event.id)
+        const response = await createEnrollmentAction(event.id, me.user.id);
+        router.push(`/conta?notification=${response ? 'enrollment-success' : 'error'}&enrollmentId=` + event.id)
     }
 
     return (

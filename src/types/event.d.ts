@@ -5,5 +5,8 @@ declare type EventDTO = PayloadDocument & {
     standFirst: string;
     location: string;
     image: ImageUploadDTO;
+    fee?: number;
+    dueDate?: string;
     html?: string;
+    instructionsHtml?: string;
 }

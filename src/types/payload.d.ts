@@ -23,4 +23,8 @@ declare type PaginatedResponse<T> = {
     nextPage: boolean | null;
 }
 
+declare type PayloadError = {
+    errors?: { field: string; message: string }[]
+}
+
 declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>

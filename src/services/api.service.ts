@@ -6,10 +6,10 @@ import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
 
 
 export class APIService<T = PayloadDocument> {
-    private readonly baseUrl: string;
-    private readonly apiKey: string;
+    protected readonly baseUrl: string;
+    protected readonly apiKey: string;
 
-    constructor(private readonly basePath: string) {
+    constructor(protected readonly basePath: string) {
         if (!process.env.CMS_API_URL) throw new Error('Variable CMS_API_URL is not defined');
         if (!process.env.CMS_API_KEY) throw new Error('Variable CMS_API_KEY is not defined');
 
@@ -17,9 +17,11 @@ export class APIService<T = PayloadDocument> {
         this.apiKey = process.env.CMS_API_KEY;
     }
 
-    protected getPagination(pagination: PaginationDTO): string {
-        if (Object.keys(pagination).length)
-            return `?${qs.stringify(pagination)}`;
+    protected makeQueryString(pagination: PaginationDTO = {}, additional: Record<string, object> = {}): string {
+        const obj = {...pagination, ...additional};
+
+        if (Object.keys(obj).length)
+            return `?${qs.stringify(obj)}`;
         return ''
     }
 
@@ -53,7 +55,7 @@ export class APIService<T = PayloadDocument> {
             },
         };
 
-        const queryString = this.getPagination(pagination);
+        const queryString = this.makeQueryString(pagination);
 
         const response = await fetch(this.baseUrl + queryString, init);
         if (!response.ok) return null;
