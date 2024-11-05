@@ -2,8 +2,7 @@ declare type TShirtType = 'masc' | 'fem' | 'inf';
 
 declare type TShirtSize = 'P' | 'M' | 'G' | 'XG';
 
-declare type UserDTO = {
-    id: string;
+declare type UserDTO = PayloadDocument & {
     birthday: string;
     cpf: string;
     email: string;
@@ -11,6 +10,9 @@ declare type UserDTO = {
     rg: string;
     role: string;
     tshirt?: { type: TShirtType, size: TShirtSize };
-    createdAt: string;
-    updatedAt: string;
+}
+
+declare type CreateUserDTO = Partial<UserDTO> & {
+    password: string;
+    'confirm-password': string;
 }

@@ -1,4 +1,4 @@
-import TextInput from "@/components/input/text-input";
+import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import {cookies} from "next/headers";
 import getMeServerService from "@/services/get-me-server.service";

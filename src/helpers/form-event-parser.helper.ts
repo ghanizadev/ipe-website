@@ -1,4 +1,4 @@
-export default function formEventParser<T = Record<string, number | string | Date | boolean>>(e: React.FormEvent): T {
+export default function formEventParser<T = FormData>(e: React.FormEvent): T {
     const form = e.target as HTMLFormElement;
     let formData = {};
 

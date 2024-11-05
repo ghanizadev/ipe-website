@@ -5,6 +5,7 @@ type TextInputProps = {
     error?: string | boolean;
     success?: string | boolean;
     readonly?: boolean;
+    required?: boolean;
     className?: string;
     defaultValue?: string;
 }
@@ -26,9 +27,13 @@ export default function TextInput(props: TextInputProps) {
     }
     return (
         <div className={props.className}>
-            <label htmlFor={props.name}
-                   className={`block mb-2 text-sm font-medium${props.success ? ' text-green-700' : ''}${props.error ? ' text-red-700' : ''}`}>{props.label}</label>
+            <label
+                htmlFor={props.name}
+                className={`block mb-2 text-sm font-medium${props.success ? ' text-green-700' : ''}${props.error ? ' text-red-700' : ''}`}>
+                {props.label}{props.required ? <span className={"text-red-700"}> *</span> : ''}
+            </label>
             <input
+                required={props.required}
                 type={props.type ?? 'text'}
                 name={props.name}
                 id={props.name}

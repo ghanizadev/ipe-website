@@ -3,7 +3,7 @@ import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
 
 export class EnrollmentService extends APIService<EnrollmentDTO> {
     constructor() {
-        super('/enrollments');
+        super('enrollments');
     }
 
     public async findEnrollmentsByUserId(userId: string): Promise<PaginatedResponse<EnrollmentDTO> | null> {

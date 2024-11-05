@@ -27,4 +27,9 @@ declare type PayloadError = {
     errors?: { field: string; message: string }[]
 }
 
+declare type LoginUserDTO = {
+    email: string;
+    password: string;
+}
+
 declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>

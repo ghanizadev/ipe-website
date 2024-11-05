@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
-import TextInput from "@/components/input/text-input";
+import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import loginService from "@/services/login.service";
 import formEventParser from "@/helpers/form-event-parser.helper";
@@ -17,9 +17,9 @@ export default function LoginForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = formEventParser(e);
+        const formData = formEventParser<LoginUserDTO>(e);
 
-        const response = await loginService(formData as { email: string; password: string; });
+        const response = await loginService(formData);
         if (response) {
             router.push('/conta')
             return;

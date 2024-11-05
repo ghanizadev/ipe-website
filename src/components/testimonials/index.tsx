@@ -1,13 +1,13 @@
 "use server"
 
 import Image from "next/image";
+import {H2} from "@/components/typography"
 
 export default async function Testimonials() {
     return (
         <section className={"my-16 px-4 bg-gray-50"}>
             <div className={"py-16"}>
-                <h2 className={"mb-8 text-2xl font-bold leading-none tracking-tight text-[--primary] md:text-3xl lg:text-4xl"}>O
-                    quê as pessoas têm a dizer?</h2>
+                <H2>O quê as pessoas têm a dizer?</H2>
                 <div className={"m-auto flex flex-col items-center justify-center max-w-2xl"}>
                     <Image
                         src={"/avatars/068938e1-ef93-40d6-bc7f-b916eaa3e7c3.jpg"}

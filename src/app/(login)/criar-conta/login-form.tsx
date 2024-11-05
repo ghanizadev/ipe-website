@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 
-import TextInput from "@/components/input/text-input";
+import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import SecondaryButton from "@/components/button/secondary-button";
 import formEventParser from "@/helpers/form-event-parser.helper";
@@ -50,7 +50,7 @@ export default function LoginForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const data = formEventParser(e);
+        const data = formEventParser<CreateUserDTO>(e);
         let isOk = true;
 
         if (!data.email) {
@@ -68,7 +68,7 @@ export default function LoginForm() {
             isOk = false;
         }
 
-        if (data.password !== data['confirm-password']) {
+        if (data.password !== data['confirm-password'] as string) {
             setErrors(errors => ({...errors, password: true, 'confirm-password': 'As senhas nao conferem'}))
             isOk = false;
         }

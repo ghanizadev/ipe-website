@@ -1,5 +1,6 @@
 import Gallery from "@/components/gallery";
 import getPhotos from "@/services/get-photos.service";
+import {Metadata} from "next";
 
 export default async function GalleryPage() {
     const photos = await getPhotos(1);
@@ -13,4 +14,8 @@ export default async function GalleryPage() {
                 photos={ps}/>
         </div>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Galeria de Fotos / IPE - Inclusão Pelo Esporte"
 }

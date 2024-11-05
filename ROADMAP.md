@@ -22,6 +22,7 @@
 - [ ] Compartilhar eventos
 - [ ] Opengraph para os eventos
 - [ ] Corrigir portugues
+- [ ] Adicionar Google Recaptcha
 
 ## Post-release
 

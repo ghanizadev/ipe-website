@@ -1,0 +1,1 @@
+declare type FormData = Record<string, number | string | Date | boolean>

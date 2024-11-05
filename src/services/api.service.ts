@@ -42,7 +42,11 @@ export class APIService<T = PayloadDocument> {
         };
 
         const response = await fetch(this.baseUrl, init);
-        if (!response.ok) return null;
+
+        if (!response.ok) {
+            console.error(await response.text())
+            return null;
+        }
 
         return await response.json();
     }

@@ -2,6 +2,7 @@ import {notFound} from "next/navigation";
 
 import getPageBySlug from "@/services/get-page-by-slug.service";
 import RichText from "@/components/rich-text";
+import {H1} from "@/components/typography";
 
 
 type PageProps = {
@@ -18,8 +19,17 @@ export default async function CustomPage({params}: PageProps) {
 
     return (
         <div className={"pt-4 pb-16"}>
-            <h1 className={"text-xl text-[--primary] font-extrabold mb-8 lg:text-4xl"}>{customPage?.title}</h1>
+            <H1>{customPage?.title}</H1>
             <RichText html={customPage.html}/>
         </div>
     )
+}
+
+export async function generateMetadata({params}: PageProps) {
+    const {categorySlug} = await params;
+    const customPage = await getPageBySlug(categorySlug);
+
+    return {
+        title: `${customPage?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
+    }
 }

@@ -3,8 +3,8 @@ import {notFound} from "next/navigation";
 
 import getEventBySlug from "@/services/get-event-by-slug.service";
 import RichText from "@/components/rich-text";
-import EnrollmentButton from "@/app/(site)/eventos/[year]/[month]/[day]/[slug]/enrollment-button";
-import createEnrollmentAction from "@/app/(site)/eventos/[year]/[month]/[day]/[slug]/create-enrollment.action";
+import EnrollmentButton from "./components/enrollment-button";
+import createEnrollmentAction from "./actions/create-enrollment.action";
 
 
 type PageProps = {
@@ -35,4 +35,13 @@ export default async function EventPage({params}: PageProps) {
             </div>
         </div>
     )
+}
+
+export async function generateMetadata({params}: PageProps) {
+    const {slug} = await params;
+    const event = await getEventBySlug(slug);
+
+    return {
+        title: `${event?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
+    }
 }
