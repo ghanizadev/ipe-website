@@ -18,7 +18,8 @@ export default function Contato() {
                         futuro.</p>
                     <br/>
                     <H3>INSTITUTO IPE</H3>
-                    <p>Travessa da Benção, 291 - Campeche - Florianópolis - SC</p>
+                    <p>Rua Nove de Julho, 1224 - Ipiranga</p>
+                    <p>São José - SC, 88.111-380</p>
                     <br/>
                     <p>Telefones:</p>
                     <p>(48) 99183-1139 / <small>Paulo Escobar – Presidente</small></p>

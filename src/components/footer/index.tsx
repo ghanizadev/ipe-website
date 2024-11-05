@@ -86,7 +86,7 @@ export default async function Footer() {
                         <div>
                             <p className={"font-bold mb-2"}>Endereço</p>
                             <p className={"text-gray-400"}>Rua Nove de Julho, 1224 - Ipiranga</p>
-                            <p className={"text-gray-400"}>Sao Jose - SC, 88.111-380</p>
+                            <p className={"text-gray-400"}>São José - SC, 88.111-380</p>
                         </div>
                     </div>
                 </div>
