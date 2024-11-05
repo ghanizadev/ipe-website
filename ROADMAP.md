@@ -2,11 +2,11 @@
 
 ## Pre-release
 
-- [ ] Adicionar Contato
+- [x] Adicionar Contato
 - [ ] Adicionar Loja
 - [ ] Cancelar inscricao
 - [ ] Validar dados do usuario ao clicar em inscrever-se
-- [ ] Adicionar callbacks quando clicar em increver-se e precisar fazer login/criar conta
+- [ ] Adicionar callbacks quando clicar em inscrever-se e precisar fazer login/criar conta
 - [ ] Adicionar servico de email
 - [ ] Esqueci minha senha
 - [ ] Excluir minha conta
@@ -17,8 +17,8 @@
 - [ ] Adicionar as redes sociais
 - [ ] Termos de uso (?)
 - [ ] Texto do rodape
-- [ ] Titulos das paginas
-- [ ] Favicon
+- [x] Titulos das paginas
+- [x] Favicon
 - [ ] Compartilhar eventos
 - [ ] Opengraph para os eventos
 - [ ] Corrigir portugues
