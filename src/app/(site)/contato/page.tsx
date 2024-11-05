@@ -11,7 +11,7 @@ export default function Contato() {
     return (
         <>
             <H1>Contato</H1>
-            <div className={"grid grid-cols-2 gap-4"}>
+            <div className={"grid grid-[repeat(1fr, 2)] gap-8 md:grid-cols-2"}>
                 <div>
                     <H2>Encontre-nos</H2>
                     <p>Venha conhecer nosso escritório e conhecer de perto nosso projeto, ideias e planos para o
