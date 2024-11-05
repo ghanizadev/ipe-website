@@ -37,11 +37,11 @@ export default async function Footer() {
                                 ))
                         }
                         <li className={"inline-block w-full underline text-nowrap lg:w-min lg:mx-2"}>
-                            <a href={"/admin"}>Interno</a>
+                            <a href={"/contato"}>Contato</a>
                         </li>
                         <div className={"hidden md:inline"}>&bull;</div>
                         <li className={"inline-block w-full underline text-nowrap lg:w-min lg:mx-2"}>
-                            <a href={"/contato"}>Contato</a>
+                            <a href={"/admin"}>Interno</a>
                         </li>
                     </ul>
                 </nav>
