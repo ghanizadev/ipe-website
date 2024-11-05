@@ -1,6 +1,9 @@
+import _ from "lodash";
+import React from "react";
+
 export default function formEventParser<T = FormData>(e: React.FormEvent): T {
     const form = e.target as HTMLFormElement;
-    let formData = {};
+    const formData = {};
 
     for (const element of form.elements) {
         const input = element as HTMLInputElement;
@@ -8,8 +11,9 @@ export default function formEventParser<T = FormData>(e: React.FormEvent): T {
         if (!name) continue;
 
         const value = input.value;
-        if (value)
-            formData = {...formData, [name]: value}
+        if (value) {
+            _.set(formData, name, value)
+        }
     }
 
     return formData as T;

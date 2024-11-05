@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
@@ -10,9 +10,9 @@ import loginService from "@/services/login.service";
 import formEventParser from "@/helpers/form-event-parser.helper";
 
 
-export default function LoginForm() {
+export default function LoginForm(props: { redirect?: string }) {
     const [error, setError] = useState("");
-    const router = useRouter()
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,11 +21,24 @@ export default function LoginForm() {
 
         const response = await loginService(formData);
         if (response) {
-            router.push('/conta')
+            if (props.redirect) {
+                try {
+                    const url = new URL(props.redirect);
+                    const ownUrl = new URL(process.env.NEXT_PUBLIC_URL!);
+
+                    if (url.hostname === ownUrl.hostname) {
+                        router.push(url.pathname + url.search);
+                        return;
+                    }
+                } catch {
+                }
+            }
+
+            router.push('/conta');
             return;
         }
 
-        setError('Email e/ou senha incorretos')
+        setError('Email e/ou senha incorretos');
     }
 
     return (

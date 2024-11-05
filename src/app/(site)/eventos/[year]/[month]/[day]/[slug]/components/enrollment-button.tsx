@@ -3,29 +3,29 @@
 import useMe from "@/hooks/use-me";
 import {useRouter} from "next/navigation";
 
+
 type EnrollmentButtonProps = {
     event: EventDTO;
-    createEnrollmentAction: (eventId: string, userId: string) => Promise<boolean>
 }
 
-
-export default function EnrollmentButton({event, createEnrollmentAction}: EnrollmentButtonProps) {
+export default function EnrollmentButton({event}: EnrollmentButtonProps) {
     const {data: me} = useMe();
     const router = useRouter();
 
     const handleEnrollment = async () => {
         if (!event) {
-            router.replace('/')
+            router.replace('/');
             return;
         }
 
-        if (!me) {
-            router.push('/entrar?redirect=' + encodeURIComponent(window.location.href))
+        if (!me?.user) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('register', '1');
+            router.push('/entrar?source=enrollment&redirect=' + encodeURIComponent(url.toString()))
             return;
         }
 
-        const response = await createEnrollmentAction(event.id, me.user.id);
-        router.push(`/conta?notification=${response ? 'enrollment-success' : 'error'}&enrollmentId=` + event.id)
+        router.push(window.location.pathname + '?register=1');
     }
 
     return (

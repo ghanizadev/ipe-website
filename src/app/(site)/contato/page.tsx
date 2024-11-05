@@ -7,7 +7,7 @@ import TextArea from "@/components/textarea";
 import Form from "./components/form";
 import createMessageAction from "@/app/(site)/contato/actions/create-message.action";
 
-export default function Contato() {
+export default function ContactPage() {
     return (
         <>
             <H1>Contato</H1>

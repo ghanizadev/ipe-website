@@ -6,7 +6,13 @@ import SecondaryButton from "@/components/button/secondary-button";
 import Image from "next/image";
 
 
-export default async function SignIn() {
+type PageProps = {
+    searchParams: Promise<Record<string, string>>
+}
+
+export default async function SignInPage({searchParams}: PageProps) {
+    const {redirect} = await searchParams;
+
     return (
         <div className={"w-[100vw] h-[100vh] flex justify-center items-center"}>
             <div
@@ -16,7 +22,7 @@ export default async function SignIn() {
                         de volta!</h3>
                     <span
                         className={"mb-6 text-md lg:text-xl text-gray-700"}>Entre com suas credenciais para acessar sua conta</span>
-                    <LoginForm/>
+                    <LoginForm redirect={redirect}/>
                     <div className={"w-full text-center my-8 flex flex-row justify-center items-center"}>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                         <span className={"mx-1 text-gray-500"}>ou</span>

@@ -11,6 +11,7 @@ const config: Config = {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
+                backdrop: "rgba(0, 0, 0, .35)"
             },
             gridTemplateColumns: {
                 sidebar: 'min-content 1fr'
