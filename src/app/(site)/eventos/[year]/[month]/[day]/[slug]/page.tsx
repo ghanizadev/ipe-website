@@ -15,7 +15,7 @@ import {H3} from "@/components/typography";
 import getMeServerService from "@/services/get-me-server.service";
 import {cookies, headers} from "next/headers";
 import SelectInput from "@/components/select";
-import {tSizes, tTypes} from "@/constants/account.constants";
+import {tshirtSizes, tshirtTypes} from "@/constants/account.constants";
 
 
 type PageProps = {
@@ -84,19 +84,25 @@ export default async function EventPage(props: PageProps) {
                             className={"mb-2"}
                             label={"Data de Nascimento"}
                             name={'birthday'}
+                            type={"date"}
                             defaultValue={me?.user?.birthday}
+                            required
                         />
                         <TextInput
                             className={"mb-2"}
                             label={"CPF (Certidão de Pessoa Física)"}
                             name={'cpf'}
+                            pattern={'\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}'}
+                            title={"O CPF deve ter o formato com hífem. Ex.: 000000000-00"}
                             defaultValue={me?.user?.cpf}
+                            required
                         />
                         <TextInput
                             className={"mb-2"}
                             label={"RG (Registro Geral)"}
                             name={'rg'}
                             defaultValue={me?.user?.rg}
+                            required
                         />
                         <H3>Camiseta</H3>
                         <SelectInput
@@ -104,14 +110,16 @@ export default async function EventPage(props: PageProps) {
                             label={"Tipo da Camiseta"}
                             name={'tshirt.type'}
                             defaultValue={me?.user?.tshirt?.type}
-                            options={tTypes}
+                            options={tshirtTypes}
+                            required
                         />
                         <SelectInput
                             className={"mb-4"}
                             label={"Tamanho da Camiseta"}
                             name={'tshirt.size'}
                             defaultValue={me?.user?.tshirt?.size}
-                            options={tSizes}
+                            options={tshirtSizes}
+                            required
                         />
                         <div className="flex items-center justify-end py-4 md:py-5 border-t border-gray-200 rounded-b">
                             <PrimaryButton type={"submit"}>Salvar e Inscrever-se</PrimaryButton>

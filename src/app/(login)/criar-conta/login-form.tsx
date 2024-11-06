@@ -54,22 +54,22 @@ export default function LoginForm() {
         let isOk = true;
 
         if (!data.email) {
-            setErrors(errors => ({...errors, email: 'E-mail e obrigatorio'}))
+            setErrors(errors => ({...errors, email: 'E-mail é obrigatório'}))
             isOk = false;
         }
 
         if (!data.name) {
-            setErrors(errors => ({...errors, name: 'Nome e obrigatorio'}))
+            setErrors(errors => ({...errors, name: 'Nome é obrigatório'}))
             isOk = false;
         }
 
         if (!data.birthday) {
-            setErrors(errors => ({...errors, birthday: 'Data de nascimento e obrigatorio'}))
+            setErrors(errors => ({...errors, birthday: 'Data de nascimento é obrigatória'}))
             isOk = false;
         }
 
         if (data.password !== data['confirm-password'] as string) {
-            setErrors(errors => ({...errors, password: true, 'confirm-password': 'As senhas nao conferem'}))
+            setErrors(errors => ({...errors, password: true, 'confirm-password': 'As senhas não conferem'}))
             isOk = false;
         }
 

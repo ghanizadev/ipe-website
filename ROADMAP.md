@@ -16,16 +16,19 @@
 - [ ] Formulario/modal de consentimento de coleta de dados
 - [ ] Adicionar as redes sociais
 - [ ] Termos de uso (?)
-- [ ] Texto do rodape
 - [x] Titulos das paginas
 - [x] Favicon
 - [ ] Compartilhar eventos
 - [ ] Opengraph para os eventos
-- [ ] Corrigir portugues
 - [ ] Adicionar Google Recaptcha
-- [ ] Adicionar alerta antes de remover inscricao
-- [ ] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
+- [x] Adicionar alerta antes de remover inscricao
+- [x] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
 - [ ] Adicionar logica de redirect quando criar uma conta
+
+## Copies
+
+- [ ] Texto do rodape
+- [ ] Corrigir portugues
 
 ## Post-release
 

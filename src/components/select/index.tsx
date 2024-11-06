@@ -4,6 +4,7 @@ type SelectProps = {
     options: { label: string, value: string }[];
     defaultValue?: string;
     className?: string;
+    required?: boolean;
 }
 
 export default function SelectInput(props: SelectProps) {
@@ -15,12 +16,17 @@ export default function SelectInput(props: SelectProps) {
 
     return (
         <>
-            <label htmlFor={`${props.name}-input`}
-                   className="block mb-1 text-sm font-medium text-gray-900">{props.label}</label>
+            <label
+                htmlFor={`${props.name}-input`}
+                className="block mb-1 text-sm font-medium text-gray-900"
+            >
+                {props.label}{props.required ? <span className={"text-red-700"}> *</span> : ""}
+            </label>
             <select
                 id={`${props.name}-input`}
                 className={classes.join(" ").trim()}
                 name={props.name}
+                required={props.required}
             >
                 {!props.defaultValue && <option selected hidden>Selecione</option>}
                 {props.options.map(opt => (

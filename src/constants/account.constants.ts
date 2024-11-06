@@ -1,4 +1,4 @@
-export const tSizes = [
+export const tshirtSizes = [
     {
         label: "P (Pequeno)",
         value: 'P'
@@ -17,7 +17,7 @@ export const tSizes = [
     },
 ]
 
-export const tTypes = [
+export const tshirtTypes = [
     {
         label: "Masculino",
         value: "masc"

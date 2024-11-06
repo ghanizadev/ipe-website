@@ -5,9 +5,9 @@ import {redirect, RedirectType} from "next/navigation";
 import React from "react";
 import RichText from "@/components/rich-text";
 import moment from "moment";
-import SecondaryButton from "@/components/button/secondary-button";
-import Form from "@/components/form";
-import cancelEnrollment from "@/app/(site)/conta/eventos/actions/cancel-enrollment.action";
+import cancelEnrollmentAction from "./actions/cancel-enrollment.action";
+import CancelEnrollmentButton from "./components/cancel-enrollment-button";
+import Link from "@/components/link";
 
 
 function getStatus(enrollment?: EnrollmentDTO) {
@@ -62,12 +62,15 @@ export default async function Account() {
                         <p className={"text-lg leading-none text-[--primary] my-4"}>Instruções</p>
                         <RichText html={enrollment.event?.instructionsHtml}/>
                         <div className={"my-2 absolute right-2 top-2"}></div>
-                        <Form action={cancelEnrollment} additionalData={{enrollmentId: enrollment.id}} refresh>
-                            <SecondaryButton className={"border-red-700 text-red-700"}>
-                                Cancelar inscrição
-                            </SecondaryButton>
-                        </Form>
-
+                        {!enrollment.payment?.paid &&
+                            <CancelEnrollmentButton enrollmentId={enrollment.id} action={cancelEnrollmentAction}/>
+                        }
+                        <br/>
+                        <small className={"text-gray-500"}>Caso voce tenha alguma duvida quanto a
+                            pagamento,
+                            cancelamento e outras instrucoes, entre
+                            em contato por qualquer de nossos <Link href={"/contato"}>canais de
+                                atendimento</Link>.</small>
                     </div>
                 )
             })}

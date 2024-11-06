@@ -5,7 +5,7 @@ import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import getMeServerService from "@/services/get-me-server.service";
 import SelectInput from "@/components/select";
-import {tSizes, tTypes} from "@/constants/account.constants";
+import {tshirtSizes, tshirtTypes} from "@/constants/account.constants";
 import updateUserProfileAction from "./actions/update-user-profile.action";
 import Form from "@/components/form";
 import SecondaryButton from "@/components/button/secondary-button";
@@ -36,9 +36,9 @@ export default async function AccountDataPage() {
                 <TextInput label={"CPF (Certidão de Pessoa Física)"} name={'cpf'} defaultValue={cpf}/>
                 <TextInput label={"RG (Registro Geral)"} name={'rg'} defaultValue={rg}/>
                 <h3 className={"text-lg leading-none text-[--primary] my-4"}>Camiseta</h3>
-                <SelectInput name={"tshirt.type"} label={"Tipo da Camiseta"} options={tTypes}
+                <SelectInput name={"tshirt.type"} label={"Tipo da Camiseta"} options={tshirtTypes}
                              defaultValue={tshirt?.type}/>
-                <SelectInput name={"tshirt.size"} label={"Tamanho da Camiseta"} options={tSizes}
+                <SelectInput name={"tshirt.size"} label={"Tamanho da Camiseta"} options={tshirtSizes}
                              defaultValue={tshirt?.size}/>
                 <PrimaryButton className={"w-min justify-self-end"}>Salvar</PrimaryButton>
             </Form>

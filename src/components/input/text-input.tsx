@@ -8,12 +8,22 @@ type TextInputProps = {
     required?: boolean;
     className?: string;
     defaultValue?: string;
+    pattern?: string;
+    title?: string;
 }
 
 export default function TextInput(props: TextInputProps) {
-    const successClassNames = "bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5";
-    const errorClassNames = "bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5";
-    const commonClassNames = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
+    const successClassNames = "bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500";
+    const errorClassNames = "bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500";
+    const commonClassNames = ["border text-sm rounded-lg block w-full p-2.5"];
+
+    if (props.error) {
+        commonClassNames.push(errorClassNames)
+    } else if (props.success) {
+        commonClassNames.push(successClassNames)
+    } else {
+        commonClassNames.push("bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500")
+    }
 
     const getDefaultValue = (defaultValue?: string): string | undefined => {
         if (!defaultValue) return;
@@ -25,6 +35,7 @@ export default function TextInput(props: TextInputProps) {
 
         return defaultValue;
     }
+
     return (
         <div className={props.className}>
             <label
@@ -38,8 +49,10 @@ export default function TextInput(props: TextInputProps) {
                 name={props.name}
                 id={props.name}
                 disabled={props.readonly}
+                pattern={props.pattern}
+                title={props.title}
                 defaultValue={getDefaultValue(props.defaultValue)}
-                className={props.error ? errorClassNames : props.success ? successClassNames : commonClassNames}
+                className={commonClassNames.join(" ").trim()}
             />
             {typeof props.success === 'string' && (<p className="mt-2 text-sm text-green-600">{props.success}</p>)}
             {typeof props.error === 'string' && (<p className="mt-2 text-sm text-red-600">{props.error}</p>)}

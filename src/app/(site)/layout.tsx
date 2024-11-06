@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import ToastWrapper from "@/components/toast";
+import ConfirmationAlert from "@/components/alert/confirmation";
 
 
 import "../globals.scss";
@@ -54,6 +55,7 @@ export default function RootLayout({
         </main>
         <Footer/>
         <ToastWrapper/>
+        <ConfirmationAlert/>
         <Script strategy={'beforeInteractive'}
                 src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></Script>
         </body>

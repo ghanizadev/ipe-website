@@ -12,6 +12,6 @@ export default function LinkButton(props: LinkProps) {
     return (
         <Link href={props.href}
               data-current={props.current}
-              className="block py-2 px-3 rounded hover:bg-[--primary-lighter] md:hover:bg-transparent md:border-0 md:hover:text-[--primary-lighter] md:p-0">{props.children}</Link>
+              className="block py-2 px-3 rounded md:border-0 hover:text-[--primary-lighter] hover:underline md:p-0">{props.children}</Link>
     )
 }
