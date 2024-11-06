@@ -1,8 +1,7 @@
 import 'server-only';
 
 import qs from 'qs';
-
-import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
+import {cookies} from "next/headers";
 
 
 export class APIService<T = PayloadDocument> {
@@ -25,7 +24,15 @@ export class APIService<T = PayloadDocument> {
         return ''
     }
 
-    protected getAuthenticationHeaders() {
+    protected async getAuthenticationHeaders(): Promise<HeadersInit> {
+        const store = await cookies();
+        const cookie = store.get('payload-token');
+
+        if (cookie)
+            return {
+                Cookie: "payload-token=" + cookie.value
+            }
+
         return {
             Authorization: "services API-Key " + process.env.CMS_API_KEY
         }
@@ -35,7 +42,7 @@ export class APIService<T = PayloadDocument> {
         const init: RequestInit = {
             method: "POST",
             headers: {
-                ...getPayloadHeaders(),
+                ...(await this.getAuthenticationHeaders()),
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(create)
@@ -55,7 +62,7 @@ export class APIService<T = PayloadDocument> {
         const init: RequestInit = {
             method: "GET",
             headers: {
-                ...getPayloadHeaders(),
+                ...(await this.getAuthenticationHeaders()),
             },
         };
 
@@ -71,7 +78,7 @@ export class APIService<T = PayloadDocument> {
         const init: RequestInit = {
             method: "GET",
             headers: {
-                ...getPayloadHeaders(),
+                ...(await this.getAuthenticationHeaders()),
             },
         };
 
@@ -85,7 +92,7 @@ export class APIService<T = PayloadDocument> {
         const init: RequestInit = {
             method: "PATCH",
             headers: {
-                ...getPayloadHeaders(),
+                ...(await this.getAuthenticationHeaders()),
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(updatedData)
@@ -101,7 +108,7 @@ export class APIService<T = PayloadDocument> {
         const init: RequestInit = {
             method: "DELETE",
             headers: {
-                ...getPayloadHeaders(),
+                ...(await this.getAuthenticationHeaders()),
             },
         };
 

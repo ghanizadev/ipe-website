@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import Link from "next/link";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";

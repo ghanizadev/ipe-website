@@ -6,6 +6,8 @@ import React from "react";
 import RichText from "@/components/rich-text";
 import moment from "moment";
 import SecondaryButton from "@/components/button/secondary-button";
+import Form from "@/components/form";
+import cancelEnrollment from "@/app/(site)/conta/eventos/actions/cancel-enrollment.action";
 
 
 function getStatus(enrollment?: EnrollmentDTO) {
@@ -60,8 +62,12 @@ export default async function Account() {
                         <p className={"text-lg leading-none text-[--primary] my-4"}>Instruções</p>
                         <RichText html={enrollment.event?.instructionsHtml}/>
                         <div className={"my-2 absolute right-2 top-2"}></div>
-                        <SecondaryButton className={"border-red-700 text-red-700"}>Cancelar
-                            inscrição</SecondaryButton>
+                        <Form action={cancelEnrollment} additionalData={{enrollmentId: enrollment.id}} refresh>
+                            <SecondaryButton className={"border-red-700 text-red-700"}>
+                                Cancelar inscrição
+                            </SecondaryButton>
+                        </Form>
+
                     </div>
                 )
             })}

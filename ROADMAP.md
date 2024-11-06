@@ -4,13 +4,13 @@
 
 - [x] Adicionar Contato
 - [ ] Adicionar Loja
-- [ ] Cancelar inscricao
-- [ ] Validar dados do usuario ao clicar em inscrever-se
-- [ ] Adicionar callbacks quando clicar em inscrever-se e precisar fazer login/criar conta
+- [x] Cancelar inscricao
+- [x] Validar dados do usuario ao clicar em inscrever-se
+- [x] Adicionar callbacks quando clicar em inscrever-se e precisar fazer login/criar conta
 - [ ] Adicionar servico de email
 - [ ] Esqueci minha senha
 - [ ] Excluir minha conta
-- [ ] Atualizar meus dados
+- [x] Atualizar meus dados
 - [ ] Adicionar depoimentos
 - [ ] Pagina de configuracao de cookies
 - [ ] Formulario/modal de consentimento de coleta de dados
@@ -23,6 +23,9 @@
 - [ ] Opengraph para os eventos
 - [ ] Corrigir portugues
 - [ ] Adicionar Google Recaptcha
+- [ ] Adicionar alerta antes de remover inscricao
+- [ ] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
+- [ ] Adicionar logica de redirect quando criar uma conta
 
 ## Post-release
 
