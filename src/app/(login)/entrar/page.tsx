@@ -4,6 +4,7 @@ import React from "react";
 import LoginForm from "./login-form";
 import SecondaryButton from "@/components/button/secondary-button";
 import Image from "next/image";
+import {H1, P} from "@/components/typography";
 
 
 type PageProps = {
@@ -18,10 +19,8 @@ export default async function SignInPage({searchParams}: PageProps) {
             <div
                 className={"max-w-2xl h-auto grid grid-cols-1 2xl:grid-cols-2 2xl:max-w-screen-xl grid-rows-1 md:border-2 md:border-[--primary] rounded-2xl overflow-hidden"}>
                 <section className={"flex flex-col m-auto p-16"}>
-                    <h3 className={"mb-4 text-2xl font-bold leading-none tracking-tight text-[--primary] md:text-2xl lg:text-4xl"}>Bem-vindo
-                        de volta!</h3>
-                    <span
-                        className={"mb-6 text-md lg:text-xl text-gray-700"}>Entre com suas credenciais para acessar sua conta</span>
+                    <H1>Bem-vindo de volta!</H1>
+                    <P>Entre com suas credenciais para acessar sua conta</P>
                     <LoginForm redirect={redirect}/>
                     <div className={"w-full text-center my-8 flex flex-row justify-center items-center"}>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>

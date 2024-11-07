@@ -45,7 +45,8 @@ export default function LoginForm(props: { redirect?: string }) {
         <form onSubmit={handleSubmit} className={"flex flex-col"}>
             <TextInput label={'E-mail'} name={'email'} error={!!error}/>
             <TextInput label={'Senha'} name={'password'} type={"password"} error={error}/>
-            <Link href={'/'} className={"text-sm text-[--primary] mb-8 underline self-end"}>Esqueci minha senha</Link>
+            <Link href={'/esqueci-minha-senha'} className={"text-sm text-[--primary] mb-8 underline self-end"}>Esqueci
+                minha senha</Link>
             <PrimaryButton>Entrar</PrimaryButton>
         </form>
     )

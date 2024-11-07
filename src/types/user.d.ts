@@ -16,3 +16,12 @@ declare type CreateUserDTO = Partial<UserDTO> & {
     password: string;
     'confirm-password': string;
 }
+
+declare type UpdatePasswordArgs = {
+    password: string;
+    token: string;
+}
+
+declare type VerifyEmailArgs = {
+    token: string;
+}
