@@ -29,7 +29,7 @@ function SelectButton({label, onClick, selected}: SelectButtonProps) {
     )
 }
 
-export default function LoginForm() {
+export default function LoginForm(props: { redirect?: string }) {
     const [step, setStep] = useState('first');
     const [role, setRole] = useState('');
     const [errors, setErrors] = useState<Record<string, string | boolean>>({});
@@ -76,7 +76,23 @@ export default function LoginForm() {
         if (!isOk) return;
 
         const response = await createAccount({...data, role});
-        if (response) router.push('/entrar?create=success');
+        if (response) {
+            if (props.redirect) {
+                try {
+                    const url = new URL(props.redirect);
+                    const ownUrl = new URL(process.env.NEXT_PUBLIC_URL!);
+
+                    if (url.hostname === ownUrl.hostname) {
+                        url.searchParams.set('create', 'success');
+                        router.push(url.pathname + url.search);
+                        return;
+                    }
+                } catch {
+                }
+            }
+
+            router.push('/entrar?create=success');
+        }
     }
 
     return (

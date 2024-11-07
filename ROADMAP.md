@@ -7,7 +7,6 @@
 - [x] Cancelar inscricao
 - [x] Validar dados do usuario ao clicar em inscrever-se
 - [x] Adicionar callbacks quando clicar em inscrever-se e precisar fazer login/criar conta
-- [ ] Adicionar servico de email
 - [ ] Esqueci minha senha
 - [ ] Excluir minha conta
 - [x] Atualizar meus dados
@@ -23,7 +22,7 @@
 - [ ] Adicionar Google Recaptcha
 - [x] Adicionar alerta antes de remover inscricao
 - [x] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
-- [ ] Adicionar logica de redirect quando criar uma conta
+- [x] Adicionar logica de redirect quando criar uma conta
 
 ## Copies
 
