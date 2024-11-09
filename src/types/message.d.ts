@@ -4,3 +4,7 @@ declare type MessageDTO = PayloadDocument & {
     phone?: string;
     message: string;
 }
+
+declare type CreateMessageCTO = MessageDTO & {
+    grecaptchaToken: string;
+}

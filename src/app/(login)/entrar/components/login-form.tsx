@@ -6,20 +6,26 @@ import {useRouter} from "next/navigation";
 
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
-import loginService from "@/services/login.service";
 import formEventParser from "@/helpers/form-event-parser.helper";
+import grecaptchaService from "@/services/grecapcha.service";
 
 
-export default function LoginForm(props: { redirect?: string }) {
+type LoginFormProps = {
+    redirect?: string;
+    action: (args: LoginUserDTO) => Promise<boolean>
+}
+
+export default function LoginForm(props: LoginFormProps) {
     const [error, setError] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const grecaptchaToken = await grecaptchaService();
         const formData = formEventParser<LoginUserDTO>(e);
 
-        const response = await loginService(formData);
+        const response = await props.action({...formData, grecaptchaToken});
         if (response) {
             if (props.redirect) {
                 try {

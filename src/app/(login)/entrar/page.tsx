@@ -1,11 +1,11 @@
 import React from "react";
-
-
-import LoginForm from "./login-form";
-import SecondaryButton from "@/components/button/secondary-button";
 import Image from "next/image";
-import {H1, P} from "@/components/typography";
 import {Metadata} from "next";
+
+import LoginForm from "./components/login-form";
+import SecondaryButton from "@/components/button/secondary-button";
+import {H1, P} from "@/components/typography";
+import loginServiceAction from "@/services/loginServiceAction";
 
 
 type PageProps = {
@@ -22,7 +22,7 @@ export default async function SignInPage({searchParams}: PageProps) {
                 <section className={"flex flex-col m-auto p-16"}>
                     <H1>Bem-vindo de volta!</H1>
                     <P>Entre com suas credenciais para acessar sua conta</P>
-                    <LoginForm redirect={redirect}/>
+                    <LoginForm redirect={redirect} action={loginServiceAction}/>
                     <div className={"w-full text-center my-8 flex flex-row justify-center items-center"}>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                         <span className={"mx-1 text-gray-500"}>ou</span>

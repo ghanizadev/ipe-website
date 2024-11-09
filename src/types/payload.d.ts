@@ -31,6 +31,7 @@ declare type PayloadError = {
 declare type LoginUserDTO = {
     email: string;
     password: string;
+    grecaptchaToken: string;
 }
 
 declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>

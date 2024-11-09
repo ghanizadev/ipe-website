@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoginForm from "./login-form";
+import LoginForm from "./components/login-form";
 import Image from "next/image";
 import Link from "next/link";
 import {Metadata} from "next";

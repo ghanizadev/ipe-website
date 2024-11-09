@@ -1,6 +1,6 @@
 type TextInputProps = {
-    label: string;
     name: string;
+    label?: string;
     type?: string;
     error?: string | boolean;
     success?: string | boolean;
@@ -10,6 +10,7 @@ type TextInputProps = {
     defaultValue?: string;
     pattern?: string;
     title?: string;
+    hidden?: boolean;
 }
 
 export default function TextInput(props: TextInputProps) {
@@ -17,12 +18,18 @@ export default function TextInput(props: TextInputProps) {
     const errorClassNames = "bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500";
     const commonClassNames = ["border text-sm rounded-lg block w-full p-2.5"];
 
+    const wrapperClassNames = [props.className ?? ''];
+
     if (props.error) {
         commonClassNames.push(errorClassNames)
     } else if (props.success) {
         commonClassNames.push(successClassNames)
     } else {
         commonClassNames.push("bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500")
+    }
+
+    if (props.hidden) {
+        wrapperClassNames.push('hidden');
     }
 
     const getDefaultValue = (defaultValue?: string): string | undefined => {
@@ -37,7 +44,7 @@ export default function TextInput(props: TextInputProps) {
     }
 
     return (
-        <div className={props.className}>
+        <div className={wrapperClassNames.join(' ').trim()}>
             <label
                 htmlFor={props.name}
                 className={`block mb-2 text-sm font-medium${props.success ? ' text-green-700' : ''}${props.error ? ' text-red-700' : ''}`}>
@@ -51,6 +58,7 @@ export default function TextInput(props: TextInputProps) {
                 disabled={props.readonly}
                 pattern={props.pattern}
                 title={props.title}
+                hidden={props.hidden}
                 defaultValue={getDefaultValue(props.defaultValue)}
                 className={commonClassNames.join(" ").trim()}
             />

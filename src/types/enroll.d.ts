@@ -6,3 +6,7 @@ declare type EnrollmentDTO = PayloadDocument & {
         paidAt?: string;
     }
 }
+
+declare type CreateEnrollmentDTO = EnrollmentDTO & {
+    grecaptchaToken: string;
+}

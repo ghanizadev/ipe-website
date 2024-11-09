@@ -1,13 +1,15 @@
 "use client"
 
 import React, {useState} from "react";
+import {useRouter} from "next/navigation";
 
+import type validateGRecaptcha from "@/actions/validate-grecaptcha.action";
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import SecondaryButton from "@/components/button/secondary-button";
 import formEventParser from "@/helpers/form-event-parser.helper";
 import createAccount from "@/services/create-account.service";
-import {useRouter} from "next/navigation";
+import grecaptchaService from "@/services/grecapcha.service";
 
 type SelectButtonProps = {
     label: string;
@@ -29,7 +31,12 @@ function SelectButton({label, onClick, selected}: SelectButtonProps) {
     )
 }
 
-export default function LoginForm(props: { redirect?: string }) {
+type LoginFormProps = {
+    redirect?: string;
+    grecaptchaValidationAction: typeof validateGRecaptcha;
+}
+
+export default function LoginForm(props: LoginFormProps) {
     const [step, setStep] = useState('first');
     const [role, setRole] = useState('');
     const [errors, setErrors] = useState<Record<string, string | boolean>>({});
@@ -49,6 +56,8 @@ export default function LoginForm(props: { redirect?: string }) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const grecaptchaToken = await grecaptchaService();
 
         const data = formEventParser<CreateUserDTO>(e);
         let isOk = true;
@@ -75,7 +84,7 @@ export default function LoginForm(props: { redirect?: string }) {
 
         if (!isOk) return;
 
-        const response = await createAccount({...data, role});
+        const response = await createAccount({...data, role, grecaptchaToken});
         if (response) {
             if (props.redirect) {
                 try {

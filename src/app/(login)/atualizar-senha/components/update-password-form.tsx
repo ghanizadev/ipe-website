@@ -4,11 +4,13 @@ import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import React, {useState} from "react";
 import formEventParser from "@/helpers/form-event-parser.helper";
+import grecaptchaService from "@/services/grecapcha.service";
 
 type UpdatePasswordParams = { password: string; 'confirm-password': string; };
 
 type UpdatePasswordFromProps = {
-    action: (password: string) => Promise<ActionResponse | void>
+    action: (password: string, token: string, grecaptchaString: string) => Promise<ActionResponse | void>;
+    token: string;
 }
 
 export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
@@ -23,7 +25,8 @@ export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
             return;
         }
 
-        const response = await props.action(password);
+        const grecaptchaToken = await grecaptchaService();
+        const response = await props.action(password, props.token, grecaptchaToken);
         if (response?.success) setErrors({});
     }
 

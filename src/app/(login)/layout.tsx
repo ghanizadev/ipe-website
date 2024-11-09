@@ -29,6 +29,9 @@ export default async function SignUpLayout({children}: Readonly<{ children: Reac
         </main>
         <Script strategy={'beforeInteractive'}
                 src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></Script>
+        <Script
+            strategy={'beforeInteractive'}
+            src={"https://www.google.com/recaptcha/api.js?render=" + process.env.NEXT_PUBLIC_GRECAPTCHA_SITE_KEY}></Script>
         </body>
         </html>
     )
