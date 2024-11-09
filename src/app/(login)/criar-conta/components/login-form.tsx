@@ -3,7 +3,6 @@
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 
-import type validateGRecaptcha from "@/actions/validate-grecaptcha.action";
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import SecondaryButton from "@/components/button/secondary-button";
@@ -33,7 +32,6 @@ function SelectButton({label, onClick, selected}: SelectButtonProps) {
 
 type LoginFormProps = {
     redirect?: string;
-    grecaptchaValidationAction: typeof validateGRecaptcha;
 }
 
 export default function LoginForm(props: LoginFormProps) {
