@@ -12,7 +12,7 @@ import grecaptchaService from "@/services/grecapcha.service";
 
 type LoginFormProps = {
     redirect?: string;
-    action: (args: LoginUserDTO) => Promise<boolean>
+    action: (args: LoginUserDTO) => Promise<ActionResponse>
 }
 
 export default function LoginForm(props: LoginFormProps) {
@@ -26,7 +26,7 @@ export default function LoginForm(props: LoginFormProps) {
         const formData = formEventParser<LoginUserDTO>(e);
 
         const response = await props.action({...formData, grecaptchaToken});
-        if (response) {
+        if (response?.success) {
             if (props.redirect) {
                 try {
                     const url = new URL(props.redirect);
