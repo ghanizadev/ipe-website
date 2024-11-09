@@ -3,6 +3,7 @@ import React from "react";
 import LoginForm from "./login-form";
 import Image from "next/image";
 import Link from "next/link";
+import {Metadata} from "next";
 
 
 export default async function SignUp() {
@@ -31,4 +32,8 @@ export default async function SignUp() {
             </div>
         </div>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Crie sua conta / IPE - Inclusão Pelo Esporte"
 }

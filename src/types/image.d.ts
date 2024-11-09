@@ -32,3 +32,11 @@ declare type LogoDTO = ImageUploadDTO & {
         lg: ImageSize
     }
 }
+
+declare type AvatarDTO = ImageUploadDTO & {
+    sizes: {
+        sm: ImageSize;
+        md: ImageSize;
+        lg: ImageSize
+    }
+}

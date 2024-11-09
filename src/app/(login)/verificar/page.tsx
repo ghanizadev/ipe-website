@@ -1,7 +1,6 @@
-"use server"
-
 import {redirect} from "next/navigation";
 import UserService from "@/services/user.service";
+import {Metadata} from "next";
 
 export default async function VerifyAccountPage({searchParams}: { searchParams: Promise<Record<string, string>>; }) {
     const {token} = await searchParams;
@@ -40,4 +39,8 @@ export default async function VerifyAccountPage({searchParams}: { searchParams: 
             {response.errors?.map(({field, message}) => <h2 key={field}>{message}</h2>)}
         </>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Aguarde..."
 }

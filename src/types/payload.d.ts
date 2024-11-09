@@ -7,6 +7,7 @@ declare type PayloadDocument = {
 declare type PaginationDTO = {
     limit?: number;
     order?: string;
+    page?: number;
     where?: Record<string, string>;
 }
 

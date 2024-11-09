@@ -3,6 +3,7 @@ import UserService from "@/services/user.service";
 import {redirect} from "next/navigation";
 import {H1, P} from "@/components/typography";
 import UpdatePasswordForm from "./components/update-password-form";
+import {Metadata} from "next";
 
 export default async function UpdatePasswordPage({searchParams}: { searchParams: Promise<Record<string, string>>; }) {
     const {token} = await searchParams;
@@ -27,4 +28,8 @@ export default async function UpdatePasswordPage({searchParams}: { searchParams:
             </section>
         </div>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Atualize sua senha / IPE - Inclusão Pelo Esporte"
 }

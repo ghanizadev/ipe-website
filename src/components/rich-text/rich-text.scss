@@ -49,4 +49,12 @@
   p {
     @apply my-2;
   }
+
+  video {
+    @apply w-full object-contain my-6;
+  }
+
+  h4 {
+    @apply text-gray-600 text-base text-[--primary] mt-4 mb-2 lg:text-lg;
+  }
 }

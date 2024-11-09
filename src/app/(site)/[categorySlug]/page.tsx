@@ -3,6 +3,7 @@ import {notFound} from "next/navigation";
 import getPageBySlug from "@/services/get-page-by-slug.service";
 import RichText from "@/components/rich-text";
 import {H1} from "@/components/typography";
+import amendHTML from "@/helpers/amend-html";
 
 
 type PageProps = {
@@ -20,7 +21,7 @@ export default async function CustomPage({params}: PageProps) {
     return (
         <div className={"pt-4 pb-16"}>
             <H1>{customPage?.title}</H1>
-            <RichText html={customPage.html}/>
+            <RichText html={amendHTML(customPage.html)}/>
         </div>
     )
 }

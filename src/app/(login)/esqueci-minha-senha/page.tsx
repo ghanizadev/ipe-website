@@ -5,6 +5,7 @@ import React from "react";
 import UserService from "@/services/user.service";
 import {H1, P} from "@/components/typography";
 import {redirect} from "next/navigation";
+import {Metadata} from "next";
 
 export default async function ForgotMyPasswordPage({searchParams}: { searchParams: Promise<Record<string, string>> }) {
     const {sent} = await searchParams;
@@ -44,4 +45,8 @@ export default async function ForgotMyPasswordPage({searchParams}: { searchParam
             </section>
         </div>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Esqueci minha senha / IPE - Inclusão Pelo Esporte"
 }

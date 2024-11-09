@@ -5,6 +5,7 @@ import LoginForm from "./login-form";
 import SecondaryButton from "@/components/button/secondary-button";
 import Image from "next/image";
 import {H1, P} from "@/components/typography";
+import {Metadata} from "next";
 
 
 type PageProps = {
@@ -36,4 +37,8 @@ export default async function SignInPage({searchParams}: PageProps) {
             </div>
         </div>
     )
+}
+
+export const metadata: Metadata = {
+    title: "Entre / IPE - Inclusão Pelo Esporte"
 }
