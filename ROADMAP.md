@@ -13,11 +13,11 @@
 - [x] Adicionar depoimentos
 - [ ] Pagina de configuracao de cookies
 - [ ] Formulario/modal de consentimento de coleta de dados
-- [ ] Adicionar as redes sociais
-- [ ] Termos de uso (?)
+- [x] Adicionar as redes sociais
+- [x] Termos de uso (?)
 - [x] Titulos das paginas
 - [x] Favicon
-- [ ] Adicionar Google Recaptcha
+- [x] Adicionar Google Recaptcha
 - [x] Adicionar alerta antes de remover inscricao
 - [x] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
 - [x] Adicionar logica de redirect quando criar uma conta

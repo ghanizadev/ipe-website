@@ -38,10 +38,6 @@
     @apply list-disc ml-8;
   }
 
-  h3 {
-    @apply text-lg text-[--primary] mt-4 mb-2 lg:text-xl;
-  }
-
   a {
     @apply text-[--primary-lighter] underline cursor-pointer;
   }
@@ -52,6 +48,10 @@
 
   video {
     @apply w-full object-contain my-6;
+  }
+
+  h3 {
+    @apply text-lg text-[--primary] mt-4 mb-2 lg:text-xl;
   }
 
   h4 {
