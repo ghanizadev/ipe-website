@@ -20,6 +20,7 @@ export default async function SignUpLayout({children}: Readonly<{ children: Reac
         <html lang="pt">
         <Head>
             <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet"/>
+            <meta name="robots" content="noindex,nofollow"/>
         </Head>
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
