@@ -22,47 +22,48 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    rewrites: async () => ({
-        afterFiles: [
-            {
-                source: "/admin/:path*",
-                destination: process.env.CMS_API_URL + "/admin/:path*",
-            },
-            {
-                source: "/avatars/:path*",
-                destination: process.env.CMS_API_URL + "/avatars/:path*",
-            },
-            {
-                source: "/media/:path*",
-                destination: process.env.CMS_API_URL + "/media/:path*",
-            },
-            {
-                source: "/logos/:path*",
-                destination: process.env.CMS_API_URL + "/logos/:path*",
-            },
-            {
-                source: "/photos/:path*",
-                destination: process.env.CMS_API_URL + "/photos/:path*",
-            },
-            {
-                source: "/graphql/:path*",
-                destination: process.env.CMS_API_URL + "/graphql/:path*",
-            },
-            {
-                source: "/api/:path*",
-                destination: process.env.CMS_API_URL + "/api/:path*",
-            }
-        ],
-        beforeFiles: [],
-        fallback: []
-    }),
-    redirects: async () => {
+    rewrites: async () => {
         const redirects = await getRedirectsService();
-        return (redirects?.docs ?? []).map(redirect => ({
+        const others = (redirects?.docs ?? []).map(redirect => ({
             source: redirect.source,
             destination: redirect.target,
-            statusCode: +redirect.code,
         }));
+
+        return {
+            afterFiles: [
+                ...others,
+                {
+                    source: "/admin/:path*",
+                    destination: process.env.CMS_API_URL + "/admin/:path*",
+                },
+                {
+                    source: "/avatars/:path*",
+                    destination: process.env.CMS_API_URL + "/avatars/:path*",
+                },
+                {
+                    source: "/media/:path*",
+                    destination: process.env.CMS_API_URL + "/media/:path*",
+                },
+                {
+                    source: "/logos/:path*",
+                    destination: process.env.CMS_API_URL + "/logos/:path*",
+                },
+                {
+                    source: "/photos/:path*",
+                    destination: process.env.CMS_API_URL + "/photos/:path*",
+                },
+                {
+                    source: "/graphql/:path*",
+                    destination: process.env.CMS_API_URL + "/graphql/:path*",
+                },
+                {
+                    source: "/api/:path*",
+                    destination: process.env.CMS_API_URL + "/api/:path*",
+                }
+            ],
+            beforeFiles: [],
+            fallback: []
+        }
     },
     env: {
         CMS_API_URL: process.env.CMS_API_URL,
