@@ -26,12 +26,11 @@ export default function Form<T = Record<string, string>, U = Record<string, stri
     } = props;
 
     const router = useRouter();
-    const grecaptchaTokenPromise = grecaptchaService();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const grecaptchaToken = await grecaptchaTokenPromise;
+        const grecaptchaToken = await grecaptchaService();
         const formData = formEventParser<T>(e);
         _.merge(formData, additionalData, {grecaptchaToken})
         await action(formData as T & U);

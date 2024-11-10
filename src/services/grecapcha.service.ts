@@ -1,3 +1,5 @@
+"use client"
+
 export default async function grecaptchaService(): Promise<string> {
     return new Promise<string>((res) => {
         grecaptcha.ready(async () => {
