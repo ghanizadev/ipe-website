@@ -10,8 +10,8 @@ export default function formEventParser<T = FormData>(e: React.FormEvent): T {
         const name = input.getAttribute('name');
         if (!name) continue;
 
-        const value = input.value;
-        if (value) {
+        const value = input.value || input.checked;
+        if (value !== undefined) {
             _.set(formData, name, value)
         }
     }

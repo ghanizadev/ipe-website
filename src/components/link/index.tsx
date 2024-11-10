@@ -1,7 +1,7 @@
 import React from "react"
 import NextLink from "next/link"
 
-type LinkProps = React.LinkHTMLAttributes<HTMLLinkElement> & { children?: React.ReactNode }
+type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & { children?: React.ReactNode }
 
 export default function Link({children, ...props}: LinkProps) {
     const classes = ["text-[--primary-lighter] underline"];
@@ -10,5 +10,5 @@ export default function Link({children, ...props}: LinkProps) {
         classes.push(props.className);
     }
 
-    return <NextLink href={props.href ?? '#'} className={classes.join(" ").trim()}>{children}</NextLink>
+    return <NextLink {...props} href={props.href ?? '#'} className={classes.join(" ").trim()}>{children}</NextLink>
 }

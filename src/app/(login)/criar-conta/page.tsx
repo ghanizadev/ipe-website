@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoginForm from "./_components/login-form";
+import CreateAccountForm from "./_components/create-account-form";
 import Image from "next/image";
 import Link from "next/link";
 import {Metadata} from "next";
@@ -16,7 +16,7 @@ export default async function SignUp() {
                         sua conta</h3>
                     <span
                         className={"mb-6 text-md lg:text-xl text-gray-700"}>Preencha com seus dados para criar sua conta</span>
-                    <LoginForm/>
+                    <CreateAccountForm/>
                     <div className={"w-full text-center my-8 flex flex-row justify-center items-center"}>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                         <span className={"mx-1 text-gray-500"}>ou</span>

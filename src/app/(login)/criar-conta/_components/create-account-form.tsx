@@ -32,7 +32,7 @@ function SelectButton({label, onClick, selected}: SelectButtonProps) {
     )
 }
 
-export default function LoginForm() {
+export default function CreateAccountForm() {
     const [step, setStep] = useState('first');
     const [role, setRole] = useState('');
     const [errors, setErrors] = useState<Record<string, string | boolean>>({});
@@ -78,6 +78,15 @@ export default function LoginForm() {
             isOk = false;
         }
 
+        console.log(data)
+        if (!data['accept-terms']) {
+            setErrors(errors => ({
+                ...errors,
+                'accept-terms': 'Você deve aceitar os termos para prosseguir'
+            }))
+            isOk = false;
+        }
+
         if (!isOk) return;
 
         const response = await createAccount({...data, role, grecaptchaToken});
@@ -104,17 +113,49 @@ export default function LoginForm() {
                 <>
                     <p className={"mb-4"}>Você selecionou: <span
                         className={"text-[--primary-darker]"}>{role === "guide" ? 'Guia' : 'Paratleta'}</span></p>
-                    <TextInput error={errors['name']} label={'Nome completo'} name={'name'}/>
-                    <TextInput error={errors['email']} label={'E-mail'} name={'email'}/>
-                    <TextInput error={errors['birthday']} type={'date'} label={'Data de nascimento'} name={'birthday'}
-                               className={"mb-8"}/>
-                    <TextInput error={errors['password']} label={'Senha'} name={'password'} type={"password"}/>
-                    <TextInput error={errors['confirm-password']} label={'Confirmar senha'} name={'confirm-password'}
-                               type={"password"}
-                               className={"mb-8"}/>
-                    <CheckboxInput name={"accept-terms"}>
-                        Eu concordo com os <Link href={"/termos-de-uso"}>Termos e Condições</Link> e as <Link
-                        href={"/politicas-de-privacidade"}>Políticas de Privacidade</Link>.
+                    <TextInput
+                        error={errors['name']}
+                        label={'Nome completo'}
+                        name={'name'}
+                        required
+                    />
+                    <TextInput
+                        error={errors['email']}
+                        label={'E-mail'}
+                        name={'email'}
+                        required
+                    />
+                    <TextInput
+                        error={errors['birthday']}
+                        type={'date'}
+                        label={'Data de nascimento'}
+                        name={'birthday'}
+                        className={"mb-8"}
+                    />
+                    <TextInput
+                        error={errors['password']}
+                        label={'Senha'}
+                        name={'password'}
+                        type={"password"}
+                        required
+                    />
+                    <TextInput
+                        error={errors['confirm-password']}
+                        label={'Confirmar senha'}
+                        name={'confirm-password'}
+                        type={"password"}
+                        className={"mb-8"}
+                        required
+                    />
+                    <CheckboxInput
+                        name={"accept-terms"}
+                        error={errors['accept-terms']}
+                        title={"Você deve aceitar os termos de serviço para continuar."}
+                        required
+                    >
+                        Eu concordo com os <Link href={"/termos-de-uso"} target={"_blank"}>Termos e Condições</Link> e
+                        as <Link
+                        href={"/politicas-de-privacidade"} target={"_blank"}>Políticas de Privacidade</Link>.
                     </CheckboxInput>
                     <PrimaryButton type={"submit"} className={"mb-2"}>Criar conta</PrimaryButton>
                     <SecondaryButton type={"button"} onClick={handleGoBack}>Voltar</SecondaryButton>

@@ -11,6 +11,7 @@ import PrimaryButton from "@/components/button/primary-button";
 import getPages from "@/services/get-pages.service";
 import getMeServerService from "@/services/get-me-server.service";
 import LogoutButton from "./components/logout-button";
+import SecondaryButton from "@/components/button/secondary-button";
 
 
 export default async function Navbar() {
@@ -97,9 +98,11 @@ export default async function Navbar() {
                             <LinkButton href="/contato">Contato</LinkButton>
                         </li>
                         {!me?.user &&
-                            <li className={"m-auto"}>
-                                <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
-                            </li>
+                            <>
+                                <li className={"m-auto"}>
+                                    <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
+                                </li>
+                            </>
                         }
                         <hr className="h-px my-2 bg-gray-200 border-0 md:hidden"/>
                         {me?.user &&

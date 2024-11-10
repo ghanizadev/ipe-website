@@ -15,6 +15,7 @@ declare type UserDTO = PayloadDocument & {
 declare type CreateUserDTO = Partial<UserDTO> & {
     password: string;
     'confirm-password': string;
+    'accept-terms': boolean;
 }
 
 declare type UpdatePasswordArgs = {
