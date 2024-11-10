@@ -11,7 +11,6 @@ import PrimaryButton from "@/components/button/primary-button";
 import getPages from "@/services/get-pages.service";
 import getMeServerService from "@/services/get-me-server.service";
 import LogoutButton from "./components/logout-button";
-import SecondaryButton from "@/components/button/secondary-button";
 
 
 export default async function Navbar() {
