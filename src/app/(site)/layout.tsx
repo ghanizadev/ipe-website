@@ -10,6 +10,7 @@ import ConfirmationAlert from "@/components/alert/confirmation";
 
 
 import "../globals.scss";
+import {Suspense} from "react";
 
 const geistSans = localFont({
     src: "../fonts/GeistVF.woff",
@@ -54,7 +55,9 @@ export default function RootLayout({
             {children}
         </main>
         <Footer/>
-        <ToastWrapper/>
+        <Suspense>
+            <ToastWrapper/>
+        </Suspense>
         <ConfirmationAlert/>
         <Script strategy={'beforeInteractive'}
                 src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></Script>

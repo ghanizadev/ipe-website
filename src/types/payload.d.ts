@@ -35,3 +35,9 @@ declare type LoginUserDTO = {
 }
 
 declare type PartialEntityDTO<T> = Partial<Omit<T | Record<keyof T, string>, 'createdAt' | 'updatedAt' | 'id'>>
+
+declare type RedirectsDTO = {
+    source: string;
+    target: string;
+    code: string;
+}

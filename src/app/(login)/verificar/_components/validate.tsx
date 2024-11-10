@@ -1,7 +1,8 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import grecaptchaService from "@/services/grecapcha.service";
+import {useRouter} from "next/navigation";
 
 
 type ValidateProps = {
@@ -10,13 +11,19 @@ type ValidateProps = {
 }
 
 export default function Validate(props: ValidateProps) {
-    const [response, setResponse] = useState<ActionResponse>();
+    const router = useRouter();
 
     useEffect(() => {
         const effect = async () => {
             const grecaptchaToken = await grecaptchaService();
             const response = await props.action(props.token, grecaptchaToken);
-            setResponse(response);
+
+            if (response?.success) {
+                router.push('/?status=confirmation-successful');
+                return;
+            }
+
+            router.push('/?status=confirmation-error');
         }
 
         effect().catch();
@@ -24,9 +31,7 @@ export default function Validate(props: ValidateProps) {
 
     return (
         <>
-            {!response && <h1>Aguarde...</h1>}
-            {!response?.success && <h1>Erro</h1>}
-            {response?.errors?.map(({field, message}) => <h2 key={field}>{message}</h2>)}
+            <h1>Aguarde...</h1>
         </>
     )
 }

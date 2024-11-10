@@ -1,11 +1,12 @@
 import {Metadata} from "next";
+
 import {TextInput} from "@/components/input";
 import PrimaryButton from "@/components/button/primary-button";
 import {H1, H2, H3} from "@/components/typography"
 import Link from "@/components/link";
 import TextArea from "@/components/textarea";
 import Form from "./components/form";
-import createMessageAction from "@/app/(site)/contato/actions/create-message.action";
+import createMessageAction from "./actions/create-message.action";
 
 export default function ContactPage() {
     return (

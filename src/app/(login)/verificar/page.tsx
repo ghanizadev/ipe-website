@@ -1,8 +1,8 @@
 import {redirect} from "next/navigation";
 import {Metadata} from "next";
 
-import Validate from "./components/validate";
-import verifyAccountAction from "./actions/verify-account.action";
+import Validate from "@/app/(login)/verificar/_components/validate";
+import verifyAccountAction from "@/app/(login)/verificar/_actions/verify-account.action";
 
 
 export default async function VerifyAccountPage({searchParams}: { searchParams: Promise<Record<string, string>>; }) {

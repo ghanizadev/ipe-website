@@ -9,6 +9,8 @@ import SecondaryButton from "@/components/button/secondary-button";
 import formEventParser from "@/helpers/form-event-parser.helper";
 import createAccount from "@/services/create-account.service";
 import grecaptchaService from "@/services/grecapcha.service";
+import Link from "@/components/link";
+import CheckboxInput from "@/components/input/checkbox-input";
 
 type SelectButtonProps = {
     label: string;
@@ -30,11 +32,7 @@ function SelectButton({label, onClick, selected}: SelectButtonProps) {
     )
 }
 
-type LoginFormProps = {
-    redirect?: string;
-}
-
-export default function LoginForm(props: LoginFormProps) {
+export default function LoginForm() {
     const [step, setStep] = useState('first');
     const [role, setRole] = useState('');
     const [errors, setErrors] = useState<Record<string, string | boolean>>({});
@@ -84,21 +82,7 @@ export default function LoginForm(props: LoginFormProps) {
 
         const response = await createAccount({...data, role, grecaptchaToken});
         if (response) {
-            if (props.redirect) {
-                try {
-                    const url = new URL(props.redirect);
-                    const ownUrl = new URL(process.env.NEXT_PUBLIC_URL!);
-
-                    if (url.hostname === ownUrl.hostname) {
-                        url.searchParams.set('create', 'success');
-                        router.push(url.pathname + url.search);
-                        return;
-                    }
-                } catch {
-                }
-            }
-
-            router.push('/entrar?create=success');
+            router.push('/criar-conta/sucesso');
         }
     }
 
@@ -128,6 +112,10 @@ export default function LoginForm(props: LoginFormProps) {
                     <TextInput error={errors['confirm-password']} label={'Confirmar senha'} name={'confirm-password'}
                                type={"password"}
                                className={"mb-8"}/>
+                    <CheckboxInput name={"accept-terms"}>
+                        Eu concordo com os <Link href={"/termos-de-uso"}>Termos e Condições</Link> e as <Link
+                        href={"/politicas-de-privacidade"}>Políticas de Privacidade</Link>.
+                    </CheckboxInput>
                     <PrimaryButton type={"submit"} className={"mb-2"}>Criar conta</PrimaryButton>
                     <SecondaryButton type={"button"} onClick={handleGoBack}>Voltar</SecondaryButton>
                 </>

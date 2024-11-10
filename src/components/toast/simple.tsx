@@ -1,7 +1,12 @@
 import {ToastProps} from "./types";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 export default function SimpleToast({type, message, title}: ToastProps) {
-    const classes = ['p-4 mb-4 w-max-xs text-sm rounded-lg border'];
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathName = usePathname();
+
+    const classes = ['p-4 mb-4 w-max-xs text-sm rounded-lg border shadow md:w-max-auto'];
     let messageTitle = title;
 
     switch (type) {
@@ -23,20 +28,31 @@ export default function SimpleToast({type, message, title}: ToastProps) {
             break;
     }
 
+    const handleClose = () => {
+        const event = new Event('toast.hide');
+        window.dispatchEvent(event);
+        if (searchParams.has('status')) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('status');
+            router.replace(`${pathName}?${newParams.toString()}`);
+        }
+    }
+
     return (
         <div className={classes.join(' ').trim()}
              role="alert">
-            <span className="font-bold">{messageTitle},</span> {message}
             <button type="button"
-                    className="ms-auto ml-1.5 items-center justify-center flex-shrink-0 text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8"
-                    data-dismiss-target="#toast-interactive" aria-label="Close">
+                    onClick={handleClose}
+                    className={"ms-auto ml-1.5 items-center justify-center flex-shrink-0 text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 float-right"}
+                    data-dismiss-target={"#toast-interactive"} aria-label={"Close"}>
                 <span className="sr-only">Close</span>
                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                           d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
             </button>
+            <span className={"font-bold"}>{messageTitle}</span> {message}
         </div>
     )
 }

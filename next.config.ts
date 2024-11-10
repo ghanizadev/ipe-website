@@ -1,5 +1,6 @@
 import type {NextConfig} from "next";
 import dotenv from "dotenv";
+import getRedirectsService from "@/services/get-redirects.service";
 
 dotenv.config()
 
@@ -55,6 +56,14 @@ const nextConfig: NextConfig = {
         beforeFiles: [],
         fallback: []
     }),
+    redirects: async () => {
+        const redirects = await getRedirectsService();
+        return (redirects?.docs ?? []).map(redirect => ({
+            source: redirect.source,
+            destination: redirect.target,
+            statusCode: +redirect.code,
+        }));
+    },
     env: {
         CMS_API_URL: process.env.CMS_API_URL,
         CMS_API_KEY: process.env.CMS_API_KEY,

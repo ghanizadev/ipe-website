@@ -5,7 +5,6 @@ import {Metadata} from "next";
 export default async function GalleryPage() {
     const photos = await getPhotos(1);
 
-    // const ps = photos?.docs ? [...photos.docs, ...photos.docs, ...photos.docs, ...photos.docs, ...photos.docs] : [];
     const ps = photos?.docs ?? [];
 
     return (

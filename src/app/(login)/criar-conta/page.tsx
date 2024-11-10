@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoginForm from "./components/login-form";
+import LoginForm from "./_components/login-form";
 import Image from "next/image";
 import Link from "next/link";
 import {Metadata} from "next";
@@ -22,7 +22,7 @@ export default async function SignUp() {
                         <span className={"mx-1 text-gray-500"}>ou</span>
                         <div className={"h-0.5 bg-gray-200 w-full"}></div>
                     </div>
-                    <span>Ja possui uma conta? <Link href={'/entrar'}
+                    <span>Já possui uma conta? <Link href={'/entrar'}
                                                      className={"text-[--primary-lighter] text-nowrap underline"}>Entre com seu e-mail e senha</Link></span>
                 </section>
                 <section className={"hidden 2xl:block"}>
