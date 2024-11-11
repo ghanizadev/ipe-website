@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
 import Link from '@/components/link';
