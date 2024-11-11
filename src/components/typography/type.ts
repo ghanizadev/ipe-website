@@ -1,9 +1,9 @@
-import type {ReactNode} from "react";
+import type { ReactNode } from 'react';
 
 export type HeadingProps = {
-    children?: ReactNode;
-}
+  children?: ReactNode;
+};
 
 export type ParagraphProps = {
-    children?: ReactNode;
-}
+  children?: ReactNode;
+};

@@ -1,21 +1,26 @@
-"use client"
+'use client';
 
-import logoutService from "@/services/logout.service";
-import React from "react";
-import {useRouter} from "next/navigation";
+import { useRouter } from 'next/navigation';
+import React from 'react';
+
+import logoutService from '@/services/logout.service';
 
 export default function LogoutButton() {
-    const router = useRouter()
+  const router = useRouter();
 
-    const handleLogout = async () => {
-        await logoutService();
-        router.push('/');
-        router.refresh();
-    }
+  const handleLogout = async () => {
+    await logoutService();
+    router.push('/');
+    router.refresh();
+  };
 
-    return (
-        <button onClick={handleLogout} type={"button"}
-                className={"text-red-700 underline mb-2"}>Sair
-        </button>
-    )
+  return (
+    <button
+      onClick={handleLogout}
+      type={'button'}
+      className={'mb-2 text-red-700 underline'}
+    >
+      Sair
+    </button>
+  );
 }

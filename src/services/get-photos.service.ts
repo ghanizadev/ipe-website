@@ -1,16 +1,18 @@
-"use server"
+'use server';
 
-import {getPayloadHeaders} from "@/helpers/get-payload-headers.helper";
+import { getPayloadHeaders } from '@/helpers/get-payload-headers.helper';
 
-export default async function getPhotos(page: number): Promise<PaginatedResponse<PhotoDTO> | null> {
-    const url = `${process.env.CMS_API_URL}/api/photos?page=${page ?? 1}`;
-    const init: RequestInit = {
-        headers: {
-            ...getPayloadHeaders()
-        }
-    }
+export default async function getPhotos(
+  page: number
+): Promise<PaginatedResponse<PhotoDTO> | null> {
+  const url = `${process.env.CMS_API_URL}/api/photos?page=${page ?? 1}`;
+  const init: RequestInit = {
+    headers: {
+      ...getPayloadHeaders(),
+    },
+  };
 
-    const response = await fetch(url, init);
-    if (!response.ok) return null;
-    return (await response.json()) as PaginatedResponse<PhotoDTO>
+  const response = await fetch(url, init);
+  if (!response.ok) return null;
+  return (await response.json()) as PaginatedResponse<PhotoDTO>;
 }

@@ -1,118 +1,122 @@
+import { cookies } from 'next/headers';
+import qs from 'qs';
 import 'server-only';
 
-import qs from 'qs';
-import {cookies} from "next/headers";
-
-
 export class APIService<T = PayloadDocument> {
-    protected readonly baseUrl: string;
-    protected readonly apiKey: string;
+  protected readonly baseUrl: string;
+  protected readonly apiKey: string;
 
-    constructor(protected readonly basePath: string) {
-        if (!process.env.CMS_API_URL) throw new Error('Variable CMS_API_URL is not defined');
-        if (!process.env.CMS_API_KEY) throw new Error('Variable CMS_API_KEY is not defined');
+  constructor(protected readonly basePath: string) {
+    if (!process.env.CMS_API_URL)
+      throw new Error('Variable CMS_API_URL is not defined');
+    if (!process.env.CMS_API_KEY)
+      throw new Error('Variable CMS_API_KEY is not defined');
 
-        this.baseUrl = `${process.env.CMS_API_URL}/api/${basePath}`;
-        this.apiKey = process.env.CMS_API_KEY;
+    this.baseUrl = `${process.env.CMS_API_URL}/api/${basePath}`;
+    this.apiKey = process.env.CMS_API_KEY;
+  }
+
+  protected makeQueryString(
+    pagination: PaginationDTO = {},
+    additional: Record<string, object> = {}
+  ): string {
+    const obj = { ...pagination, ...additional };
+
+    if (Object.keys(obj).length) return `?${qs.stringify(obj)}`;
+    return '';
+  }
+
+  protected async getAuthenticationHeaders(): Promise<HeadersInit> {
+    const store = await cookies();
+    const cookie = store.get('payload-token');
+
+    if (cookie)
+      return {
+        Cookie: 'payload-token=' + cookie.value,
+      };
+
+    return {
+      Authorization: 'services API-Key ' + process.env.CMS_API_KEY,
+    };
+  }
+
+  public async create(create: PartialEntityDTO<T>): Promise<T | null> {
+    const init: RequestInit = {
+      method: 'POST',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(create),
+    };
+
+    const response = await fetch(this.baseUrl, init);
+
+    if (!response.ok) {
+      console.error(await response.text());
+      return null;
     }
 
-    protected makeQueryString(pagination: PaginationDTO = {}, additional: Record<string, object> = {}): string {
-        const obj = {...pagination, ...additional};
+    return await response.json();
+  }
 
-        if (Object.keys(obj).length)
-            return `?${qs.stringify(obj)}`;
-        return ''
-    }
+  public async findAll(
+    pagination: PaginationDTO
+  ): Promise<PaginatedResponse<T> | null> {
+    const init: RequestInit = {
+      method: 'GET',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+      },
+    };
 
-    protected async getAuthenticationHeaders(): Promise<HeadersInit> {
-        const store = await cookies();
-        const cookie = store.get('payload-token');
+    const queryString = this.makeQueryString(pagination);
 
-        if (cookie)
-            return {
-                Cookie: "payload-token=" + cookie.value
-            }
+    const response = await fetch(this.baseUrl + queryString, init);
+    if (!response.ok) return null;
 
-        return {
-            Authorization: "services API-Key " + process.env.CMS_API_KEY
-        }
-    }
+    return await response.json();
+  }
 
-    public async create(create: PartialEntityDTO<T>): Promise<T | null> {
-        const init: RequestInit = {
-            method: "POST",
-            headers: {
-                ...(await this.getAuthenticationHeaders()),
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(create)
-        };
+  public async findById(id: string) {
+    const init: RequestInit = {
+      method: 'GET',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+      },
+    };
 
-        const response = await fetch(this.baseUrl, init);
+    const response = await fetch(this.baseUrl + '/' + id, init);
+    if (!response.ok) return null;
 
-        if (!response.ok) {
-            console.error(await response.text())
-            return null;
-        }
+    return await response.json();
+  }
 
-        return await response.json();
-    }
+  public async updateById(id: string, updatedData: PartialEntityDTO<T>) {
+    const init: RequestInit = {
+      method: 'PATCH',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    };
 
-    public async findAll(pagination: PaginationDTO): Promise<PaginatedResponse<T> | null> {
-        const init: RequestInit = {
-            method: "GET",
-            headers: {
-                ...(await this.getAuthenticationHeaders()),
-            },
-        };
+    const response = await fetch(this.baseUrl + '/' + id, init);
+    if (!response.ok) return null;
 
-        const queryString = this.makeQueryString(pagination);
+    return await response.json();
+  }
 
-        const response = await fetch(this.baseUrl + queryString, init);
-        if (!response.ok) return null;
+  public async deleteById(id: string): Promise<boolean> {
+    const init: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+      },
+    };
 
-        return await response.json();
-    }
-
-    public async findById(id: string) {
-        const init: RequestInit = {
-            method: "GET",
-            headers: {
-                ...(await this.getAuthenticationHeaders()),
-            },
-        };
-
-        const response = await fetch(this.baseUrl + "/" + id, init);
-        if (!response.ok) return null;
-
-        return await response.json();
-    }
-
-    public async updateById(id: string, updatedData: PartialEntityDTO<T>) {
-        const init: RequestInit = {
-            method: "PATCH",
-            headers: {
-                ...(await this.getAuthenticationHeaders()),
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(updatedData)
-        };
-
-        const response = await fetch(this.baseUrl + "/" + id, init);
-        if (!response.ok) return null;
-
-        return await response.json();
-    }
-
-    public async deleteById(id: string): Promise<boolean> {
-        const init: RequestInit = {
-            method: "DELETE",
-            headers: {
-                ...(await this.getAuthenticationHeaders()),
-            },
-        };
-
-        const response = await fetch(this.baseUrl + "/" + id, init);
-        return response.ok;
-    }
+    const response = await fetch(this.baseUrl + '/' + id, init);
+    return response.ok;
+  }
 }

@@ -1,7 +1,7 @@
-import {APIService} from "@/services/api.service";
+import { APIService } from '@/services/api.service';
 
 export class TestimonialService extends APIService<TestimonialDTO> {
-    constructor() {
-        super('testimonials');
-    }
+  constructor() {
+    super('testimonials');
+  }
 }

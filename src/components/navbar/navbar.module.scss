@@ -1,8 +1,8 @@
 .navbar {
-  @apply flex flex-row fixed left-0 right-0 top-0 h-10 bg-gray-100 text-cyan-950 font-bold;
+  @apply fixed left-0 right-0 top-0 flex h-10 flex-row bg-gray-100 font-bold text-cyan-950;
 
   & > ul {
-    @apply flex flex-row justify-center items-center;
+    @apply flex flex-row items-center justify-center;
 
     & li {
       @apply w-36 text-center;
@@ -14,7 +14,7 @@
   @apply relative;
 
   & > span {
-    @apply flex flex-row justify-center items-center;
+    @apply flex flex-row items-center justify-center;
   }
 
   & > ul {

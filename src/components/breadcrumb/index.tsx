@@ -1,7 +1,3 @@
 export default async function Breadcrumb() {
-    return (
-        <ul>
-            
-        </ul>
-    )
+  return <ul></ul>;
 }

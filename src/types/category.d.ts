@@ -1,4 +1,4 @@
 declare type CategoryDTO = PayloadDocument & {
-    title: string;
-    slug: string;
-}
+  title: string;
+  slug: string;
+};

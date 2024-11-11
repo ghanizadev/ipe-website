@@ -1,4 +1,4 @@
 declare type ActionResponse = {
-    success: boolean,
-    errors?: { field: string, message: string }[]
-}
+  success: boolean;
+  errors?: { field: string; message: string }[];
+};

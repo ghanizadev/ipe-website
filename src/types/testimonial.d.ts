@@ -1,6 +1,6 @@
 declare type TestimonialDTO = PayloadDocument & {
-    avatar?: AvatarDTO;
-    name: stringl
-    occupation: string;
-    testimonial: string;
-}
+  avatar?: AvatarDTO;
+  name: stringl;
+  occupation: string;
+  testimonial: string;
+};

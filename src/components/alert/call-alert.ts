@@ -1,27 +1,39 @@
-import {AlertProps, ConfirmationReturnArgument} from "@/components/alert/type";
-import {nanoid} from "nanoid";
+import { nanoid } from 'nanoid';
 
-export default async function callAlert(type: 'confirmation', props: AlertProps): Promise<ConfirmationReturnArgument>;
+import {
+  AlertProps,
+  ConfirmationReturnArgument,
+} from '@/components/alert/type';
 
-export default async function callAlert<T>(type: string, props: AlertProps): Promise<T> {
-    const eventName = 'alert.' + type;
-    const id = nanoid();
-    const callbackName = `${eventName}.${id}`;
+export default async function callAlert(
+  type: 'confirmation',
+  props: AlertProps
+): Promise<ConfirmationReturnArgument>;
 
-    const event = new CustomEvent(eventName, {detail: {...props, callbackName}});
+export default async function callAlert<T>(
+  type: string,
+  props: AlertProps
+): Promise<T> {
+  const eventName = 'alert.' + type;
+  const id = nanoid();
+  const callbackName = `${eventName}.${id}`;
 
-    const promise = new Promise<T>(resolve => {
-        function fn(event: Event) {
-            event.preventDefault();
-            const {detail} = event as CustomEvent;
-            window.removeEventListener(callbackName, fn);
-            resolve(detail);
-        }
+  const event = new CustomEvent(eventName, {
+    detail: { ...props, callbackName },
+  });
 
-        window.addEventListener(callbackName, fn);
-    });
+  const promise = new Promise<T>((resolve) => {
+    function fn(event: Event) {
+      event.preventDefault();
+      const { detail } = event as CustomEvent;
+      window.removeEventListener(callbackName, fn);
+      resolve(detail);
+    }
 
-    window.dispatchEvent(event);
+    window.addEventListener(callbackName, fn);
+  });
 
-    return await promise;
+  window.dispatchEvent(event);
+
+  return await promise;
 }
