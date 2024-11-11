@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import Anchor from '@/components/button/anchor';
 
@@ -12,22 +13,24 @@ function PrimaryButton(props: AnchorProps): React.JSX.Element;
 function PrimaryButton(props: ButtonProps): React.JSX.Element;
 
 function PrimaryButton({ tag, ...props }: AnchorProps | ButtonProps) {
-  const classes = ['text-white bg-[--primary] hover:bg-[--primary-darker]'];
+  let classStr = 'text-white bg-[--primary] hover:bg-[--primary-darker]';
 
-  if (props.className) classes.push(props.className);
+  if (props.className) {
+    classStr = twMerge(classStr, props.className);
+  }
 
   switch (tag) {
     case 'anchor':
       const anchorProps = props as AnchorProps;
       return (
-        <Anchor {...anchorProps} className={classes.join(' ')}>
+        <Anchor {...anchorProps} className={classStr}>
           {props.children}
         </Anchor>
       );
     default:
       const buttonProps = props as ButtonProps;
       return (
-        <Button {...buttonProps} className={classes.join(' ')}>
+        <Button {...buttonProps} className={classStr}>
           {props.children}
         </Button>
       );

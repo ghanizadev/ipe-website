@@ -5,6 +5,7 @@ import Script from 'next/script';
 import { Suspense } from 'react';
 
 import ConfirmationAlert from '@/components/alert/confirmation';
+import CookieConsent from '@/components/cookie-consent';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import ToastWrapper from '@/components/toast';
@@ -57,6 +58,7 @@ export default function RootLayout({
         <Footer />
         <Suspense>
           <ToastWrapper />
+          <CookieConsent />
         </Suspense>
         <ConfirmationAlert />
         <Script

@@ -21,7 +21,7 @@
 - [x] Adicionar alerta antes de remover inscricao
 - [x] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
 - [x] Adicionar logica de redirect quando criar uma conta
-- [ ] CPF input validation
+- [ ] Validacao de CPF
 
 ## Copies
 
