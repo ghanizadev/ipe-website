@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
@@ -21,16 +22,20 @@ type SelectButtonProps = {
 };
 
 function SelectButton({ label, onClick, selected }: SelectButtonProps) {
-  const classes = ['p-8 border-2 border-[--primary] w-full rounded-2xl'];
+  let classStr =
+    'p-8 border-2 border-[--secondary] w-full rounded-2xl hover:border-[--primary] hover:text-[--primary]';
 
   if (selected) {
-    classes.push('bg-[--primary] text-white');
+    classStr = twMerge(
+      classStr,
+      'bg-[--secondary] text-white hover:border-white hover:text-white'
+    );
   } else {
-    classes.push('text-[--primary] scale-90');
+    classStr = twMerge(classStr, 'text-[--secondary] scale-90');
   }
 
   return (
-    <button type={'button'} onClick={onClick} className={classes.join(' ')}>
+    <button type={'button'} onClick={onClick} className={classStr}>
       {label}
     </button>
   );
@@ -89,7 +94,6 @@ export default function CreateAccountForm() {
       isOk = false;
     }
 
-    console.log(data);
     if (!data['accept-terms']) {
       setErrors((errors) => ({
         ...errors,

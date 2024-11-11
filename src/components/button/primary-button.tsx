@@ -13,7 +13,7 @@ function PrimaryButton(props: AnchorProps): React.JSX.Element;
 function PrimaryButton(props: ButtonProps): React.JSX.Element;
 
 function PrimaryButton({ tag, ...props }: AnchorProps | ButtonProps) {
-  let classStr = 'text-white bg-[--primary] hover:bg-[--primary-darker]';
+  let classStr = 'text-white bg-[--secondary] hover:bg-[--primary]';
 
   if (props.className) {
     classStr = twMerge(classStr, props.className);

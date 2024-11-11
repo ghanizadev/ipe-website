@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
+
+import Link from '@/components/link';
 
 import CreateAccountForm from './_components/create-account-form';
 
@@ -36,12 +37,7 @@ export default async function SignUp() {
           </div>
           <span>
             Já possui uma conta?{' '}
-            <Link
-              href={'/entrar'}
-              className={'text-nowrap text-[--primary-lighter] underline'}
-            >
-              Entre com seu e-mail e senha
-            </Link>
+            <Link href={'/entrar'}>Entre com seu e-mail e senha</Link>
           </span>
         </section>
         <section className={'hidden 2xl:block'}>

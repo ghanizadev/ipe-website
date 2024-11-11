@@ -92,8 +92,8 @@ export default async function Account() {
             )}
             <br />
             <small className={'text-gray-500'}>
-              Caso voce tenha alguma duvida quanto a pagamento, cancelamento e
-              outras instrucoes, entre em contato por qualquer de nossos{' '}
+              Caso você tenha alguma dúvida quanto a pagamento, cancelamento e
+              outras instruções, entre em contato por qualquer um dos nossos{' '}
               <Link href={'/contato'}>canais de atendimento</Link>.
             </small>
           </div>

@@ -87,7 +87,7 @@ export default function ConfirmationAlert() {
                   data-modal-hide='small-modal'
                   type='button'
                   onClick={handleAction('confirm')}
-                  className='focus:ring-bg-[--primary-lighter] ms-3 rounded-lg bg-[--primary] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[--primary-darker] focus:outline-none focus:ring-4'
+                  className='focus:ring-bg-[--secondary] ms-3 rounded-lg bg-[--primary] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[--primary-darker] focus:outline-none focus:ring-4'
                 >
                   Aceito
                 </button>

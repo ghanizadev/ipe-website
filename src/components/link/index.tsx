@@ -6,7 +6,7 @@ type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 export default function Link({ children, ...props }: LinkProps) {
-  const classes = ['text-[--primary-lighter] underline'];
+  const classes = ['text-[--secondary] underline text-nowrap'];
 
   if (props.className) {
     classes.push(props.className);

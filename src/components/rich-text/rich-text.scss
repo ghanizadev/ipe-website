@@ -19,7 +19,7 @@
       @apply line-through;
 
       &::before {
-        @apply border-[--primary] bg-[--primary-lighter];
+        @apply border-[--primary] bg-[--secondary];
       }
 
       &::after {
@@ -38,7 +38,7 @@
   }
 
   a {
-    @apply cursor-pointer text-[--primary-lighter] underline;
+    @apply cursor-pointer text-[--secondary] underline;
   }
 
   p {

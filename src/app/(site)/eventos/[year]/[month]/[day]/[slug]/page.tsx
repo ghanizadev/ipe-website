@@ -17,8 +17,8 @@ import getMeServerService from '@/services/get-me-server.service';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
 
-import confirmAndEnrollAction from './actions/confirm-and-enroll.action';
-import EnrollmentButton from './components/enrollment-button';
+import confirmAndEnrollAction from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_actions/confirm-and-enroll.action';
+import EnrollmentButton from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_components/enrollment-button';
 
 type PageProps = {
   params: Promise<Record<string, string>>;
@@ -45,7 +45,7 @@ export default async function EventPage(props: PageProps) {
       <div className={'m-auto max-w-screen-xl'}>
         <h1
           className={
-            'lg:6xl my-8 text-center text-4xl font-extrabold text-[--primary]'
+            'lg:6xl my-8 text-center text-4xl font-extrabold text-[--secondary]'
           }
         >
           {event.title}
@@ -109,8 +109,8 @@ export default async function EventPage(props: PageProps) {
               className={'mb-2'}
               label={'CPF (Certidão de Pessoa Física)'}
               name={'cpf'}
-              pattern={'\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}'}
-              title={'O CPF deve ter o formato com hífem. Ex.: 000000000-00'}
+              // pattern={'\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}'}
+              // title={'O CPF deve ter o formato com hífem. Ex.: 000000000-00'}
               defaultValue={me?.user?.cpf}
               required
             />

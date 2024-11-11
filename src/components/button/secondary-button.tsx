@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import Anchor from '@/components/button/anchor';
 import { AnchorProps, ButtonProps } from '@/components/button/props';
@@ -12,24 +13,25 @@ function SecondaryButton(props: AnchorProps): React.JSX.Element;
 function SecondaryButton(props: ButtonProps): React.JSX.Element;
 
 function SecondaryButton({ tag, ...props }: ButtonProps | AnchorProps) {
-  const classes = [
-    'border-2 text-[--primary] border-[--primary] bg-transparent hover:border-[--primary-darker] focus:ring-[--primary-darker]',
-  ];
+  let classStr =
+    'border-2 text-[--secondary] border-[--secondary] bg-transparent hover:text-[--primary] hover:border-[--primary] focus:ring-[--primary]';
 
-  if (props.className) classes.push(props.className);
+  if (props.className) {
+    classStr = twMerge(classStr, props.className);
+  }
 
   switch (tag) {
     case 'anchor':
       const anchorProps = props as AnchorProps;
       return (
-        <Anchor {...anchorProps} className={classes.join(' ')}>
+        <Anchor {...anchorProps} className={classStr}>
           {props.children}
         </Anchor>
       );
     default:
       const buttonProps = props as ButtonProps;
       return (
-        <Button {...buttonProps} className={classes.join(' ')}>
+        <Button {...buttonProps} className={classStr}>
           {props.children}
         </Button>
       );

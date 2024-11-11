@@ -36,7 +36,9 @@ export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
       onClick={handleEnrollment}
       type={'button'}
       disabled={!event}
-      className={'rounded-2xl bg-[--primary] px-6 py-4 text-2xl text-white'}
+      className={
+        'rounded-2xl bg-[--primary] px-6 py-4 text-2xl text-white hover:bg-[--primary-darker]'
+      }
     >
       Inscreva-se!
     </button>
