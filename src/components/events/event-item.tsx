@@ -33,7 +33,7 @@ export default async function EventItem(props: EventProps) {
                 <Link href={path} className={"text-[--primary] text-2xl font-bold underline"}>{title}</Link>
                 <p className={"my-2"}>{standFirst}</p>
                 <div className={"w-32 self-end"}>
-                    <SecondaryButton path={path}>Saiba mais</SecondaryButton>
+                    <SecondaryButton tag={"anchor"} href={path}>Saiba mais</SecondaryButton>
                 </div>
             </div>
         </div>

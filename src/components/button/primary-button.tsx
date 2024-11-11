@@ -1,9 +1,10 @@
 "use client"
 
 import React from "react";
-import {AnchorProps, ButtonProps, CommonButtonProps} from "./props";
-import Button from "./button";
+
 import Anchor from "@/components/button/anchor";
+import {AnchorProps, ButtonProps} from "./props";
+import Button from "./button";
 
 function PrimaryButton(props: AnchorProps): React.JSX.Element;
 

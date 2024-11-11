@@ -28,6 +28,7 @@ export default function CancelEnrollmentButton(props: CancelEnrollmentButtonProp
 
     return (
         <SecondaryButton
+            tag={"button"}
             className={"border-red-700 text-red-700 w-full mt-4 mb-2 md:mb-0 md:w-fit md:float-right"}
             onClick={handleCancelEnrollment}
         >

@@ -106,7 +106,7 @@ export default function CreateAccountForm() {
                         <SelectButton selected={role === 'guide'} onClick={handleTypeSelect('guide')}
                                       label={"Guia"}/>
                     </div>
-                    <SecondaryButton type={"button"} onClick={handleSelect}>Selecionar</SecondaryButton>
+                    <SecondaryButton tag={"button"} type={"button"} onClick={handleSelect}>Selecionar</SecondaryButton>
                 </>
             }
             {step === "second" &&
@@ -157,8 +157,8 @@ export default function CreateAccountForm() {
                         as <Link
                         href={"/politicas-de-privacidade"} target={"_blank"}>Políticas de Privacidade</Link>.
                     </CheckboxInput>
-                    <PrimaryButton type={"submit"} className={"mb-2"}>Criar conta</PrimaryButton>
-                    <SecondaryButton type={"button"} onClick={handleGoBack}>Voltar</SecondaryButton>
+                    <PrimaryButton tag={"button"} type={"submit"} className={"mb-2"}>Criar conta</PrimaryButton>
+                    <SecondaryButton tag={"button"} type={"button"} onClick={handleGoBack}>Voltar</SecondaryButton>
                 </>
             }
         </form>

@@ -45,7 +45,7 @@ export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
                 type={"password"}
                 className={"mb-4"}
             />
-            <PrimaryButton>Salvar</PrimaryButton>
+            <PrimaryButton tag={"button"}>Salvar</PrimaryButton>
         </form>
     )
 }

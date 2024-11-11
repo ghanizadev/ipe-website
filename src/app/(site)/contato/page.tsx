@@ -34,7 +34,7 @@ export default function ContactPage() {
                         <TextInput className={"mb-2"} label={"E-mail"} name={'email'} type={"email"} required/>
                         <TextInput className={"mb-2"} label={"Telefone/Whatsapp"} name={'phone'} type={"phone"}/>
                         <TextArea className={"mb-2"} label={"Mensagem"} name={'message'} required/>
-                        <PrimaryButton className={"float-right"} type={"submit"}>Enviar</PrimaryButton>
+                        <PrimaryButton tag={"button"} className={"float-right"} type={"submit"}>Enviar</PrimaryButton>
                     </Form>
                 </div>
             </div>

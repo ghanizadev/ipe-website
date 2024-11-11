@@ -40,10 +40,11 @@ export default async function AccountDataPage() {
                              defaultValue={tshirt?.type}/>
                 <SelectInput name={"tshirt.size"} label={"Tamanho da Camiseta"} options={tshirtSizes}
                              defaultValue={tshirt?.size}/>
-                <PrimaryButton className={"w-min justify-self-end"}>Salvar</PrimaryButton>
+                <PrimaryButton tag={"button"} className={"w-min justify-self-end"}>Salvar</PrimaryButton>
             </Form>
             <h3 className={"text-lg leading-none text-[--primary] my-4"}>Outros</h3>
-            <SecondaryButton className={"border-red-800 text-red-800"}>Remover minha conta</SecondaryButton>
+            <SecondaryButton tag={"button"} className={"border-red-800 text-red-800"}>Remover minha
+                conta</SecondaryButton>
         </div>
     )
 }

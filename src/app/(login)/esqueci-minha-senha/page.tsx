@@ -19,7 +19,7 @@ export default async function ForgotMyPasswordPage({searchParams}: { searchParam
                         <P>Informe o e-mail que você usa para acessar sua conta</P>
                         <Form action={sendForgotPasswordResetAction} className={"flex flex-col"}>
                             <TextInput label={'Email'} name={'email'} type={"email"} className={"mb-4"}/>
-                            <PrimaryButton>Enviar</PrimaryButton>
+                            <PrimaryButton tag={"button"}>Enviar</PrimaryButton>
                         </Form>
                     </>
                 }
@@ -27,7 +27,7 @@ export default async function ForgotMyPasswordPage({searchParams}: { searchParam
                     <>
                         <H1>Mensagem enviada!</H1>
                         <P>Um e-mail foi enviado para o endereço informado, caso ele exista.</P>
-                        <PrimaryButton path={"/"}>Ir para o início</PrimaryButton>
+                        <PrimaryButton tag={"anchor"} href={"/"}>Ir para o início</PrimaryButton>
                     </>
                 }
             </section>

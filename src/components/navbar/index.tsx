@@ -99,7 +99,7 @@ export default async function Navbar() {
                         {!me?.user &&
                             <>
                                 <li className={"m-auto"}>
-                                    <PrimaryButton path={"/entrar"}>Entrar</PrimaryButton>
+                                    <PrimaryButton tag={"anchor"} href={"/entrar"}>Entrar</PrimaryButton>
                                 </li>
                             </>
                         }

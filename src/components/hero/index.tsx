@@ -15,7 +15,7 @@ export default async function Hero() {
                     lucrativos, que teve início em 2016 com apenas 4 atletas, e hoje atendemos mais de 60 pessoas,
                     promovendo ações ligadas ao esporte e lazer, com foco a inclusão de pessoas com deficiência e
                     voluntários.</p>
-                <PrimaryButton path={"/como-ajudar"}>Saiba como ajudar</PrimaryButton>
+                <PrimaryButton tag={"anchor"} href={"/como-ajudar"}>Saiba como ajudar</PrimaryButton>
             </div>
             <div className={"p-4 hidden col-span-6 lg:block"}>
                 <Image src={"/hero.jpg"} alt={"descricao"} width={1920} height={850}

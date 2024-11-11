@@ -53,7 +53,7 @@ export default function LoginForm(props: LoginFormProps) {
             <TextInput label={'Senha'} name={'password'} type={"password"} error={error}/>
             <Link href={'/esqueci-minha-senha'} className={"text-sm text-[--primary] mb-8 underline self-end"}>Esqueci
                 minha senha</Link>
-            <PrimaryButton>Entrar</PrimaryButton>
+            <PrimaryButton tag={"button"}>Entrar</PrimaryButton>
         </form>
     )
 }

@@ -123,7 +123,7 @@ export default async function EventPage(props: PageProps) {
                         />
                         <div
                             className="flex items-center justify-end py-4 md:py-5 border-t border-gray-200 rounded-b">
-                            <PrimaryButton type={"submit"}>Salvar e Inscrever-se</PrimaryButton>
+                            <PrimaryButton tag={"button"} type={"submit"}>Salvar e Inscrever-se</PrimaryButton>
                         </div>
                     </Form>
                 </Modal>

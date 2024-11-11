@@ -15,7 +15,7 @@ function ObjectiveItem(props: ObjectiveItemProps) {
             className={"w-48 h-[100%] mx-4 flex flex-col items-center justify-center border-2 rounded-xl border-[--primary] px-4 py-4"}>
             <span className={"mb-4 text-xl text-[--primary]"}>{props.title}</span>
             <p className={"mb-4 text-md text-gray-600"}>{props.message}</p>
-            {props.cta && <PrimaryButton>{props.cta.label}</PrimaryButton>}
+            {props.cta && <PrimaryButton tag={"button"}>{props.cta.label}</PrimaryButton>}
         </div>
     )
 }
