@@ -171,9 +171,19 @@ export default function CreateAccountForm() {
             label={'Confirmar senha'}
             name={'confirm-password'}
             type={'password'}
-            className={'mb-8'}
             required
           />
+          <small className={'text-gray-400 my-4'}>
+            Este site é protegido pelo reCAPTCHA e as{' '}
+            <Link href='https://policies.google.com/privacy'>
+              Políticas de Privacidade
+            </Link>{' '}
+            e os{' '}
+            <Link href='https://policies.google.com/terms'>
+              Termos de Serviço
+            </Link>{' '}
+            da Google são aplicáveis.
+          </small>
           <CheckboxInput
             name={'accept-terms'}
             error={errors['accept-terms']}

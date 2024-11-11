@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
+import Link from '@/components/link';
 
 import grecaptchaService from '@/services/grecapcha.service';
 

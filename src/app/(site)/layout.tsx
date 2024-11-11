@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Head from 'next/head';
+import { cookies } from 'next/headers';
 import Script from 'next/script';
 import { Suspense } from 'react';
 
@@ -9,6 +10,8 @@ import CookieConsent from '@/components/cookie-consent';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import ToastWrapper from '@/components/toast';
+
+import { saveCookiesPreferencesAction } from '@/actions/save-cookies-preferences.action';
 
 import '../globals.scss';
 
@@ -37,11 +40,15 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+
+  const hasConsented = cookieStore.has('cookie-consent');
+
   return (
     <html lang='pt'>
       <Head>
@@ -58,7 +65,10 @@ export default function RootLayout({
         <Footer />
         <Suspense>
           <ToastWrapper />
-          <CookieConsent />
+          <CookieConsent
+            hasConsented={hasConsented}
+            action={saveCookiesPreferencesAction}
+          />
         </Suspense>
         <ConfirmationAlert />
         <Script

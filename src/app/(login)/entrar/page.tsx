@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import SecondaryButton from '@/components/button/secondary-button';
+import Link from '@/components/link';
 import { H1, P } from '@/components/typography';
 
 import loginAction from './actions/login.action';
@@ -38,6 +39,17 @@ export default async function SignInPage({ searchParams }: PageProps) {
           <SecondaryButton tag={'anchor'} href={'/criar-conta'}>
             Criar um conta
           </SecondaryButton>
+          <small className={'text-gray-400 my-4'}>
+            Este site é protegido pelo reCAPTCHA e as{' '}
+            <Link href='https://policies.google.com/privacy'>
+              Políticas de Privacidade
+            </Link>{' '}
+            e os{' '}
+            <Link href='https://policies.google.com/terms'>
+              Termos de Serviço
+            </Link>{' '}
+            da Google são aplicáveis.
+          </small>
         </section>
         <section className={'hidden 2xl:block'}>
           <Image

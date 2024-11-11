@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
+import Link from '@/components/link';
 
 import grecaptchaService from '@/services/grecapcha.service';
 
@@ -59,6 +60,15 @@ export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
         className={'mb-4'}
       />
       <PrimaryButton tag={'button'}>Salvar</PrimaryButton>
+      <small className={'text-gray-400 my-4'}>
+        Este site é protegido pelo reCAPTCHA e a{' '}
+        <Link href='https://policies.google.com/privacy'>
+          Políticas de Privacidade
+        </Link>{' '}
+        da Google e os seus{' '}
+        <Link href='https://policies.google.com/terms'>Termos de Serviço</Link>{' '}
+        são válidos.
+      </small>
     </form>
   );
 }
