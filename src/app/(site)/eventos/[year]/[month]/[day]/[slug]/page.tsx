@@ -71,6 +71,7 @@ export default async function EventPage(props: PageProps) {
                             name={'name'}
                             defaultValue={me?.user?.name}
                             readonly
+                            required
                         />
                         <TextInput
                             className={"mb-2"}
@@ -78,6 +79,7 @@ export default async function EventPage(props: PageProps) {
                             name={'email'}
                             defaultValue={me?.user?.email}
                             readonly
+                            required
                         />
                         <H3>Documentação</H3>
                         <TextInput
@@ -121,8 +123,9 @@ export default async function EventPage(props: PageProps) {
                             options={tshirtSizes}
                             required
                         />
+                        <small><span className={"text-red-600"}>*</span> Campos obrigatórios.</small>
                         <div
-                            className="flex items-center justify-end py-4 md:py-5 border-t border-gray-200 rounded-b">
+                            className="mt-4 flex items-center justify-end py-4 md:py-5 border-t border-gray-200 rounded-b">
                             <PrimaryButton tag={"button"} type={"submit"}>Salvar e Inscrever-se</PrimaryButton>
                         </div>
                     </Form>
