@@ -1,19 +1,39 @@
 "use client"
 
 import React from "react";
-import {ButtonProps} from "./props";
+import {AnchorProps, ButtonProps, CommonButtonProps} from "./props";
 import Button from "./button";
+import Anchor from "@/components/button/anchor";
 
-export default function PrimaryButton(props: ButtonProps) {
+function PrimaryButton(props: AnchorProps): React.JSX.Element;
+
+function PrimaryButton(props: ButtonProps): React.JSX.Element;
+
+function PrimaryButton({tag, ...props}: AnchorProps | ButtonProps) {
     const classes = ["text-white bg-[--primary] hover:bg-[--primary-darker]"];
 
-    if (props.className) classes.push(props.className)
+    if (props.className) classes.push(props.className);
 
-    return (
-        <Button
-            {...props}
-            className={classes.join(" ")}>
-            {props.children}
-        </Button>
-    )
+    switch (tag) {
+        case 'anchor':
+            const anchorProps = props as AnchorProps;
+            return (
+                <Anchor
+                    {...anchorProps}
+                    className={classes.join(" ")}>
+                    {props.children}
+                </Anchor>
+            )
+        default:
+            const buttonProps = props as ButtonProps;
+            return (
+                <Button
+                    {...buttonProps}
+                    className={classes.join(" ")}>
+                    {props.children}
+                </Button>
+            )
+    }
 }
+
+export default PrimaryButton;

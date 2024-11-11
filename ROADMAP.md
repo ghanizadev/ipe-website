@@ -3,7 +3,7 @@
 ## Pre-release
 
 - [x] Adicionar Contato
-- [ ] Adicionar Loja
+- [x] Adicionar Loja
 - [x] Cancelar inscricao
 - [x] Validar dados do usuario ao clicar em inscrever-se
 - [x] Adicionar callbacks quando clicar em inscrever-se e precisar fazer login/criar conta

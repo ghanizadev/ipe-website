@@ -1,9 +1,20 @@
 import React from "react";
 
-export type ButtonProps = {
-    onClick?: () => void | Promise<void>;
-    path?: string;
+export type CommonButtonProps = {
     className?: string;
-    type?: 'submit' | 'reset' | 'button';
+    tag: "button" | "anchor";
     children?: React.ReactNode | React.ReactNode[];
+}
+
+export type AnchorProps = CommonButtonProps & {
+    tag: 'anchor';
+    href: string;
+    target?: string;
+    rel?: string;
+}
+
+export type ButtonProps = CommonButtonProps & {
+    tag: 'button';
+    type?: 'submit' | 'reset' | 'button';
+    onClick?: () => void | Promise<void>;
 }

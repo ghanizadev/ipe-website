@@ -1,12 +1,13 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 import {useRouter} from "next/navigation";
-import {ButtonProps} from "@/components/button/props";
+import {ButtonProps, CommonButtonProps} from "@/components/button/props";
 
 
 export default function Button(props: ButtonProps) {
     const {onClick, path, children, type} = props;
     const router = useRouter()
+
 
     const handleOnClick = async () => {
         if (path) router.push(path)
