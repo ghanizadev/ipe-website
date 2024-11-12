@@ -30,12 +30,12 @@
 ## Post-release
 
 - [ ] Pagina de configuracao de cookies
-- [ ] Compartilhar eventos
+- [x] Compartilhar eventos
 - [ ] Colocar titulo no fomrulario de inscricao
 - [ ] Erros no formulario de inscricao
-- [ ] Perfil de paratleta
+- [ ] ~~Perfil de paratleta~~
 - [ ] Motivacionais
-- [ ] Opengraph para os eventos
+- [x] Opengraph para os eventos
 - [ ] Refatorar componentes e reusar tipografia
 - [ ] Criar classes no tailwind
 - [ ] Melhorar a UX da galeria de fotos, com swap pra mobile e botoes para passar as fotos
