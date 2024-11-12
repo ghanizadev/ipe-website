@@ -8,7 +8,9 @@ import CreateAccountForm from './_components/create-account-form';
 
 export default async function SignUp() {
   return (
-    <div className={'flex h-[100vh] w-[100vw] items-center justify-center'}>
+    <div
+      className={'flex min-h-[100vh] w-[100vw] m-8 items-center justify-center'}
+    >
       <div
         className={
           'grid h-auto max-w-2xl grid-cols-1 grid-rows-1 overflow-hidden rounded-2xl md:border-2 md:border-[--primary] 2xl:max-w-screen-xl 2xl:grid-cols-2'
