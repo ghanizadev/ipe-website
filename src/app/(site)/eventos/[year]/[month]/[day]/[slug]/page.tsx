@@ -16,10 +16,13 @@ import { H3 } from '@/components/typography';
 import getEventBySlug from '@/services/get-event-by-slug.service';
 import getMeServerService from '@/services/get-me-server.service';
 
+import makeEventLink from '@/helpers/make-event-link.helper';
+
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
 
-import confirmAndEnrollAction from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_actions/confirm-and-enroll.action';
-import EnrollmentButton from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_components/enrollment-button';
+import confirmAndEnrollAction from './_actions/confirm-and-enroll.action';
+import EnrollmentButton from './_components/enrollment-button';
+import ShareBar from './_components/share-bar';
 
 type PageProps = {
   params: Promise<Record<string, string>>;
@@ -51,7 +54,11 @@ export default async function EventPage(props: PageProps) {
         >
           {event.title}
         </h1>
-        <div className={'my-16 flex items-center justify-center text-center'}>
+        <div
+          className={
+            'my-16 flex flex-col items-center justify-center text-center'
+          }
+        >
           <div className={'w-2/3'}>
             <p className={'text-gray-600'}>{event.standFirst}</p>
           </div>
@@ -65,7 +72,15 @@ export default async function EventPage(props: PageProps) {
             'w-full h-72 max-h-72 md:h-[32em] md:max-h-[32em] object-cover'
           }
         />
-        <RichText html={event.html} className={'my-16'} />
+        <div
+          className={
+            'flex justify-end items-center my-4 py-2 border-b-2 border-gray-100'
+          }
+        >
+          <p className={'text-gray-600'}>Compartilhe:</p>
+          <ShareBar link={makeEventLink(event)} title={event.title} />
+        </div>
+        <RichText html={event.html} className={'my-8'} />
         <div className={'mb-16 flex items-center justify-center'}>
           <EnrollmentButton event={event} />
         </div>
