@@ -11,8 +11,7 @@
 - [ ] Excluir minha conta
 - [x] Atualizar meus dados
 - [x] Adicionar depoimentos
-- [ ] Pagina de configuracao de cookies
-- [ ] Formulario/modal de consentimento de coleta de dados
+- [x] Formulario/modal de consentimento de coleta de dados
 - [x] Adicionar as redes sociais
 - [x] Termos de uso (?)
 - [x] Titulos das paginas
@@ -30,6 +29,7 @@
 
 ## Post-release
 
+- [ ] Pagina de configuracao de cookies
 - [ ] Compartilhar eventos
 - [ ] Colocar titulo no fomrulario de inscricao
 - [ ] Erros no formulario de inscricao

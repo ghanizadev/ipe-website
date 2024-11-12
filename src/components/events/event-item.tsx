@@ -26,14 +26,14 @@ export default async function EventItem(props: EventProps) {
   const path = `/eventos/${formattedDate.getFullYear()}/${formattedDate.getMonth() + 1}/${formattedDate.getDate()}/${slug}`;
 
   return (
-    <div className={'grid gap-4 lg:grid-cols-6'}>
+    <div className={'grid gap-4 lg:grid-cols-6 mb-6'}>
       <div className={'col-span-3 flex flex-col items-end lg:col-span-2'}>
         <Image
           src={process.env.NEXT_PUBLIC_CMS_URL + url}
           alt={'alt'}
           width={width}
           height={height}
-          className={'rounded-2xl object-cover'}
+          className={'rounded-lg object-cover h-56'}
         />
       </div>
       <div

@@ -60,6 +60,9 @@ export default async function EventPage(props: PageProps) {
           alt={''}
           width={event.image.width}
           height={event.image.height}
+          className={
+            'w-full h-72 max-h-72 md:h-[32em] md:max-h-[32em] object-cover'
+          }
         />
         <RichText html={event.html} className={'my-16'} />
         <div className={'mb-16 flex items-center justify-center'}>
@@ -109,8 +112,6 @@ export default async function EventPage(props: PageProps) {
               className={'mb-2'}
               label={'CPF (Certidão de Pessoa Física)'}
               name={'cpf'}
-              // pattern={'\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}'}
-              // title={'O CPF deve ter o formato com hífem. Ex.: 000000000-00'}
               defaultValue={me?.user?.cpf}
               required
             />
