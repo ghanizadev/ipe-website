@@ -1,5 +1,6 @@
 'use server';
 
+import { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -154,11 +155,23 @@ export default async function EventPage(props: PageProps) {
   );
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
 
   return {
     title: `${event?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
+    openGraph: {
+      title: event?.title,
+      description: event?.standFirst,
+      images: {
+        height: event?.image.height,
+        width: event?.image.width,
+        alt: event?.image.altText,
+        url: `${process.env.NEXT_PUBLIC_URL}${event?.image.url}`,
+      },
+    },
   };
 }
