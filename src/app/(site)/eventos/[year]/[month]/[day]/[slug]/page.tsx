@@ -30,7 +30,7 @@ type PageProps = {
 };
 
 export default async function EventPage(props: PageProps) {
-  const { slug } = await props.params;
+  const { slug, year, month, day } = await props.params;
   const { register } = await props.searchParams;
   const heads = await headers();
   const pathname = heads.get('next-url');
@@ -41,6 +41,12 @@ export default async function EventPage(props: PageProps) {
   const event = await getEventBySlug(slug);
 
   if (!event) {
+    return notFound();
+  }
+
+  const url = `/eventos/${year}/${month}/${day}/${slug}`;
+
+  if (url !== makeEventLink(event)) {
     return notFound();
   }
 

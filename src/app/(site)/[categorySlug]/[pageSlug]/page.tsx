@@ -12,17 +12,17 @@ type PageProps = {
 };
 
 export default async function CustomPage({ params }: PageProps) {
-  const { pageSlug } = await params;
-  const customPage = await getPageBySlug(pageSlug);
+  const { pageSlug, categorySlug } = await params;
+  const page = await getPageBySlug(pageSlug);
 
-  if (!customPage) {
+  if (!page || page.category?.slug !== categorySlug) {
     return notFound();
   }
 
   return (
     <div className={'pb-16 pt-4'}>
-      <H1>{customPage?.title}</H1>
-      <RichText html={amendHTML(customPage.html)} />
+      <H1>{page?.title}</H1>
+      <RichText html={amendHTML(page.html)} />
     </div>
   );
 }
