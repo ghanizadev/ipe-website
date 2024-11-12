@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import SecondaryButton from '@/components/button/secondary-button';
 
+import makeEventLink from '@/helpers/make-event-link.helper';
+
 type EventProps = {
   event: EventDTO;
 };
@@ -13,7 +15,6 @@ export default async function EventItem(props: EventProps) {
   const {
     title,
     location,
-    slug,
     date,
     standFirst,
     image: { height, width, url },
@@ -23,7 +24,7 @@ export default async function EventItem(props: EventProps) {
   const hour = `${formattedDate.getHours().toString()}:${formattedDate.getMinutes().toString().padStart(2, '0')}`;
   const day = `${formattedDate.getDate()}/${formattedDate.getMonth() + 1}`;
 
-  const path = `/eventos/${formattedDate.getFullYear()}/${formattedDate.getMonth() + 1}/${formattedDate.getDate()}/${slug}`;
+  const path = makeEventLink(props.event);
 
   return (
     <div className={'grid gap-4 lg:grid-cols-6 mb-6'}>

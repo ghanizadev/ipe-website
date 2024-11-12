@@ -78,7 +78,10 @@ export default async function EventPage(props: PageProps) {
           }
         >
           <p className={'text-gray-600'}>Compartilhe:</p>
-          <ShareBar link={makeEventLink(event)} title={event.title} />
+          <ShareBar
+            link={`${process.env.NEXT_PUBLIC_URL}${makeEventLink(event)}`}
+            title={event.title}
+          />
         </div>
         <RichText html={event.html} className={'my-8'} />
         <div className={'mb-16 flex items-center justify-center'}>
