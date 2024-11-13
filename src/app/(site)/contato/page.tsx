@@ -6,8 +6,8 @@ import Link from '@/components/link';
 import TextArea from '@/components/textarea';
 import { H1, H2, H3 } from '@/components/typography';
 
-import createMessageAction from './actions/create-message.action';
-import Form from './components/form';
+import createMessageAction from './_actions/create-message.action';
+import Form from './_components/form';
 
 export default function ContactPage() {
   return (

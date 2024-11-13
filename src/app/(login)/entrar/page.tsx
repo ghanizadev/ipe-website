@@ -6,8 +6,8 @@ import SecondaryButton from '@/components/button/secondary-button';
 import Link from '@/components/link';
 import { H1, P } from '@/components/typography';
 
-import loginAction from './actions/login.action';
-import LoginForm from './components/login-form';
+import loginAction from './_actions/login.action';
+import LoginForm from './_components/login-form';
 
 type PageProps = {
   searchParams: Promise<Record<string, string>>;

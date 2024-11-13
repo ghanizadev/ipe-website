@@ -3,8 +3,8 @@ import React from 'react';
 
 import { H1, P } from '@/components/typography';
 
-import updatePasswordAction from './actions/update-password.action';
-import UpdatePasswordForm from './components/update-password-form';
+import updatePasswordAction from './_actions/update-password.action';
+import UpdatePasswordForm from './_components/update-password-form';
 
 export default async function UpdatePasswordPage({
   searchParams,

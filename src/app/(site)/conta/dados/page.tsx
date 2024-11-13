@@ -1,21 +1,20 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import PrimaryButton from '@/components/button/primary-button';
-import SecondaryButton from '@/components/button/secondary-button';
 import Form from '@/components/form';
 import { TextInput } from '@/components/input';
 import SelectInput from '@/components/select';
 
-import getMeServerService from '@/services/get-me-server.service';
+import getMeAction from '@/actions/get-me.action';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
 
+import removeAccountAction from './_actions/remove-account.action';
 import updateUserProfileAction from './_actions/update-user-profile.action';
+import RemoveAccountButton from './_components/remove-acount-button';
 
 export default async function AccountDataPage() {
-  const cookieStore = await cookies();
-  const me = await getMeServerService(cookieStore.get('payload-token')?.value);
+  const me = await getMeAction();
 
   if (!me?.user) {
     return redirect('/');
@@ -93,9 +92,10 @@ export default async function AccountDataPage() {
         </PrimaryButton>
       </Form>
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Outros</h3>
-      <SecondaryButton tag={'button'} className={'border-red-800 text-red-800'}>
-        Remover minha conta
-      </SecondaryButton>
+      <RemoveAccountButton
+        userId={id}
+        removeAccountAction={removeAccountAction}
+      />
     </div>
   );
 }

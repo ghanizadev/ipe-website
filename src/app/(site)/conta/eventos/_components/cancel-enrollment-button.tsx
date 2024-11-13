@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import callAlert from '@/components/alert/call-alert';
 import SecondaryButton from '@/components/button/secondary-button';
@@ -9,6 +9,7 @@ import SecondaryButton from '@/components/button/secondary-button';
 type CancelEnrollmentButtonProps = {
   enrollmentId: string;
   action: (args: { enrollmentId: string }) => Promise<void>;
+  updateAction: () => Promise<any>;
 };
 
 export default function CancelEnrollmentButton(
@@ -20,7 +21,7 @@ export default function CancelEnrollmentButton(
     const { status } = await callAlert('confirmation', {
       title: 'Deseja mesmo cancelar esta inscrição?',
       message:
-        'É possivel cancelar sua inscrição se ela não estiver paga ainda. Além disso, você poderá se reinscrever neste mesmo evento, porém não pode ser que não tenha mais vagas.\n\nAo aceitar, você concorda em desistir da sua reserva.',
+        'É possivel cancelar sua inscrição se ela não estiver paga ainda.\nAlém disso, você poderá se reinscrever neste mesmo evento, porém não pode ser que não tenha mais vagas.\n\nAo aceitar, você concorda em desistir da sua reserva.',
     });
 
     if (status === 'confirm') {
@@ -28,6 +29,10 @@ export default function CancelEnrollmentButton(
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    props.updateAction();
+  }, []);
 
   return (
     <SecondaryButton

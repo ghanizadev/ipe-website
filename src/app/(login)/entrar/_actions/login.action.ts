@@ -50,5 +50,19 @@ export default async function loginAction(
     expires,
   });
 
+  if (responseBody.user?.softDelete) {
+    const expiresAt = new Date(responseBody.user?.softDelete);
+    expiresAt.setDate(expiresAt.getDate() + 30);
+
+    cookieStore.set('account-recovery', '1', {
+      sameSite: 'strict',
+      expires: expiresAt,
+    });
+  } else {
+    cookieStore.set('account-recovery', '0', {
+      expires: new Date(0),
+    });
+  }
+
   return { success: true };
 }

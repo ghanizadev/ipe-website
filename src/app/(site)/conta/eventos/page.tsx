@@ -1,17 +1,16 @@
 import moment from 'moment';
-import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 import React from 'react';
 
 import Link from '@/components/link';
 import RichText from '@/components/rich-text';
 
-import getMeServerService from '@/services/get-me-server.service';
+import getMeAction from '@/actions/get-me.action';
+import getUserAction from '@/actions/get-user.action';
 
-import findEnrollmentsAction from '@/app/(site)/conta/eventos/actions/find-enrollments.action';
-
-import cancelEnrollmentAction from './actions/cancel-enrollment.action';
-import CancelEnrollmentButton from './components/cancel-enrollment-button';
+import cancelEnrollmentAction from './_actions/cancel-enrollment.action';
+import findEnrollmentsAction from './_actions/find-enrollments.action';
+import CancelEnrollmentButton from './_components/cancel-enrollment-button';
 
 function getStatus(enrollment?: EnrollmentDTO) {
   let label = 'Inscrição confirmada';
@@ -42,8 +41,7 @@ function getStatus(enrollment?: EnrollmentDTO) {
 }
 
 export default async function Account() {
-  const cookieStore = await cookies();
-  const me = await getMeServerService(cookieStore.get('payload-token')?.value);
+  const me = await getMeAction();
 
   if (!me?.user) {
     return redirect('/', RedirectType.replace);
@@ -88,6 +86,7 @@ export default async function Account() {
               <CancelEnrollmentButton
                 enrollmentId={enrollment.id}
                 action={cancelEnrollmentAction}
+                updateAction={getUserAction}
               />
             )}
             <br />

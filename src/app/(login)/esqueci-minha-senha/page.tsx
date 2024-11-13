@@ -7,7 +7,7 @@ import { TextInput } from '@/components/input';
 import Link from '@/components/link';
 import { H1, P } from '@/components/typography';
 
-import sendForgotPasswordResetAction from './actions/send-forgot-password-reset.action';
+import sendForgotPasswordResetAction from './_actions/send-forgot-password-reset.action';
 
 export default async function ForgotMyPasswordPage({
   searchParams,
