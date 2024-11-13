@@ -3,12 +3,18 @@ import { nanoid } from 'nanoid';
 import {
   AlertProps,
   ConfirmationReturnArgument,
+  RemoveReturnArgument,
 } from '@/components/alert/type';
 
 export default async function callAlert(
   type: 'confirmation',
   props: AlertProps
 ): Promise<ConfirmationReturnArgument>;
+
+export default async function callAlert(
+  type: 'remove',
+  props: AlertProps
+): Promise<RemoveReturnArgument>;
 
 export default async function callAlert<T>(
   type: string,

@@ -6,12 +6,16 @@ import Script from 'next/script';
 import { Suspense } from 'react';
 
 import ConfirmationAlert from '@/components/alert/confirmation';
+import RemoveAlert from '@/components/alert/remove';
 import CookieConsent from '@/components/cookie-consent';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
+import RecoverAccount from '@/components/recover-account';
 import ToastWrapper from '@/components/toast';
 
-import { saveCookiesPreferencesAction } from '@/actions/save-cookies-preferences.action';
+import getMeAction from '@/actions/get-me.action';
+import getUserAction from '@/actions/get-user.action';
+import saveCookiesPreferencesAction from '@/actions/save-cookies-preferences.action';
 
 import '../globals.scss';
 
@@ -48,6 +52,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
 
   const hasConsented = cookieStore.has('cookie-consent');
+  const me = await getMeAction();
 
   return (
     <html lang='pt'>
@@ -60,7 +65,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
+        <Navbar me={me} />
         <main className='mx-auto max-w-screen-xl p-4'>{children}</main>
         <Footer />
         <Suspense>
@@ -69,8 +74,10 @@ export default async function RootLayout({
             hasConsented={hasConsented}
             action={saveCookiesPreferencesAction}
           />
+          <RecoverAccount />
         </Suspense>
         <ConfirmationAlert />
+        <RemoveAlert />
         <Script
           strategy={'beforeInteractive'}
           src='https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js'

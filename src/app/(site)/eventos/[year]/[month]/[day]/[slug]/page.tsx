@@ -14,7 +14,8 @@ import SelectInput from '@/components/select';
 import { H3 } from '@/components/typography';
 
 import getEventBySlug from '@/services/get-event-by-slug.service';
-import getMeServerService from '@/services/get-me-server.service';
+
+import getMeAction from '@/actions/get-me.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
@@ -35,9 +36,7 @@ export default async function EventPage(props: PageProps) {
   const heads = await headers();
   const pathname = heads.get('next-url');
 
-  const cookieStore = await cookies();
-
-  const me = await getMeServerService(cookieStore.get('payload-token')?.value);
+  const me = await getMeAction();
   const event = await getEventBySlug(slug);
 
   if (!event) {

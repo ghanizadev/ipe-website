@@ -1,6 +1,5 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -9,16 +8,16 @@ import PrimaryButton from '@/components/button/primary-button';
 import Dropdown from '@/components/dropdown';
 import LinkButton from '@/components/link-button';
 
-import getMeServerService from '@/services/get-me-server.service';
 import getPages from '@/services/get-pages.service';
 
 import LogoutButton from './components/logout-button';
 
-export default async function Navbar() {
-  const pages = await getPages();
+type NavbarProps = {
+  me: { user?: UserDTO } | null;
+};
 
-  const cookieStore = await cookies();
-  const me = await getMeServerService(cookieStore.get('payload-token')?.value);
+export default async function Navbar(props: NavbarProps) {
+  const pages = await getPages();
 
   const navigation = (pages?.docs ?? []).reduce(
     (previous, current) => {
@@ -125,7 +124,7 @@ export default async function Navbar() {
             <li className={'m-auto'}>
               <LinkButton href='/contato'>Contato</LinkButton>
             </li>
-            {!me?.user && (
+            {!props.me?.user && (
               <>
                 <li className={'m-auto'}>
                   <PrimaryButton tag={'anchor'} href={'/entrar'}>
@@ -135,11 +134,11 @@ export default async function Navbar() {
               </>
             )}
             <hr className='my-2 h-px border-0 bg-gray-200 md:hidden' />
-            {me?.user && (
+            {props.me?.user && (
               <>
                 <li className={'m-auto text-[--primary-darker]'}>
                   <LinkButton href='/conta'>
-                    Olá, {me.user.name.split(' ')[0]}
+                    Olá, {props.me.user.name.split(' ')[0]}
                   </LinkButton>
                 </li>
                 <li className={'m-auto md:hidden'}>

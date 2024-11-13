@@ -46,7 +46,30 @@ export default class UserService extends APIService<UserDTO> {
     };
 
     const response = await fetch(this.baseUrl + '/reset-password', init);
-    console.log(await response.text());
+    return response.ok;
+  }
+
+  public async removeAccount(userId: string) {
+    const init: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+      },
+    };
+
+    const response = await fetch(`${this.baseUrl}/${userId}/schedule`, init);
+    return response.ok;
+  }
+
+  public async recoverAccount(userId: string) {
+    const init: RequestInit = {
+      method: 'PATCH',
+      headers: {
+        ...(await this.getAuthenticationHeaders()),
+      },
+    };
+
+    const response = await fetch(`${this.baseUrl}/${userId}/recover`, init);
     return response.ok;
   }
 }

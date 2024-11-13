@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-export async function saveCookiesPreferencesAction(accept: boolean) {
+export default async function saveCookiesPreferencesAction(accept: boolean) {
   const expires = new Date();
   expires.setMonth(expires.getMonth() + 6);
 

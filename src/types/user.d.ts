@@ -10,6 +10,7 @@ declare type UserDTO = PayloadDocument & {
   rg: string;
   role: string;
   tshirt?: { type: TShirtType; size: TShirtSize };
+  softDelete?: string;
 };
 
 declare type CreateUserDTO = Partial<UserDTO> & {
