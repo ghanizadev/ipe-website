@@ -6,7 +6,6 @@ import Link from '@/components/link';
 import RichText from '@/components/rich-text';
 
 import getMeAction from '@/actions/get-me.action';
-import getUserAction from '@/actions/get-user.action';
 
 import cancelEnrollmentAction from './_actions/cancel-enrollment.action';
 import findEnrollmentsAction from './_actions/find-enrollments.action';
@@ -86,7 +85,6 @@ export default async function Account() {
               <CancelEnrollmentButton
                 enrollmentId={enrollment.id}
                 action={cancelEnrollmentAction}
-                updateAction={getUserAction}
               />
             )}
             <br />

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import callAlert from '@/components/alert/call-alert';
 import SecondaryButton from '@/components/button/secondary-button';
@@ -9,7 +9,6 @@ import SecondaryButton from '@/components/button/secondary-button';
 type CancelEnrollmentButtonProps = {
   enrollmentId: string;
   action: (args: { enrollmentId: string }) => Promise<void>;
-  updateAction: () => Promise<any>;
 };
 
 export default function CancelEnrollmentButton(
@@ -29,10 +28,6 @@ export default function CancelEnrollmentButton(
       router.refresh();
     }
   };
-
-  useEffect(() => {
-    props.updateAction();
-  }, []);
 
   return (
     <SecondaryButton

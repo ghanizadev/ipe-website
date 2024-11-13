@@ -14,7 +14,6 @@ import RecoverAccount from '@/components/recover-account';
 import ToastWrapper from '@/components/toast';
 
 import getMeAction from '@/actions/get-me.action';
-import getUserAction from '@/actions/get-user.action';
 import saveCookiesPreferencesAction from '@/actions/save-cookies-preferences.action';
 
 import '../globals.scss';
