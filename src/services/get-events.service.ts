@@ -1,7 +1,7 @@
 import { getPayloadHeaders } from '@/helpers/get-payload-headers.helper';
 
 export default async function getEvents(): Promise<PaginatedResponse<EventDTO> | null> {
-  const url = `${process.env.CMS_API_URL}/api/events`;
+  const url = `${process.env.CMS_API_URL}/api/events?limit=3&sort=-date`;
   const init: RequestInit = {
     headers: {
       ...getPayloadHeaders(),

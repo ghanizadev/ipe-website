@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import SecondaryButton from '@/components/button/secondary-button';
+import EventStatus from '@/components/events/event-status';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
@@ -57,12 +58,15 @@ export default async function EventItem(props: EventProps) {
         </p>
       </div>
       <div className={'col-span-3 flex flex-col lg:col-span-3'}>
-        <Link
-          href={path}
-          className={'text-2xl font-bold text-[--primary] underline'}
-        >
-          {title}
-        </Link>
+        <div className={'flex flex-col'}>
+          <Link
+            href={path}
+            className={'text-2xl font-bold text-[--primary] underline'}
+          >
+            {title}
+          </Link>
+          <EventStatus event={props.event} />
+        </div>
         <p className={'my-2'}>{standFirst}</p>
         <div className={'w-32 self-end'}>
           <SecondaryButton tag={'anchor'} href={path}>
