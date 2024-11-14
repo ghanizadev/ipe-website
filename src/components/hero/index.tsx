@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import PrimaryButton from '@/components/button/primary-button';
 
+import { MOTIVATION } from '@/constants/content.constants';
+
 export default async function Hero() {
   return (
     <div className={'py-18 grid lg:grid-cols-12 lg:grid-rows-1 lg:py-24'}>
@@ -23,10 +25,7 @@ export default async function Hero() {
           Inclusão Pelo Esporte
         </h1>
         <p className={'mb-6 text-lg font-normal text-gray-500 lg:text-xl'}>
-          Somos uma instituição sem fins lucrativos, que teve início em 2016 com
-          apenas 4 atletas, e hoje atendemos mais de 60 pessoas, promovendo
-          ações ligadas ao esporte e lazer, com foco a inclusão de pessoas com
-          deficiência e voluntários.
+          {MOTIVATION}
         </p>
         <PrimaryButton tag={'anchor'} href={'/como-ajudar'}>
           Saiba como ajudar
