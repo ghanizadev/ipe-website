@@ -8,6 +8,7 @@ import LineBreakNode from '@/components/rich-text/nodes/linebreak';
 import LinkNode from '@/components/rich-text/nodes/link';
 import ParagraphNode from '@/components/rich-text/nodes/paragraph';
 import TextNode from '@/components/rich-text/nodes/text';
+import UploadNode from '@/components/rich-text/nodes/upload';
 
 type GetNodeProps = {
   node: LexicalAnyNode;
@@ -23,6 +24,8 @@ export default async function Node({ node }: GetNodeProps) {
       return <LinkNode node={node} />;
     case 'linebreak':
       return <LineBreakNode />;
+    case 'upload':
+      return <UploadNode node={node} />;
     case 'heading':
       return <HeadingNode node={node} />;
     case 'horizontalrule':

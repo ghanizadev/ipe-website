@@ -6,6 +6,7 @@ declare type LexicalAnyNode =
   | LexicalLinkNode
   | LexicalLineBreakNode
   | LexicalTextNode
+  | LexicalUploadNode
   | LexicalHorizontalRuleNode;
 
 declare type LexicalRootNode = {
@@ -59,6 +60,17 @@ declare type LexicalTextNode = {
   mode: 'normal';
   detail: number;
   format: number;
+};
+
+declare type LexicalUploadNode = {
+  format: string;
+  type: 'upload';
+  version: number;
+  relationTo: string;
+  value: Document & {
+    mimeType: 'video/mp4';
+    url: string;
+  };
 };
 
 declare type LexicalLineBreakNode = {
