@@ -88,7 +88,9 @@ export default async function EventPage(props: PageProps) {
             title={event.title}
           />
         </div>
-        <RichText html={event.html} className={'my-8'} />
+        {event?.content && (
+          <RichText nodes={event.content} className={'my-8'} />
+        )}
         <div className={'mb-16 flex items-center justify-center'}>
           <EnrollmentButton event={event} />
         </div>

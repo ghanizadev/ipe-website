@@ -3,8 +3,8 @@ import { RedirectType, redirect } from 'next/navigation';
 import React from 'react';
 
 import Link from '@/components/link';
-import RichText from '@/components/rich-text';
 
+// import RichText from '@/components/rich-text';
 import getMeAction from '@/actions/get-me.action';
 
 import cancelEnrollmentAction from './_actions/cancel-enrollment.action';
@@ -51,6 +51,14 @@ export default async function Account() {
   return (
     <div className={'m-4'}>
       <h4 className={'mb-2 font-bold'}>Minhas inscrições</h4>
+      {!myEnrollments?.length && (
+        <div className={'text-gray-600 p-4'}>
+          <p>
+            Você ainda não se inscreveu em nenhum evento. Confira os próximos
+            eventos na nossa <Link href={'/'}>página inicial</Link>.
+          </p>
+        </div>
+      )}
       {myEnrollments?.map((enrollment) => {
         const event = enrollment.event;
         return (
@@ -79,7 +87,7 @@ export default async function Account() {
             <p className={'my-4 text-lg leading-none text-[--primary]'}>
               Instruções
             </p>
-            <RichText html={enrollment.event?.instructionsHtml} />
+            {/*<RichText html={enrollment.event?.instructionsHtml} />*/}
             <div className={'absolute right-2 top-2 my-2'}></div>
             {!enrollment.payment?.paid && (
               <CancelEnrollmentButton

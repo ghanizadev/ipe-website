@@ -1,17 +1,22 @@
+'use server';
+
 import React from 'react';
 
-import './rich-text.scss';
+import Node from '@/components/rich-text/node';
 
 type RichTextProps = {
-  html?: string;
+  nodes: LexicalNodes;
   className?: string;
 };
 
-export default function RichText({ html, className }: RichTextProps) {
+export default async function RichText({ nodes, className }: RichTextProps) {
   return (
-    <div
-      className={['richText', className].join(' ').trim()}
-      dangerouslySetInnerHTML={{ __html: html ?? '' }}
-    ></div>
+    <>
+      <div className={['richText', className].join(' ').trim()}>
+        {nodes.root.children.map((child: AnyNode, index: number) => (
+          <Node key={index} node={child} />
+        ))}
+      </div>
+    </>
   );
 }

@@ -11,6 +11,11 @@ export default async function Events() {
   return (
     <section className={'my-16 px-4'}>
       <H2>Próximos eventos</H2>
+      {!events?.docs.length && (
+        <div className={'text-gray-600 p-4'}>
+          <p>Não há eventos ativos no momento.</p>
+        </div>
+      )}
       {events?.docs?.map((event) => <EventItem key={event.id} event={event} />)}
     </section>
   );
