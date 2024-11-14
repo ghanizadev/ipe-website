@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import Head from 'next/head';
 import { cookies } from 'next/headers';
 import Script from 'next/script';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 
 import ConfirmationAlert from '@/components/alert/confirmation';
 import RemoveAlert from '@/components/alert/remove';

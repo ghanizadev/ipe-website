@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 import Head from 'next/head';
 import Script from 'next/script';
+import React from 'react';
 
 import '../globals.scss';
 

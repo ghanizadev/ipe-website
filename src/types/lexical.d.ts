@@ -5,6 +5,7 @@ declare type LexicalAnyNode =
   | LexicalHeadingNode
   | LexicalLinkNode
   | LexicalLineBreakNode
+  | LexicalTextNode
   | LexicalHorizontalRuleNode;
 
 declare type LexicalRootNode = {
@@ -46,6 +47,18 @@ declare type LexicalLinkNode = {
     newTab: boolean;
     url: string;
   }[];
+};
+
+declare type LexicalTextNode = {
+  children: AnyNode[];
+  direction: 'ltr' | 'rtl';
+  version: number;
+  type: 'text';
+  text: string;
+  style: string;
+  mode: 'normal';
+  detail: number;
+  format: number;
 };
 
 declare type LexicalLineBreakNode = {

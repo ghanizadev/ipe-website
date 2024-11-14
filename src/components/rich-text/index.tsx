@@ -13,7 +13,7 @@ export default async function RichText({ nodes, className }: RichTextProps) {
   return (
     <>
       <div className={['richText', className].join(' ').trim()}>
-        {nodes.root.children.map((child: AnyNode, index: number) => (
+        {nodes.root.children.map((child: LexicalAnyNode, index: number) => (
           <Node key={index} node={child} />
         ))}
       </div>

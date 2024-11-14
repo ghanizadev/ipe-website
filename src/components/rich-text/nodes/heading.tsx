@@ -5,7 +5,7 @@ import React from 'react';
 import Node from '@/components/rich-text/node';
 
 type HeadingNodeProps = {
-  node: HeadingNode;
+  node: LexicalHeadingNode;
 };
 
 export default async function HeadingNode(props: HeadingNodeProps) {

@@ -5,7 +5,7 @@ import React from 'react';
 import { LexicalFormats } from '@/enums/lexical';
 
 type ParagraphNodeProps = {
-  node: Heading;
+  node: LexicalTextNode;
   children?: React.ReactNode;
 };
 

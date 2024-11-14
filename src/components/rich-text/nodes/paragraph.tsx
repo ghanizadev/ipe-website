@@ -5,7 +5,7 @@ import React from 'react';
 import Node from '@/components/rich-text/node';
 
 type ParagraphNodeProps = {
-  node: ParagraphNode;
+  node: LexicalParagraphNode;
 };
 
 export default async function ParagraphNode(props: ParagraphNodeProps) {
