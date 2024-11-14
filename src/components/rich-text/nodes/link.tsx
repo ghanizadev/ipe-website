@@ -9,7 +9,7 @@ type LinkNodeProps = {
 
 export default async function LinkNode(props: LinkNodeProps) {
   const { node } = props;
-  const field = node.fields[0];
+  const field = node.fields;
 
   return (
     <Link href={field?.url ?? '#'} target={field?.newTab ? '_blank' : '_self'}>

@@ -46,7 +46,7 @@ declare type LexicalLinkNode = {
     linkType: 'custom' | 'internal';
     newTab: boolean;
     url: string;
-  }[];
+  };
 };
 
 declare type LexicalTextNode = {
