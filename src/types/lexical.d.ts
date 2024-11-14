@@ -1,22 +1,21 @@
 declare type Document = Record<string, string | number | boolean | Document>;
 
-declare type AnyNode =
-  | ParagraphNode
-  | HeadingNode
-  | LinkNode
-  | Heading
-  | LineBreakNode
-  | HorizontalRuleNode;
+declare type LexicalAnyNode =
+  | LexicalParagraphNode
+  | LexicalHeadingNode
+  | LexicalLinkNode
+  | LexicalLineBreakNode
+  | LexicalHorizontalRuleNode;
 
-declare type RootNode = {
-  children: AnyNode[];
+declare type LexicalRootNode = {
+  children: LexicalAnyNode[];
   direction: 'ltr' | 'rtl';
   version: number;
   type: 'root';
 };
 
-declare type ParagraphNode = {
-  children: AnyNode[];
+declare type LexicalParagraphNode = {
+  children: LexicalAnyNode[];
   direction: 'ltr' | 'rtl';
   version: number;
   type: 'paragraph';
@@ -24,8 +23,8 @@ declare type ParagraphNode = {
   indent: number;
 };
 
-declare type HeadingNode = {
-  children: AnyNode[];
+declare type LexicalHeadingNode = {
+  children: LexicalAnyNode[];
   direction: 'ltr' | 'rtl';
   version: number;
   type: 'heading';
@@ -33,8 +32,8 @@ declare type HeadingNode = {
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 };
 
-declare type LinkNode = {
-  children: AnyNode[];
+declare type LexicalLinkNode = {
+  children: LexicalAnyNode[];
   direction: 'ltr' | 'rtl';
   version: number;
   type: 'link';
@@ -49,28 +48,16 @@ declare type LinkNode = {
   }[];
 };
 
-declare type Heading = {
-  children: AnyNode[];
-  direction: 'ltr' | 'rtl';
-  version: number;
-  type: 'text';
-  text: string;
-  style: string;
-  mode: 'normal';
-  detail: number;
-  format: number;
-};
-
-declare type LineBreakNode = {
+declare type LexicalLineBreakNode = {
   type: 'linebreak';
   version: number;
 };
 
-declare type HorizontalRuleNode = {
+declare type LexicalHorizontalRuleNode = {
   type: 'horizontalrule';
   version: number;
 };
 
 declare type LexicalNodes = {
-  root: RootNode;
+  root: LexicalRootNode;
 };
