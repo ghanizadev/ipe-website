@@ -186,11 +186,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const event = await getEventBySlug(slug);
 
+  if (!event) return {};
+
   return {
     title: `${event?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
+    description: event?.standFirst,
     openGraph: {
       title: event?.title,
       description: event?.standFirst,
+      url: process.env.NEXT_PUBLIC_URL + makeEventLink(event),
+      siteName: 'IPE - Inclusão Pelo Esporte',
       images: {
         height: event?.image.height,
         width: event?.image.width,
