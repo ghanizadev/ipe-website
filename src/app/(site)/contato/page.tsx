@@ -6,6 +6,8 @@ import Link from '@/components/link';
 import TextArea from '@/components/textarea';
 import { H1, H2, H3 } from '@/components/typography';
 
+import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
+
 import createMessageAction from './_actions/create-message.action';
 import Form from './_components/form';
 
@@ -83,4 +85,5 @@ export default function ContactPage() {
 
 export const metadata: Metadata = {
   title: 'Contato / IPE - Inclusão Pelo Esporte',
+  openGraph: DEFAULT_OPENGRAPH,
 };

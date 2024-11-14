@@ -4,6 +4,8 @@ import RichText from '@/components/rich-text';
 
 import getPageBySlug from '@/services/get-page-by-slug.service';
 
+import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
+
 type PageProps = {
   params: Promise<Record<string, string>>;
 };
@@ -29,5 +31,6 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: `${customPage?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
+    openGraph: DEFAULT_OPENGRAPH,
   };
 }

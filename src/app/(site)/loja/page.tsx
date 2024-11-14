@@ -4,6 +4,8 @@ import { Suspense } from 'react';
 import Pagination from '@/components/pagination';
 import { H1, H2, P } from '@/components/typography';
 
+import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
+
 import getProducts from '@/app/(site)/loja/_actions/get-products.action';
 import ProductItem from '@/app/(site)/loja/_components/product-item';
 
@@ -42,6 +44,9 @@ export default async function StorePage(props: {
   );
 }
 
-export const metadata: Metadata = {
-  title: 'Loja / IPE - Inclusão Pelo Esporte',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Loja / IPE - Inclusão Pelo Esporte',
+    openGraph: DEFAULT_OPENGRAPH,
+  };
+}
