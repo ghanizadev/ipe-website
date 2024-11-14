@@ -19,11 +19,11 @@ export default async function Node({ node }: GetNodeProps) {
     case 'text':
       return <TextNode node={node} />;
     case 'linebreak':
-      return <LineBreakNode node={node} />;
+      return <LineBreakNode />;
     case 'heading':
       return <HeadingNode node={node} />;
     case 'horizontalrule':
-      return <HorizontalRuleNode node={node} />;
+      return <HorizontalRuleNode />;
     default:
       return <></>;
   }
