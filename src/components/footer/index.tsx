@@ -26,14 +26,14 @@ export default async function Footer() {
           <a href={'/institucional/quem-somos-nos'}>Saiba mais</a>
         </div>
         <nav>
-          <ul className={'text-gray-400'}>
+          <ul className={'text-gray-400 [&>li]:mb-2'}>
             {pages?.docs
               ?.filter((page) => page.shownOnFooter)
               .map((page) => (
                 <Fragment key={page.id}>
                   <li
                     className={
-                      'inline-block w-full text-nowrap underline lg:mx-2 lg:w-min'
+                      'inline-block w-full underline md:text-nowrap lg:mx-2 lg:w-min'
                     }
                   >
                     <a
@@ -47,7 +47,7 @@ export default async function Footer() {
               ))}
             <li
               className={
-                'inline-block w-full text-nowrap underline lg:mx-2 lg:w-min'
+                'inline-block w-full underline md:text-nowrap lg:mx-2 lg:w-min'
               }
             >
               <a href={'/contato'}>Contato</a>
@@ -55,7 +55,7 @@ export default async function Footer() {
             <div className={'hidden md:inline'}>&bull;</div>
             <li
               className={
-                'inline-block w-full text-nowrap underline lg:mx-2 lg:w-min'
+                'inline-block w-full underline md:text-nowrap lg:mx-2 lg:w-min'
               }
             >
               <a href={'/admin'}>Interno</a>
