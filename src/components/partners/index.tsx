@@ -29,7 +29,10 @@ export default async function Partners() {
               rel={'noreferrer,noopener'}
             >
               <Image
-                src={partner.logo.sizes.md?.url ?? ''}
+                src={
+                  process.env.NEXT_PUBLIC_CMS_URL +
+                  (partner.logo.sizes.md?.url ?? '')
+                }
                 alt={partner.name + ' logo'}
                 width={128}
                 height={128}
@@ -49,7 +52,10 @@ export default async function Partners() {
               rel={'noreferrer,noopener'}
             >
               <Image
-                src={partner.logo.sizes.md?.url ?? ''}
+                src={
+                  process.env.NEXT_PUBLIC_CMS_URL +
+                  (partner.logo.sizes.md?.url ?? '')
+                }
                 alt={partner.name + ' logo'}
                 width={128}
                 height={128}

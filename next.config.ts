@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3300',
+        pathname: '/**',
+      },
+      {
         protocol: 'https',
         hostname: 'ipe-cms-65f2725a70b5.herokuapp.com',
         port: '',

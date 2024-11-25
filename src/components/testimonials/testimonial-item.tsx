@@ -9,7 +9,7 @@ export default function TestimonialItem(props: TestimonialSwitchProps) {
     <>
       {avatar && (
         <Image
-          src={avatar.sizes.sm.url!}
+          src={process.env.NEXT_PUBLIC_CMS_URL + avatar.sizes.sm.url!}
           alt={'testimonial'}
           width={avatar.sizes.sm.width!}
           height={avatar.sizes.sm.height!}
