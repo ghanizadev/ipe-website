@@ -15,15 +15,15 @@ export default async function Footer() {
         }
       >
         <div>
-          <p className={'mb-6 font-bold'}>IPE - Inclusao pelo esporte</p>
-          <p className={'mb-2 text-gray-400'}>
-            Mussum Ipsum, cacilds vidis litro abertis. Casamentiss faiz
-            malandris se pirulitá. Negão é teu passadis, eu sou faxa pretis.
-            Copo furadis é disculpa de bebadis, arcu quam euismod magna. Mauris
-            nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae
-            iaculis nisl.
-          </p>
-          <a href={'/institucional/quem-somos-nos'}>Saiba mais</a>
+          <p className={'mb-6 font-bold'}>IPE - Inclusão Pelo Esporte</p>
+          {/*<p className={'mb-2 text-gray-400'}>*/}
+          {/*  Mussum Ipsum, cacilds vidis litro abertis. Casamentiss faiz*/}
+          {/*  malandris se pirulitá. Negão é teu passadis, eu sou faxa pretis.*/}
+          {/*  Copo furadis é disculpa de bebadis, arcu quam euismod magna. Mauris*/}
+          {/*  nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae*/}
+          {/*  iaculis nisl.*/}
+          {/*</p>*/}
+          {/*<Link href={'/quem-somos-nos'}>Saiba mais</Link>*/}
         </div>
         <nav>
           <ul className={'text-gray-400 [&>li]:mb-2'}>
