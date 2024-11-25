@@ -92,7 +92,11 @@ export default async function EventPage(props: PageProps) {
           <RichText nodes={event.content} className={'my-8'} />
         )}
         <div className={'mb-16 flex items-center justify-center'}>
-          <EnrollmentButton event={event} />
+          {new Date(event.dueDate ?? 0).getTime() > Date.now() ? (
+            <EnrollmentButton event={event} />
+          ) : (
+            <p>Inscrições encerradas</p>
+          )}
         </div>
       </div>
       {register && (
