@@ -47,7 +47,7 @@ export default function SimpleToast({ type, message, title }: ToastProps) {
         type='button'
         onClick={handleClose}
         className={
-          'float-right ml-1.5 ms-auto inline-flex h-8 w-8 flex-shrink-0 items-center justify-center p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300'
+          'float-right ml-1.5 ms-auto inline-flex h-8 w-8 flex-shrink-0 items-center justify-center p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900'
         }
         data-dismiss-target={'#toast-interactive'}
         aria-label={'Close'}

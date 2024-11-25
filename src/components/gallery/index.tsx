@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import getPhotos from '@/services/get-photos.service';
+
 type GalleryProps = {
   photos?: PhotoDTO[];
 };
@@ -11,7 +13,10 @@ let touchStart = 0;
 let touchEnd = 0;
 
 export default function Gallery({ photos: init }: GalleryProps) {
-  const [photos] = useState<PhotoDTO[]>(init ?? []);
+  const [photos, setPhotos] = useState<PhotoDTO[]>(init ?? []);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasNext, setHasNext] = useState(true);
   const [previewIndex, setPreviewIndex] = useState<number>(-1);
   const [columns, setColumns] = useState(0);
 
@@ -55,25 +60,35 @@ export default function Gallery({ photos: init }: GalleryProps) {
     };
   };
 
+  const allImagesShowing = () => {
+    const images = document.querySelectorAll('[data-image]');
+    const viewHeight = Math.max(
+      document.documentElement.clientHeight,
+      window.innerHeight
+    );
+
+    if (!images.length) return true;
+
+    const rect = images[images.length - 1].getBoundingClientRect();
+    return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+  };
+
   useEffect(() => {
     function doSomething() {
-      if (!ref.current) return;
+      if (!ref.current || loading || !hasNext) return;
 
-      const offsetHeight = ref.current.offsetHeight;
-      const top = ref.current.getBoundingClientRect().top;
-      const offset = 300;
-      const shouldUpdate = -top + window.innerHeight > offsetHeight - offset;
-
-      if (shouldUpdate) {
-        console.log('update');
+      if (allImagesShowing()) {
+        setLoading(true);
+        setPage((page) => page + 1);
       }
     }
 
+    doSomething();
     document.addEventListener('scroll', doSomething);
     return () => {
       document.removeEventListener('scroll', doSomething);
     };
-  }, [ref]);
+  }, [ref, loading, hasNext]);
 
   useEffect(() => {
     if (previewIndex >= 0) document.body.classList.add('no-scroll');
@@ -124,6 +139,17 @@ export default function Gallery({ photos: init }: GalleryProps) {
     };
   }, []);
 
+  useEffect(() => {
+    if (loading && hasNext)
+      getPhotos(page, 3).then((res) => {
+        if (!res?.hasNextPage) setHasNext(false);
+        if (res?.docs) {
+          setPhotos((photos) => [...photos, ...res.docs]);
+          setLoading(false);
+        }
+      });
+  }, [loading, page, hasNext]);
+
   return (
     <>
       <section
@@ -137,6 +163,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
                 {ps.map((photo) => {
                   return (
                     <Image
+                      data-image
                       key={photo.id}
                       src={photo.url}
                       alt={photo.altText ?? ''}

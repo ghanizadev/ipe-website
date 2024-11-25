@@ -14,7 +14,7 @@ function SecondaryButton(props: ButtonProps): React.JSX.Element;
 
 function SecondaryButton({ tag, ...props }: ButtonProps | AnchorProps) {
   let classStr =
-    'border-2 text-[--secondary] border-[--secondary] bg-transparent hover:text-[--primary] hover:border-[--primary] focus:ring-[--primary]';
+    'border-2 text-[--secondary] border-[--secondary] bg-transparent hover:text-[--primary] hover:border-[--primary]';
 
   if (props.className) {
     classStr = twMerge(classStr, props.className);

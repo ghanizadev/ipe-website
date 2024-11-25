@@ -21,6 +21,7 @@
 - [x] Ajustar fundo colorido dos itens no menu hamburger na versao mobile
 - [x] Adicionar logica de redirect quando criar uma conta
 - [ ] Validacao de CPF
+- [ ] Adicionar endereco
 
 ## Copies
 
@@ -38,6 +39,6 @@
 - [x] Opengraph para os eventos
 - [ ] Refatorar componentes e reusar tipografia
 - [ ] Criar classes no tailwind
-- [ ] Melhorar a UX da galeria de fotos, com swap pra mobile e botoes para passar as fotos
+- [x] Melhorar a UX da galeria de fotos, com swap pra mobile e botoes para passar as fotos
 - [ ] Melhorar a interface da conta de usuario
 - [ ] Atualizar paginas editaveis

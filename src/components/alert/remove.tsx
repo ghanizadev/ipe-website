@@ -80,14 +80,14 @@ export default function RemoveAlert() {
                 <button
                   type='button'
                   onClick={handleAction(false)}
-                  className='rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100'
+                  className='rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:outline-none'
                 >
                   Cancelar
                 </button>
                 <button
                   type='button'
                   onClick={handleAction(true)}
-                  className='focus:ring-bg-red-800 ms-3 rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-4'
+                  className='ms-3 rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none'
                 >
                   Aceito
                 </button>

@@ -101,7 +101,7 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
                   data-modal-hide='small-modal'
                   type='button'
                   onClick={handleAction('deny')}
-                  className='rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100'
+                  className='rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-700 focus:z-10'
                 >
                   Cancelar
                 </button>
@@ -109,7 +109,7 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
                   data-modal-hide='small-modal'
                   type='button'
                   onClick={handleAction('confirm')}
-                  className='focus:ring-bg-[--secondary] ms-3 rounded-lg bg-[--primary] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[--primary-darker] focus:outline-none focus:ring-4'
+                  className='ms-3 rounded-lg bg-[--primary] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[--primary-darker] focus:outline-none'
                 >
                   Aceito
                 </button>

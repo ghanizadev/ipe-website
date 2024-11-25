@@ -12,7 +12,7 @@ type CheckboxInputProps = {
 
 export default function CheckboxInput(props: CheckboxInputProps) {
   const inputClasses = [
-    'w-4 h-4 text-[--primary] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[--primary]',
+    'w-4 h-4 text-[--primary] border border-gray-300 rounded bg-gray-50',
   ];
   const labelClasses = ['ms-2 text-sm font-medium text-gray-900'];
 

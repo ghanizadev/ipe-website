@@ -15,9 +15,9 @@ type TextInputProps = {
 
 export default function TextInput(props: TextInputProps) {
   const successClassNames =
-    'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500';
+    'bg-green-50 border-green-500 text-green-900 placeholder-green-700';
   const errorClassNames =
-    'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500';
+    'bg-red-50 border-red-500 text-red-900 placeholder-red-700';
   const commonClassNames = ['border text-sm rounded-lg block w-full p-2.5'];
 
   const wrapperClassNames = [props.className ?? ''];
@@ -27,9 +27,7 @@ export default function TextInput(props: TextInputProps) {
   } else if (props.success) {
     commonClassNames.push(successClassNames);
   } else {
-    commonClassNames.push(
-      'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500'
-    );
+    commonClassNames.push('bg-gray-50 border-gray-300 text-gray-900');
   }
 
   if (props.hidden) {

@@ -10,7 +10,7 @@ export default function Button(props: ButtonProps) {
   };
 
   const classNames =
-    'inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-lg focus:ring-4 ' +
+    'inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-lg ' +
     props.className;
 
   return (
