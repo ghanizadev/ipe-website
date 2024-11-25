@@ -2,6 +2,7 @@ type TextAreaProps = {
   label: string;
   name: string;
   className?: string;
+  defaultValue?: string;
   placeholder?: string;
   required?: boolean;
 };
@@ -11,6 +12,7 @@ export default function TextArea({
   name,
   className,
   placeholder,
+  defaultValue,
   required,
 }: TextAreaProps) {
   const classes = [
@@ -36,6 +38,7 @@ export default function TextArea({
         className={classes.join(' ').trim()}
         placeholder={placeholder}
         name={name}
+        defaultValue={defaultValue}
       ></textarea>
     </>
   );

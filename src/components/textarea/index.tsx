@@ -3,6 +3,7 @@ type TextAreaProps = {
   name: string;
   className?: string;
   placeholder?: string;
+  defaultValue?: string;
   required?: boolean;
 };
 
@@ -11,10 +12,11 @@ export default function TextArea({
   name,
   className,
   placeholder,
+  defaultValue,
   required,
 }: TextAreaProps) {
   const classes = [
-    'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300',
+    'block p-2.5 my-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300',
   ];
 
   if (className) {
@@ -36,6 +38,7 @@ export default function TextArea({
         className={classes.join(' ').trim()}
         placeholder={placeholder}
         name={name}
+        defaultValue={defaultValue}
       ></textarea>
     </>
   );

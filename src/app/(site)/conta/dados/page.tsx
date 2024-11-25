@@ -4,6 +4,7 @@ import PrimaryButton from '@/components/button/primary-button';
 import Form from '@/components/form';
 import { TextInput } from '@/components/input';
 import SelectInput from '@/components/select';
+import TextArea from '@/components/textarea';
 
 import getMeAction from '@/actions/get-me.action';
 
@@ -20,7 +21,7 @@ export default async function AccountDataPage() {
     return redirect('/');
   }
 
-  const { id, name, email, birthday, rg, cpf, tshirt } = me.user;
+  const { id, name, email, birthday, rg, cpf, tshirt, address } = me.user;
 
   return (
     <div>
@@ -49,6 +50,12 @@ export default async function AccountDataPage() {
           name={'birthday'}
           type={'date'}
           defaultValue={birthday}
+          required
+        />
+        <TextArea
+          label={'Endereço'}
+          name={'address'}
+          defaultValue={address}
           required
         />
         <h3 className={'my-4 text-lg leading-none text-[--primary]'}>

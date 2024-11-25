@@ -9,6 +9,7 @@ import SecondaryButton from '@/components/button/secondary-button';
 import { TextInput } from '@/components/input';
 import CheckboxInput from '@/components/input/checkbox-input';
 import Link from '@/components/link';
+import TextArea from '@/components/textarea';
 
 import createAccount from '@/services/create-account.service';
 import grecaptchaService from '@/services/grecapcha.service';
@@ -161,8 +162,8 @@ export default function CreateAccountForm() {
             type={'date'}
             label={'Data de nascimento'}
             name={'birthday'}
-            className={'mb-8'}
           />
+          <TextArea label={'Endereço'} name={'address'} className={'mb-8'} />
           <TextInput
             error={errors['password']}
             label={'Senha'}

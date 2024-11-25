@@ -8,6 +8,7 @@ declare type UserDTO = PayloadDocument & {
   email: string;
   name: string;
   rg: string;
+  address: string;
   role: string;
   tshirt?: { type: TShirtType; size: TShirtSize };
   softDelete?: string;

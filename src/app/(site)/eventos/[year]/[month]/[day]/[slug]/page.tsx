@@ -11,6 +11,7 @@ import { TextInput } from '@/components/input';
 import Modal from '@/components/modal';
 import RichText from '@/components/rich-text';
 import SelectInput from '@/components/select';
+import TextArea from '@/components/textarea';
 import { H3 } from '@/components/typography';
 
 import getEventBySlug from '@/services/get-event-by-slug.service';
@@ -127,6 +128,12 @@ export default async function EventPage(props: PageProps) {
               name={'email'}
               defaultValue={me?.user?.email}
               readonly
+              required
+            />
+            <TextArea
+              label={'Endereço'}
+              name={'address'}
+              defaultValue={me?.user?.address}
               required
             />
             <H3>Documentação</H3>

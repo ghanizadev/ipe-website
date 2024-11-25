@@ -18,7 +18,9 @@ export default function TextInput(props: TextInputProps) {
     'bg-green-50 border-green-500 text-green-900 placeholder-green-700';
   const errorClassNames =
     'bg-red-50 border-red-500 text-red-900 placeholder-red-700';
-  const commonClassNames = ['border text-sm rounded-lg block w-full p-2.5'];
+  const commonClassNames = [
+    'border text-sm rounded-lg block w-full p-2.5 my-1',
+  ];
 
   const wrapperClassNames = [props.className ?? ''];
 
