@@ -12,7 +12,7 @@ export default function ShareBar({ link, title }: ShareBarProps) {
   return (
     <ul className={'text-gray-600 inline-flex'}>
       <li className={'ml-6'}>
-        <Link target={'_blank'} href={`whatsapp://send?text=${encodedLink}`}>
+        <Link target={'_blank'} href={`https://wa.me/?text=${encodedLink}`}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='24'
