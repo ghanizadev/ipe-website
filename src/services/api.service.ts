@@ -18,7 +18,7 @@ export class APIService<T = PayloadDocument> {
 
   protected makeQueryString(
     pagination: PaginationDTO = {},
-    additional: Record<string, object> = {}
+    additional: Record<string, object | number | string> = {}
   ): string {
     const obj = { ...pagination, ...additional };
 

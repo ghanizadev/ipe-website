@@ -10,4 +10,5 @@ declare type EventDTO = PayloadDocument & {
   dueDate?: string;
   html?: string;
   instructionsHtml?: string;
+  instructions?: LexicalNodes;
 };

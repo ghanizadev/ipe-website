@@ -3,8 +3,8 @@ import { RedirectType, redirect } from 'next/navigation';
 import React from 'react';
 
 import Link from '@/components/link';
+import RichText from '@/components/rich-text';
 
-// import RichText from '@/components/rich-text';
 import getMeAction from '@/actions/get-me.action';
 
 import cancelEnrollmentAction from './_actions/cancel-enrollment.action';
@@ -48,6 +48,10 @@ export default async function Account() {
 
   const { myEnrollments } = await findEnrollmentsAction(me.user.id);
 
+  const enrollments = (myEnrollments ?? []).filter(
+    (enrollment) => typeof enrollment.event === 'object' && enrollment.event?.id
+  );
+
   return (
     <div className={'m-4'}>
       <h4 className={'mb-2 font-bold'}>Minhas inscrições</h4>
@@ -59,7 +63,12 @@ export default async function Account() {
           </p>
         </div>
       )}
-      {myEnrollments?.map((enrollment) => {
+      {!enrollments.length ? (
+        <p className={'my-4 text-neutral-500'}>Nenhuma inscrição</p>
+      ) : (
+        <></>
+      )}
+      {enrollments.map((enrollment) => {
         const event = enrollment.event;
         return (
           <div
@@ -87,7 +96,9 @@ export default async function Account() {
             <p className={'my-4 text-lg leading-none text-[--primary]'}>
               Instruções
             </p>
-            {/*<RichText html={enrollment.event?.instructionsHtml} />*/}
+            {enrollment.event?.instructions && (
+              <RichText nodes={enrollment.event?.instructions} />
+            )}
             <div className={'absolute right-2 top-2 my-2'}></div>
             {!enrollment.payment?.paid && (
               <CancelEnrollmentButton
