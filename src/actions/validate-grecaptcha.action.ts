@@ -25,7 +25,7 @@ export default async function validateGRecaptcha(
 
   const response = await fetch(GRECAPTCHA_URL, init);
   if (!response.ok) {
-    //log error
+    console.log('Recaptcha Error', await response.text());
     return true;
   }
 

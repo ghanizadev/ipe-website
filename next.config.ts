@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'ipe-cms-65f2725a70b5.herokuapp.com',
+        hostname: 'cms.instituto-ipe.org',
         port: '',
         pathname: '/**',
       },
