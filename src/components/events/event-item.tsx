@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import SecondaryButton from '@/components/button/secondary-button';
+import { EventDate } from '@/components/events/event-date';
 import EventStatus from '@/components/events/event-status';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
@@ -20,10 +21,6 @@ export default async function EventItem(props: EventProps) {
     standFirst,
     image: { height, width, url },
   } = props.event;
-
-  const formattedDate = new Date(date);
-  const hour = `${formattedDate.getHours().toString()}:${formattedDate.getMinutes().toString().padStart(2, '0')}`;
-  const day = `${formattedDate.getDate()}/${formattedDate.getMonth() + 1}`;
 
   const path = makeEventLink(props.event);
 
@@ -43,12 +40,7 @@ export default async function EventItem(props: EventProps) {
           'col-span-3 flex flex-row flex-wrap items-end lg:col-span-1 lg:flex-col lg:items-end'
         }
       >
-        <h3 className={'mr-2 text-2xl font-bold leading-none text-red-800'}>
-          Dia {day}
-        </h3>
-        <p className={'mr-2 text-lg leading-none text-[--primary]'}>
-          às {hour} horas
-        </p>
+        <EventDate date={date} />
         <p
           className={
             'text-md font-base mr-2 w-full leading-none text-gray-500 lg:text-right lg:text-lg'
