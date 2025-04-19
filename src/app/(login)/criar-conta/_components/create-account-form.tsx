@@ -15,6 +15,7 @@ import createAccount from '@/services/create-account.service';
 import grecaptchaService from '@/services/grecapcha.service';
 
 import formEventParser from '@/helpers/form-event-parser.helper';
+import SelectInput from '@/components/select';
 
 type SelectButtonProps = {
   label: string;
@@ -155,6 +156,16 @@ export default function CreateAccountForm() {
             error={errors['email']}
             label={'E-mail'}
             name={'email'}
+            required
+          />
+          <SelectInput
+            options={[
+              { label: 'Deficiente Físico', value: 'physical' },
+              { label: 'Deficiente Intelectual', value: 'intelectual' },
+              { label: 'Deficiente Visual', value: 'visual' }
+            ]}
+            label={'Classificação PCD'}
+            name={'pwd-classification'}
             required
           />
           <TextInput
