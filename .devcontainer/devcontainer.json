@@ -2,7 +2,34 @@
   "name": "ipe-website",
   "dockerFile": "Dockerfile",
   "context": "..",
+  "remoteUser": "dev",
   "customizations": {
+    "jetbrains": {
+      "plugins": [
+        "com.intellij.ml.llm",
+        "com.intellij.typescript-language",
+        "JavaScript.NextJS",
+        "com.intellij.tailwindcss",
+        "com.intellij.CSS",
+        "com.intellij.html",
+        "com.intellij.JavaScript",
+        "org.jetbrains.plugins.typescript",
+        "NodeJS",
+        "prettierJS",
+        "org.jetbrains.plugins.mongo",
+        "Git4Idea",
+        "com.intellij.database",
+        "mobi.hsz.idea.gitignore",
+        "com.eslint",
+        "com.intellij.tailwindcss",
+        "ru.adelf.idea.dotenv"
+      ],
+      "settings": {
+        "com.intellij:app:GeneralSettings.autoSaveIfInactive": true,
+        "Git4Idea:app:Git-Application-Settings.use_credential_helper": true,
+        "Git4Idea:app:Git-Application-Settings.staging_area_enabled": true
+      }
+    },
     "vscode": {
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
@@ -18,9 +45,6 @@
   },
   "postCreateCommand": "npm install",
   "forwardPorts": [3400],
-  "mounts": [
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ],
   "remoteEnv": {
     "NODE_ENV": "development"
   }
