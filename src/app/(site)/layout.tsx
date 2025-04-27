@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Head from 'next/head';
@@ -88,6 +89,7 @@ export default async function RootLayout({
             process.env.NEXT_PUBLIC_GRECAPTCHA_SITE_KEY
           }
         ></Script>
+        <GoogleAnalytics gaId={'G-QBTZB6ZD7N'} />
       </body>
     </html>
   );
