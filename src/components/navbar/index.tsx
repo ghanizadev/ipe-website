@@ -61,11 +61,11 @@ export default async function Navbar(props: NavbarProps) {
           className='flex items-center space-x-3 rtl:space-x-reverse'
         >
           <Image
-            src='/logo.png'
+            src={'/logo.png'}
             width={127}
             height={73}
             className='h-12 w-auto'
-            alt='Logo instituto IPE'
+            alt={'Logo instituto IPE'}
           />
         </Link>
         <button

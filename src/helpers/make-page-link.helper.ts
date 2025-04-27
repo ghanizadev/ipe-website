@@ -4,7 +4,7 @@ export default function makePageLink(page: PageDTO): string {
   if (page.category?.slug) {
     url += `/${page.category.slug}`;
   }
-  
+
   url += `/${page.slug}`;
 
   return url;

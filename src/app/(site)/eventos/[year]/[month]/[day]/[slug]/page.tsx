@@ -159,17 +159,20 @@ export default async function EventPage(props: PageProps) {
               defaultValue={me?.user?.rg}
               required
             />
-            <H3>Corrida</H3>
-            <SelectInput
-              options={[
-                { label: '3km (caminhada)', value: '3km' },
-                { label: '5km', value: '5km'},
-                { label: '10km', value: '10km'}
-              ]}
-              label={'Modalidade'}
-              name={'modality'}
-              required
-            />
+            {event.modality?.length ? 
+            <>
+              <H3>Corrida</H3>
+              <SelectInput
+                options={[
+                  { label: '3km (caminhada)', value: '3km' },
+                  { label: '5km', value: '5km'},
+                  { label: '10km', value: '10km'}
+                ]}
+                label={'Modalidade'}
+                name={'modality'}
+                required
+              />
+            </> : <></>}
             <H3>Camiseta</H3>
             <SelectInput
               className={'mb-2'}

@@ -9,13 +9,13 @@ import SecondaryButton from '@/components/button/secondary-button';
 import { TextInput } from '@/components/input';
 import CheckboxInput from '@/components/input/checkbox-input';
 import Link from '@/components/link';
+import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
 import createAccount from '@/services/create-account.service';
 import grecaptchaService from '@/services/grecapcha.service';
 
 import formEventParser from '@/helpers/form-event-parser.helper';
-import SelectInput from '@/components/select';
 
 type SelectButtonProps = {
   label: string;
@@ -162,7 +162,7 @@ export default function CreateAccountForm() {
             options={[
               { label: 'Deficiente Físico', value: 'physical' },
               { label: 'Deficiente Intelectual', value: 'intelectual' },
-              { label: 'Deficiente Visual', value: 'visual' }
+              { label: 'Deficiente Visual', value: 'visual' },
             ]}
             label={'Classificação PCD'}
             name={'pwd-classification'}
