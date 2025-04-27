@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye
 
 ARG USERNAME=dev
-ARG USER_UID=1000
+ARG USER_UID=2000
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USERNAME \
