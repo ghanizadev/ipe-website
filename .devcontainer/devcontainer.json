@@ -2,6 +2,7 @@
   "name": "ipe-website",
   "dockerFile": "Dockerfile",
   "context": "..",
+  "containerUser": "dev",
   "remoteUser": "dev",
   "customizations": {
     "jetbrains": {
@@ -46,6 +47,6 @@
   "postCreateCommand": "npm install",
   "forwardPorts": [3400],
   "remoteEnv": {
-    "NODE_ENV": "development"
+    "NODE_ENV": "development",
   }
 }
