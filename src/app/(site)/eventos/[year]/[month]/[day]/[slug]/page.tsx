@@ -163,11 +163,9 @@ export default async function EventPage(props: PageProps) {
             <>
               <H3>Corrida</H3>
               <SelectInput
-                options={[
-                  { label: '3km (caminhada)', value: '3km' },
-                  { label: '5km', value: '5km'},
-                  { label: '10km', value: '10km'}
-                ]}
+                options={event.modality.map(function(modality){return{
+                  label: modality, value: modality
+                }})}
                 label={'Modalidade'}
                 name={'modality'}
                 required
