@@ -15,6 +15,7 @@ import createAccount from '@/services/create-account.service';
 import grecaptchaService from '@/services/grecapcha.service';
 
 import formEventParser from '@/helpers/form-event-parser.helper';
+import SelectInput from '@/components/select';
 
 type SelectButtonProps = {
   label: string;
@@ -151,6 +152,18 @@ export default function CreateAccountForm() {
             name={'name'}
             required
           />
+          <SelectInput 
+            label='Gênero'
+            name='gender'
+            options={[
+              {label: 'Feminino', value: 'f',},
+              {label: 'Masculino', value: 'm',},
+              {label: 'Não binário', value: 'nb',},
+              {label: 'Prefiro não dizer', value: 'nda',},
+            ]}
+            required
+          >
+          </SelectInput>
           <TextInput
             error={errors['email']}
             label={'E-mail'}
