@@ -1,4 +1,4 @@
-FROM node:18
+FROM mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye
 
 ARG USERNAME=dev
 ARG USER_UID=1000
@@ -10,15 +10,3 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY .. .
-
-EXPOSE 3400
-
-CMD ["npm", "run", "dev"]
