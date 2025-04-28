@@ -47,6 +47,6 @@
   "postCreateCommand": "npm install",
   "forwardPorts": [3400],
   "remoteEnv": {
-    "NODE_ENV": "development",
+    "NODE_ENV": "development"
   }
 }
