@@ -152,6 +152,16 @@ export default function CreateAccountForm() {
             name={'name'}
             required
           />
+          <SelectInput
+            label='Gênero'
+            name='gender'
+            options={[
+              { label: 'Feminino', value: 'f' },
+              { label: 'Masculino', value: 'm' },
+              { label: 'Prefiro não dizer', value: 'nda' },
+            ]}
+            required
+          ></SelectInput>
           <TextInput
             error={errors['email']}
             label={'E-mail'}
