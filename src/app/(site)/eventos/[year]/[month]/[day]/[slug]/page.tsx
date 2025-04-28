@@ -159,18 +159,24 @@ export default async function EventPage(props: PageProps) {
               defaultValue={me?.user?.rg}
               required
             />
-            {event.modality?.length ? 
-            <>
-              <H3>Corrida</H3>
-              <SelectInput
-                options={event.modality.map(function(modality){return{
-                  label: modality, value: modality
-                }})}
-                label={'Modalidade'}
-                name={'modality'}
-                required
-              />
-            </> : <></>}
+            {event.modality?.length ? (
+              <>
+                <H3>Corrida</H3>
+                <SelectInput
+                  options={event.modality.map(function (modality) {
+                    return {
+                      label: modality,
+                      value: modality,
+                    };
+                  })}
+                  label={'Modalidade'}
+                  name={'modality'}
+                  required
+                />
+              </>
+            ) : (
+              <></>
+            )}
             <H3>Camiseta</H3>
             <SelectInput
               className={'mb-2'}
