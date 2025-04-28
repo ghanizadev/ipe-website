@@ -158,16 +158,22 @@ export default function CreateAccountForm() {
             name={'email'}
             required
           />
-          <SelectInput
-            options={[
-              { label: 'Deficiente Físico', value: 'physical' },
-              { label: 'Deficiente Intelectual', value: 'intelectual' },
-              { label: 'Deficiente Visual', value: 'visual' },
-            ]}
-            label={'Classificação PCD'}
-            name={'pwd-classification'}
-            required
-          />
+          {role === 'parathlete' ? (
+            <>
+              <SelectInput
+                options={[
+                  { label: 'Deficiente Físico', value: 'physical' },
+                  { label: 'Deficiente Intelectual', value: 'intelectual' },
+                  { label: 'Deficiente Visual', value: 'visual' },
+                ]}
+                label={'Classificação PCD'}
+                name={'pwd-classification'}
+                required
+              />
+            </>
+          ) : (
+            <></>
+          )}
           <TextInput
             error={errors['birthday']}
             type={'date'}
