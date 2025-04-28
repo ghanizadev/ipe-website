@@ -6,13 +6,18 @@ import React from 'react';
 type ModalProps = {
   title: string;
   children?: React.ReactNode;
+  onClose?: () => void;
 };
 
-export default function Modal({ title, children }: ModalProps) {
+export default function Modal({ title, children, onClose }: ModalProps) {
   const router = useRouter();
 
   const handleClose = () => {
-    router.push(window.location.pathname);
+    if (onClose) {
+      onClose();
+    } else {
+      router.push(window.location.pathname);
+    }
   };
 
   return (
