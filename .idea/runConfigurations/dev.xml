@@ -5,7 +5,6 @@
     <scripts>
       <script value="dev" />
     </scripts>
-    <arguments value="-- --port 3400" />
     <node-interpreter value="$APPLICATION_CONFIG_DIR$/node/versions/20.19.1/node" />
     <envs />
     <EXTENSION ID="com.intellij.lang.javascript.buildTools.npm.rc.StartBrowserRunConfigurationExtension">

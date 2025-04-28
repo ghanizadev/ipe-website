@@ -1,9 +1,6 @@
-import dotenv from 'dotenv';
 import type { NextConfig } from 'next';
 
 import getRedirectsService from '@/services/get-redirects.service';
-
-dotenv.config();
 
 const nextConfig: NextConfig = {
   /* config options here */
