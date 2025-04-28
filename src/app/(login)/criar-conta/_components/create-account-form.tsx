@@ -9,6 +9,7 @@ import SecondaryButton from '@/components/button/secondary-button';
 import { TextInput } from '@/components/input';
 import CheckboxInput from '@/components/input/checkbox-input';
 import Link from '@/components/link';
+import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
 import createAccount from '@/services/create-account.service';
@@ -157,6 +158,22 @@ export default function CreateAccountForm() {
             name={'email'}
             required
           />
+          {role === 'parathlete' ? (
+            <>
+              <SelectInput
+                options={[
+                  { label: 'Deficiente Físico', value: 'physical' },
+                  { label: 'Deficiente Intelectual', value: 'intelectual' },
+                  { label: 'Deficiente Visual', value: 'visual' },
+                ]}
+                label={'Classificação PCD'}
+                name={'pwd-classification'}
+                required
+              />
+            </>
+          ) : (
+            <></>
+          )}
           <TextInput
             error={errors['birthday']}
             type={'date'}

@@ -11,4 +11,5 @@ declare type EventDTO = PayloadDocument & {
   html?: string;
   instructionsHtml?: string;
   instructions?: LexicalNodes;
+  modality?: string[];
 };
