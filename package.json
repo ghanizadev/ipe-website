@@ -21,6 +21,7 @@
     "@payloadcms/next": "^3.36.0",
     "@payloadcms/richtext-lexical": "^3.36.0",
     "cheerio": "^1.0.0",
+    "exceljs": "^4.4.0",
     "graphql": "^16.11.0",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
