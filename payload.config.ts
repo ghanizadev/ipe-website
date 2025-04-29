@@ -39,7 +39,7 @@ export default buildConfig({
   }),
   sharp,
   typescript: {
-    outputFile: 'payload-types.ts',
+    outputFile: 'src/payload-types.ts',
   },
   telemetry: false,
   plugins: [cronJobPlugin()],

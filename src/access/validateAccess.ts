@@ -1,11 +1,13 @@
 import { Access } from 'payload';
 
+type Role = 'admin' | 'parathlete' | 'guide' | 'service'
+
 function validateAccess(
-  roles: ('admin' | 'parathlete' | 'guide' | 'service')[] | '*',
+  roles: Role[] | '*',
   allowUI = true
 ) {
   return <Access>function (access) {
-    const me = access.req.user?.role;
+    const me = access.req.user?.role as Role;
 
     if (!allowUI && access.req.url === '/api/access' && me !== 'admin')
       return false;

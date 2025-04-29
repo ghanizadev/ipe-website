@@ -1,8 +1,10 @@
+import type { Enrollment, User } from '@/payload-types';
 import { Workbook } from 'exceljs';
 import { PayloadHandler } from 'payload';
-import type { Enrollment } from 'payload/generated-types';
 
-function getRole(role: string) {
+function getRole(role?: string | null) {
+  if (!role) return '';
+
   switch (role) {
     case 'guide':
       return 'Guia';
@@ -13,7 +15,9 @@ function getRole(role: string) {
   }
 }
 
-function formatDate(date: string) {
+function formatDate(date?: string | null) {
+  if (!date) return '';
+
   const d = new Date(date);
   return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
@@ -52,7 +56,12 @@ const exportXLSX: PayloadHandler = async (req) => {
     'Situação',
   ]);
 
-  for (const { user, payment } of items.docs as Enrollment[]) {
+  for (const doc of items.docs as Enrollment[]) {
+    if (!doc.user || typeof doc.user === 'string') continue;
+
+    const user = doc.user as User;
+    const payment = doc.payment as Enrollment['payment'];
+
     worksheet.addRow([
       getRole(user.role),
       user.name,
@@ -61,8 +70,8 @@ const exportXLSX: PayloadHandler = async (req) => {
       user.cpf,
       user.rg,
       user.address,
-      user.tshirt.type,
-      user.tshirt.size,
+      user.tshirt?.type,
+      user.tshirt?.size,
       getPayment(payment),
     ]);
   }
