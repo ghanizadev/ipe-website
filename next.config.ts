@@ -1,9 +1,12 @@
+import { withPayload } from '@payloadcms/next/withPayload';
 import type { NextConfig } from 'next';
 
 import getRedirectsService from '@/services/get-redirects.service';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    reactCompiler: false,
+  },
   images: {
     remotePatterns: [
       {
@@ -30,10 +33,10 @@ const nextConfig: NextConfig = {
     return {
       afterFiles: [
         ...others,
-        {
-          source: '/admin/:path*',
-          destination: process.env.CMS_API_URL + '/admin/:path*',
-        },
+        // {
+        //   source: '/admin/:path*',
+        //   destination: process.env.CMS_API_URL + '/admin/:path*',
+        // },
         {
           source: '/avatars/:path*',
           destination: process.env.CMS_API_URL + '/avatars/:path*',
@@ -54,10 +57,10 @@ const nextConfig: NextConfig = {
           source: '/graphql/:path*',
           destination: process.env.CMS_API_URL + '/graphql/:path*',
         },
-        {
-          source: '/api/:path*',
-          destination: process.env.CMS_API_URL + '/api/:path*',
-        },
+        // {
+        //   source: '/api/:path*',
+        //   destination: process.env.CMS_API_URL + '/api/:path*',
+        // },
       ],
       beforeFiles: [],
       fallback: [],
@@ -71,4 +74,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);
