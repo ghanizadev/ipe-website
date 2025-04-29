@@ -75,9 +75,15 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    'payload-locked-documents':
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences':
+      | PayloadPreferencesSelect<false>
+      | PayloadPreferencesSelect<true>;
+    'payload-migrations':
+      | PayloadMigrationsSelect<false>
+      | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: string;
@@ -117,6 +123,19 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  role?: ('admin' | 'guide' | 'parathlete') | null;
+  softDelete?: string | null;
+  name?: string | null;
+  gender: 'f' | 'm' | 'nda';
+  pwdClassification?: ('physical' | 'intelectual' | 'visual') | null;
+  birthday?: string | null;
+  address?: string | null;
+  cpf?: string | null;
+  rg?: string | null;
+  tshirt?: {
+    type?: ('masc' | 'fem' | 'inf') | null;
+    size?: ('P' | 'M' | 'G' | 'XG') | null;
+  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -124,6 +143,8 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
@@ -185,6 +206,21 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  softDelete?: T;
+  name?: T;
+  gender?: T;
+  pwdClassification?: T;
+  birthday?: T;
+  address?: T;
+  cpf?: T;
+  rg?: T;
+  tshirt?:
+    | T
+    | {
+        type?: T;
+        size?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -192,6 +228,8 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
 }
@@ -234,7 +272,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Auth {
   [k: string]: unknown;
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
