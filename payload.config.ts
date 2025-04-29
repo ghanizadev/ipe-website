@@ -1,4 +1,5 @@
 import Administrators from '@/collections/Administrators';
+import Avatars from '@/collections/Avatars';
 import Users from '@/collections/Users';
 import cronJobPlugin from '@/plugins/cron-job.plugin';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
@@ -14,10 +15,10 @@ export default buildConfig({
   admin: {
     user: Administrators.slug,
   },
+  collections: [Users, Administrators, Avatars],
   editor: lexicalEditor({
     features: [...defaultEditorFeatures, HTMLConverterFeature({})],
   }),
-  collections: [Users, Administrators],
   secret: process.env.PAYLOAD_SECRET || '',
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
