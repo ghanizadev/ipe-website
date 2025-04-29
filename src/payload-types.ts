@@ -64,6 +64,7 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     admins: AdminAuthOperations;
+    services: ServiceAuthOperations;
     users: UserAuthOperations;
   };
   blocks: {};
@@ -73,8 +74,18 @@ export interface Config {
     categories: Category;
     enrollments: Enrollment;
     events: Event;
+    logos: Logo;
     media: Media;
+    messages: Message;
+    pages: Page;
+    parathletes: Parathlete;
+    partners: Partner;
+    photos: Photo;
+    products: Product;
     receipts: Receipt;
+    redirects: Redirect;
+    services: Service;
+    testimonials: Testimonial;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -87,8 +98,18 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     enrollments: EnrollmentsSelect<false> | EnrollmentsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    logos: LogosSelect<false> | LogosSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    messages: MessagesSelect<false> | MessagesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    parathletes: ParathletesSelect<false> | ParathletesSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
+    photos: PhotosSelect<false> | PhotosSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     receipts: ReceiptsSelect<false> | ReceiptsSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -104,6 +125,9 @@ export interface Config {
     | (Admin & {
         collection: 'admins';
       })
+    | (Service & {
+        collection: 'services';
+      })
     | (User & {
         collection: 'users';
       });
@@ -113,6 +137,24 @@ export interface Config {
   };
 }
 export interface AdminAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface ServiceAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -362,6 +404,217 @@ export interface Receipt {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos".
+ */
+export interface Logo {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    lg?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    md?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    sm?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages".
+ */
+export interface Message {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  category?: (string | null) | Category;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  shownOnNavbar?: boolean | null;
+  shownOnDrawer?: boolean | null;
+  shownOnFooter?: boolean | null;
+  html?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "parathletes".
+ */
+export interface Parathlete {
+  id: string;
+  name?: string | null;
+  slug?: string | null;
+  since?: string | null;
+  message?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  sponsorship?: string | null;
+  socials?: {
+    facebook?: string | null;
+    instagram?: string | null;
+    twitter?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: string;
+  name?: string | null;
+  type?: ('company' | 'support') | null;
+  link?: string | null;
+  logo?: (string | null) | Logo;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos".
+ */
+export interface Photo {
+  id: string;
+  description?: string | null;
+  altText?: string | null;
+  tags?: string[] | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  photos?:
+    | {
+        photo?: (string | null) | Media;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  name?: string | null;
+  price?: number | null;
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: string;
+  source: string;
+  target: string;
+  code?: ('301' | '307' | '308') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: string;
+  role?: string | null;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: string;
+  avatar?: (string | null) | Avatar;
+  name?: string | null;
+  occupation?: string | null;
+  testimonial?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -388,12 +641,52 @@ export interface PayloadLockedDocument {
         value: string | Event;
       } | null)
     | ({
+        relationTo: 'logos';
+        value: string | Logo;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'messages';
+        value: string | Message;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'parathletes';
+        value: string | Parathlete;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: string | Partner;
+      } | null)
+    | ({
+        relationTo: 'photos';
+        value: string | Photo;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
         relationTo: 'receipts';
         value: string | Receipt;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: string | Redirect;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: string | Service;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: string | Testimonial;
       } | null)
     | ({
         relationTo: 'users';
@@ -404,6 +697,10 @@ export interface PayloadLockedDocument {
     | {
         relationTo: 'admins';
         value: string | Admin;
+      }
+    | {
+        relationTo: 'services';
+        value: string | Service;
       }
     | {
         relationTo: 'users';
@@ -422,6 +719,10 @@ export interface PayloadPreference {
     | {
         relationTo: 'admins';
         value: string | Admin;
+      }
+    | {
+        relationTo: 'services';
+        value: string | Service;
       }
     | {
         relationTo: 'users';
@@ -575,6 +876,57 @@ export interface EventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos_select".
+ */
+export interface LogosSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        lg?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        md?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        sm?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -591,6 +943,102 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages_select".
+ */
+export interface MessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  content?: T;
+  shownOnNavbar?: T;
+  shownOnDrawer?: T;
+  shownOnFooter?: T;
+  html?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "parathletes_select".
+ */
+export interface ParathletesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  since?: T;
+  message?: T;
+  sponsorship?: T;
+  socials?:
+    | T
+    | {
+        facebook?: T;
+        instagram?: T;
+        twitter?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  link?: T;
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos_select".
+ */
+export interface PhotosSelect<T extends boolean = true> {
+  description?: T;
+  altText?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  photos?:
+    | T
+    | {
+        photo?: T;
+        description?: T;
+        id?: T;
+      };
+  name?: T;
+  price?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "receipts_select".
  */
 export interface ReceiptsSelect<T extends boolean = true> {
@@ -604,6 +1052,42 @@ export interface ReceiptsSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  source?: T;
+  target?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  role?: T;
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  avatar?: T;
+  name?: T;
+  occupation?: T;
+  testimonial?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
