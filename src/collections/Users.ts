@@ -21,7 +21,7 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Manutenção',
-    hidden: ({ user }) => user.role !== 'admin',
+    hidden: ({ user }) => user?.role !== 'admin',
   },
   access: {
     create: validateAccess(['admin', 'service']),
