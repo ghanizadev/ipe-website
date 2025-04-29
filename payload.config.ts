@@ -4,6 +4,7 @@ import Categories from '@/collections/Categories';
 import Enrollments from '@/collections/Enrollments';
 import Events from '@/collections/Events';
 import Media from '@/collections/Media';
+import Messages from '@/collections/Messages';
 import Receipts from '@/collections/Receipts';
 import Users from '@/collections/Users';
 import cronJobPlugin from '@/plugins/cron-job.plugin';
@@ -27,6 +28,7 @@ export default buildConfig({
     Enrollments,
     Events,
     Media,
+    Messages,
     Receipts,
     Users,
   ],
