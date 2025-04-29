@@ -1,5 +1,6 @@
 import { Workbook } from 'exceljs';
 import { PayloadHandler } from 'payload';
+import type { Enrollment } from 'payload/generated-types';
 
 function getRole(role: string) {
   switch (role) {
@@ -17,7 +18,7 @@ function formatDate(date: string) {
   return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
-function getPayment(payment: any) {
+function getPayment(payment: Enrollment['payment'] | undefined) {
   return payment?.paid ? 'Pago' : 'Nao pago';
 }
 
@@ -51,7 +52,7 @@ const exportXLSX: PayloadHandler = async (req) => {
     'Situação',
   ]);
 
-  for (const { user, payment } of items.docs) {
+  for (const { user, payment } of items.docs as Enrollment[]) {
     worksheet.addRow([
       getRole(user.role),
       user.name,

@@ -63,25 +63,33 @@ export type SupportedTimezones =
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
     admins: AdminAuthOperations;
+    users: UserAuthOperations;
   };
   blocks: {};
   collections: {
-    users: User;
     admins: Admin;
     avatars: Avatar;
     categories: Category;
+    enrollments: Enrollment;
+    events: Event;
+    media: Media;
+    receipts: Receipt;
+    users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
     admins: AdminsSelect<false> | AdminsSelect<true>;
     avatars: AvatarsSelect<false> | AvatarsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    enrollments: EnrollmentsSelect<false> | EnrollmentsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    receipts: ReceiptsSelect<false> | ReceiptsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -93,33 +101,15 @@ export interface Config {
   globalsSelect: {};
   locale: null;
   user:
-    | (User & {
-        collection: 'users';
-      })
     | (Admin & {
         collection: 'admins';
+      })
+    | (User & {
+        collection: 'users';
       });
   jobs: {
     tasks: unknown;
     workflows: unknown;
-  };
-}
-export interface UserAuthOperations {
-  forgotPassword: {
-    email: string;
-    password: string;
-  };
-  login: {
-    email: string;
-    password: string;
-  };
-  registerFirstUser: {
-    email: string;
-    password: string;
-  };
-  unlock: {
-    email: string;
-    password: string;
   };
 }
 export interface AdminAuthOperations {
@@ -140,37 +130,23 @@ export interface AdminAuthOperations {
     password: string;
   };
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  role?: ('admin' | 'guide' | 'parathlete') | null;
-  softDelete?: string | null;
-  name?: string | null;
-  gender: 'f' | 'm' | 'nda';
-  pwdClassification?: ('physical' | 'intelectual' | 'visual') | null;
-  birthday?: string | null;
-  address?: string | null;
-  cpf?: string | null;
-  rg?: string | null;
-  tshirt?: {
-    type?: ('masc' | 'fem' | 'inf') | null;
-    size?: ('P' | 'M' | 'G' | 'XG') | null;
+export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
   };
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  _verified?: boolean | null;
-  _verificationToken?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -250,15 +226,147 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enrollments".
+ */
+export interface Enrollment {
+  id: string;
+  user?: (string | null) | User;
+  event?: (string | null) | Event;
+  payment?: {
+    paid?: boolean | null;
+    docNumber?: string | null;
+    paidAt?: string | null;
+    confirmation?: (string | null) | Receipt;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  role?: ('admin' | 'guide' | 'parathlete') | null;
+  softDelete?: string | null;
+  name?: string | null;
+  gender: 'f' | 'm' | 'nda';
+  pwdClassification?: ('physical' | 'intelectual' | 'visual') | null;
+  birthday?: string | null;
+  address?: string | null;
+  cpf?: string | null;
+  rg?: string | null;
+  tshirt?: {
+    type?: ('masc' | 'fem' | 'inf') | null;
+    size?: ('P' | 'M' | 'G' | 'XG') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  virtualId?: string | null;
+  slug?: string | null;
+  title: string;
+  date: string;
+  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km')[] | null;
+  dueDate: string;
+  standFirst: string;
+  location: string;
+  fee: number;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  instructions: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: string | Media;
+  enrollments?: string | null;
+  paidEnrollments?: string | null;
+  html?: string | null;
+  instructionsHtml?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  altText?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "receipts".
+ */
+export interface Receipt {
+  id: string;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: string;
   document?:
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
     | ({
         relationTo: 'admins';
         value: string | Admin;
@@ -270,16 +378,36 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'enrollments';
+        value: string | Enrollment;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'receipts';
+        value: string | Receipt;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
       } | null);
   globalSlug?: string | null;
   user:
     | {
-        relationTo: 'users';
-        value: string | User;
-      }
-    | {
         relationTo: 'admins';
         value: string | Admin;
+      }
+    | {
+        relationTo: 'users';
+        value: string | User;
       };
   updatedAt: string;
   createdAt: string;
@@ -292,12 +420,12 @@ export interface PayloadPreference {
   id: string;
   user:
     | {
-        relationTo: 'users';
-        value: string | User;
-      }
-    | {
         relationTo: 'admins';
         value: string | Admin;
+      }
+    | {
+        relationTo: 'users';
+        value: string | User;
       };
   key?: string | null;
   value?:
@@ -322,38 +450,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  role?: T;
-  softDelete?: T;
-  name?: T;
-  gender?: T;
-  pwdClassification?: T;
-  birthday?: T;
-  address?: T;
-  cpf?: T;
-  rg?: T;
-  tshirt?:
-    | T
-    | {
-        type?: T;
-        size?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  _verified?: T;
-  _verificationToken?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -434,6 +530,112 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enrollments_select".
+ */
+export interface EnrollmentsSelect<T extends boolean = true> {
+  user?: T;
+  event?: T;
+  payment?:
+    | T
+    | {
+        paid?: T;
+        docNumber?: T;
+        paidAt?: T;
+        confirmation?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  virtualId?: T;
+  slug?: T;
+  title?: T;
+  date?: T;
+  modality?: T;
+  dueDate?: T;
+  standFirst?: T;
+  location?: T;
+  fee?: T;
+  content?: T;
+  instructions?: T;
+  image?: T;
+  enrollments?: T;
+  paidEnrollments?: T;
+  html?: T;
+  instructionsHtml?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  altText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "receipts_select".
+ */
+export interface ReceiptsSelect<T extends boolean = true> {
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  softDelete?: T;
+  name?: T;
+  gender?: T;
+  pwdClassification?: T;
+  birthday?: T;
+  address?: T;
+  cpf?: T;
+  rg?: T;
+  tshirt?:
+    | T
+    | {
+        type?: T;
+        size?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
