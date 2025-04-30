@@ -7,8 +7,8 @@ import { TextInput } from '@/components/input';
 import Link from '@/components/link';
 import { RecaptchaInput } from '@/components/recaptcha-input';
 
-type UpdatePasswordFromProps = {
-  updatePasswordAction: (
+type ForgotPasswordFormProps = {
+  forgotPasswordAction: (
     initialState: {
       success: boolean;
       error?: Record<string, string[] | undefined>;
@@ -18,40 +18,32 @@ type UpdatePasswordFromProps = {
     success: boolean;
     error?: Record<string, string[] | undefined>;
   }>;
-  token: string;
 };
 
-export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
-  const [formState, formAction] = useActionState(props.updatePasswordAction, {
+export function ForgotPasswordForm(props: ForgotPasswordFormProps) {
+  const [formState, formAction] = useActionState(props.forgotPasswordAction, {
     success: false,
   });
 
   return (
     <form action={formAction} className={'flex flex-col'}>
       <TextInput
-        error={formState.error?.password?.[0]}
-        label={'Nova senha'}
-        name={'password'}
-        type={'password'}
-      />
-      <TextInput
-        error={formState.error?.['confirm-password']?.[0]}
-        label={'Confirme a senha'}
-        name={'confirm-password'}
-        type={'password'}
+        label={'Email'}
+        name={'email'}
+        type={'email'}
         className={'mb-4'}
+        error={formState.error?.email?.[0]}
       />
-      <input type={'hidden'} name={'token'} value={props.token} />
       <RecaptchaInput />
-      <PrimaryButton tag={'button'}>Salvar</PrimaryButton>
+      <PrimaryButton tag={'button'}>Enviar</PrimaryButton>
       <small className={'text-gray-400 my-4'}>
-        Este site é protegido pelo reCAPTCHA e a{' '}
+        Este site é protegido pelo reCAPTCHA e as{' '}
         <Link href='https://policies.google.com/privacy'>
           Políticas de Privacidade
         </Link>{' '}
-        da Google e os seus{' '}
+        e os{' '}
         <Link href='https://policies.google.com/terms'>Termos de Serviço</Link>{' '}
-        são válidos.
+        da Google são aplicáveis.
       </small>
     </form>
   );
