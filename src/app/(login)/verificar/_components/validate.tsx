@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import grecaptchaService from '@/services/grecapcha.service';
+import recaptchaService from '@/services/recapcha.service';
 
 type ValidateProps = {
   action: (token: string, grecaptchaToken: string) => Promise<ActionResponse>;
@@ -15,7 +15,7 @@ export default function Validate(props: ValidateProps) {
 
   useEffect(() => {
     const effect = async () => {
-      const grecaptchaToken = await grecaptchaService();
+      const grecaptchaToken = await recaptchaService();
       const response = await props.action(props.token, grecaptchaToken);
 
       if (response?.success) {

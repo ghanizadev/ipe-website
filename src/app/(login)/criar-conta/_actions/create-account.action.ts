@@ -45,14 +45,14 @@ export default async function createAccountAction(
   initialState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  const grecaptchaToken = formData.get('grecaptchaToken')?.toString();
+  const recaptcha = formData.get('g-recaptcha')?.toString();
 
-  if (!grecaptchaToken)
+  if (!recaptcha)
     return {
       success: false,
     };
 
-  const isValid = validateGRecaptcha(grecaptchaToken);
+  const isValid = validateGRecaptcha(recaptcha);
 
   if (!isValid)
     return {

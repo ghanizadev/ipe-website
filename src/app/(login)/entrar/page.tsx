@@ -26,7 +26,7 @@ export default async function SignInPage({ searchParams }: PageProps) {
         <section className={'m-auto flex flex-col p-16'}>
           <H1>Bem-vindo de volta!</H1>
           <P>Entre com suas credenciais para acessar sua conta</P>
-          <LoginForm redirect={redirect} action={loginAction} />
+          <LoginForm redirect={redirect} loginAction={loginAction} />
           <div
             className={
               'my-8 flex w-full flex-row items-center justify-center text-center'

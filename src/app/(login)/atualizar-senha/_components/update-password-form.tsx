@@ -6,7 +6,7 @@ import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
 import Link from '@/components/link';
 
-import grecaptchaService from '@/services/grecapcha.service';
+import recaptchaService from '@/services/recapcha.service';
 
 import formEventParser from '@/helpers/form-event-parser.helper';
 
@@ -39,7 +39,7 @@ export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
       return;
     }
 
-    const grecaptchaToken = await grecaptchaService();
+    const grecaptchaToken = await recaptchaService();
     const response = await props.action(password, props.token, grecaptchaToken);
     if (response?.success) setErrors({});
   };

@@ -1,18 +1,17 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useActionState, useEffect, useRef, useState } from 'react';
+import React, { useActionState, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
+import { CaptchaInput } from '@/components/captchaInput';
 import { TextInput } from '@/components/input';
 import CheckboxInput from '@/components/input/checkbox-input';
 import Link from '@/components/link';
 import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
-
-import grecaptchaService from '@/services/grecapcha.service';
 
 import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
 
@@ -51,8 +50,6 @@ export default function CreateAccountForm() {
 
   const router = useRouter();
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const handleTypeSelect = (role: string) => () => {
     setRole(role);
   };
@@ -66,19 +63,8 @@ export default function CreateAccountForm() {
   };
 
   useEffect(() => {
-    console.log(formState);
     if (formState.success) router.push('/criar-conta/sucesso');
   }, [formState, router]);
-
-  useEffect(() => {
-    const loadToken = async () => {
-      if (inputRef.current) {
-        inputRef.current.value = await grecaptchaService();
-      }
-    };
-
-    loadToken();
-  }, [inputRef]);
 
   return (
     <form action={formAction} className={'flex flex-col'}>
@@ -163,6 +149,7 @@ export default function CreateAccountForm() {
             type={'password'}
             required
           />
+          <CaptchaInput />
           <small className={'text-gray-400 my-4'}>
             Este site é protegido pelo reCAPTCHA e as{' '}
             <Link href='https://policies.google.com/privacy'>
@@ -202,7 +189,6 @@ export default function CreateAccountForm() {
           </SecondaryButton>
         </>
       )}
-      <input type={'hidden'} name={'grecaptchaToken'} ref={inputRef} />
     </form>
   );
 }

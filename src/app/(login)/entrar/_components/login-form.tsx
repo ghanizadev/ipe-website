@@ -1,61 +1,64 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useActionState, useEffect } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
+import { CaptchaInput } from '@/components/captchaInput';
 import { TextInput } from '@/components/input';
 import Link from '@/components/link';
 
-import grecaptchaService from '@/services/grecapcha.service';
-
-import formEventParser from '@/helpers/form-event-parser.helper';
-
 type LoginFormProps = {
   redirect?: string;
-  action: (args: LoginUserDTO) => Promise<ActionResponse>;
+  loginAction: (
+    initialState: {
+      success: boolean;
+      error?: Record<string, string[] | undefined>;
+    },
+    formData: FormData
+  ) => Promise<{
+    success: boolean;
+    error?: Record<string, string[] | undefined>;
+  }>;
 };
 
 export default function LoginForm(props: LoginFormProps) {
-  const [error, setError] = useState('');
   const router = useRouter();
+  const [formState, formAction] = useActionState(props.loginAction, {
+    success: false,
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const grecaptchaToken = await grecaptchaService();
-    const formData = formEventParser<LoginUserDTO>(e);
-
-    const response = await props.action({ ...formData, grecaptchaToken });
-    if (response?.success) {
+  useEffect(() => {
+    if (formState.success) {
       if (props.redirect) {
         try {
-          const url = new URL(props.redirect);
-          const ownUrl = new URL(process.env.NEXT_PUBLIC_URL!);
-
-          if (url.hostname === ownUrl.hostname) {
-            router.push(url.pathname + url.search);
-            return;
-          }
-        } catch {}
+          const url = new URL(
+            `${process.env.NEXT_PUBLIC_URL}${props.redirect}`
+          );
+          router.push(url.pathname + url.search);
+        } catch {
+          router.push('/conta');
+        }
+      } else {
+        router.push('/conta');
       }
-
-      router.push('/conta');
-      return;
     }
-
-    setError('Email e/ou senha incorretos');
-  };
+  }, [formState, router, props.redirect]);
 
   return (
-    <form onSubmit={handleSubmit} className={'flex flex-col'}>
-      <TextInput label={'E-mail'} name={'email'} error={!!error} />
+    <form action={formAction} className={'flex flex-col'}>
+      <TextInput
+        label={'E-mail'}
+        name={'email'}
+        error={formState.error?.email?.[0]}
+      />
       <TextInput
         label={'Senha'}
         name={'password'}
         type={'password'}
-        error={error}
+        error={formState.error?.password?.[0]}
       />
+      <CaptchaInput />
       <Link
         href={'/esqueci-minha-senha'}
         className={'mb-8 self-end text-sm text-[--primary] underline'}

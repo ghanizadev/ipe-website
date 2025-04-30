@@ -1,68 +1,119 @@
 'use server';
 
+import payloadConfig from '@payload-config';
 import { cookies } from 'next/headers';
+import { getPayload } from 'payload';
+import { z } from 'zod';
 
 import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
 
-export default async function loginAction(
-  data: LoginUserDTO
-): Promise<ActionResponse> {
-  const cookieStore = await cookies();
-  const url = `${process.env.CMS_API_URL}/api/users/login`;
+const loginForm = z.object({
+  email: z
+    .string({ required_error: 'E-mail não informado.' })
+    .email('O e-mail é inválido.'),
+  password: z.string({ required_error: 'Senha não informada.' }),
+});
 
-  const isValid = await validateGRecaptcha(data.grecaptchaToken);
+export default async function loginAction(
+  initialState: {
+    success: boolean;
+    error?: Record<string, string[] | undefined>;
+  },
+  formData: FormData
+): Promise<{ success: boolean; error?: Record<string, string[] | undefined> }> {
+  const recaptcha = formData.get('g-recaptcha')?.toString();
+
+  if (!recaptcha) {
+    return {
+      success: false,
+    };
+  }
+
+  const isValid = await validateGRecaptcha(recaptcha);
+
   if (!isValid) {
     console.warn('Login failed. Invalid Recaptcha.');
     return {
       success: false,
-      errors: [{ field: '*', message: 'E-mail e/ou senha incorretos.' }],
+      error: {
+        email: [' '],
+        password: ['E-mail e/ou senha incorretos.'],
+      },
     };
   }
 
-  const init: RequestInit = {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: data.email,
-      password: data.password,
-    }),
-  };
+  const jsonData = Object.fromEntries(formData.entries());
+  const validateFields = loginForm.safeParse(jsonData);
 
-  const response = await fetch(url, init);
-  if (!response.ok) {
-    console.warn('Login failed. Invalid credentials.');
+  if (!validateFields.success) {
     return {
       success: false,
-      errors: [{ field: '*', message: 'E-mail e/ou senha incorretos.' }],
+      error: validateFields.error.flatten().fieldErrors,
     };
   }
 
-  const responseBody = await response.json();
-  const expires = new Date();
-  expires.setHours(expires.getHours() + 2);
+  const cookieStore = await cookies();
 
-  cookieStore.set('payload-token', responseBody.token, {
-    sameSite: 'lax',
-    httpOnly: true,
-    expires,
-  });
+  const payload = await getPayload({ config: payloadConfig });
 
-  if (responseBody.user?.softDelete) {
-    const expiresAt = new Date(responseBody.user?.softDelete);
-    expiresAt.setDate(expiresAt.getDate() + 30);
-
-    cookieStore.set('account-recovery', '1', {
-      sameSite: 'strict',
-      expires: expiresAt,
+  try {
+    const response = await payload.login({
+      collection: 'users',
+      data: {
+        email: validateFields.data.email,
+        password: validateFields.data.password,
+      },
     });
-  } else {
-    cookieStore.set('account-recovery', '0', {
-      expires: new Date(0),
+
+    if (!response.token) {
+      return {
+        success: false,
+        error: {
+          email: [' '],
+          password: ['E-mail e/ou senha incorretos.'],
+        },
+      };
+    }
+
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 2);
+
+    cookieStore.set('payload-token', response.token, {
+      sameSite: 'lax',
+      httpOnly: true,
+      expires,
     });
+
+    if (response.user?.softDelete) {
+      const expiresAt = new Date(response.user?.softDelete);
+      expiresAt.setDate(expiresAt.getDate() + 30);
+
+      cookieStore.set('account-recovery', '1', {
+        sameSite: 'strict',
+        expires: expiresAt,
+      });
+    } else {
+      cookieStore.set('account-recovery', '0', {
+        expires: new Date(0),
+      });
+    }
+
+    return { success: true };
+  } catch (error: unknown) {
+    if ((error as Error).name === 'UnverifiedEmail') {
+      return {
+        success: false,
+        error: {
+          email: ['Confirme seu e-mail para continuar.'],
+        },
+      };
+    }
+
+    return {
+      success: false,
+      error: {
+        email: ['Erro ao tentar fazer login. Tente novamente mais tarde.'],
+      },
+    };
   }
-
-  return { success: true };
 }
