@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 
-import getEvents from '@/services/get-events.service';
 import getPages from '@/services/get-pages.service';
+
+import getEventsAction from '@/actions/get-events.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 import makePageLink from '@/helpers/make-page-link.helper';
@@ -39,9 +40,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  const events = await getEvents();
+  const events = await getEventsAction();
 
-  for (const event of events?.docs ?? []) {
+  for (const event of events) {
     const date = new Date(event.createdAt);
 
     routes.push({

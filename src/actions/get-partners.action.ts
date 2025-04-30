@@ -1,17 +1,15 @@
 'use server';
 
+import { Partner } from '@/payload-types';
 import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
 
-export default async function findEnrollmentsAction(userId: string) {
+export default async function getPartnersAction(): Promise<Partner[]> {
   const payload = await getPayload({ config: payloadConfig });
   const paginatedResponse = await payload.find({
-    collection: 'enrollments',
-    where: {
-      user: {
-        equals: userId,
-      },
-    },
+    collection: 'partners',
+    limit: 0,
+    overrideAccess: true,
   });
 
   return paginatedResponse.docs;

@@ -1,3 +1,4 @@
+import { User } from '@/payload-types';
 import { redirect } from 'next/navigation';
 
 import PrimaryButton from '@/components/button/primary-button';
@@ -6,7 +7,7 @@ import { TextInput } from '@/components/input';
 import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
-import getMeAction from '@/actions/get-me.action';
+import { getUserAuth } from '@/actions/get-user-auth.action';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
 
@@ -15,13 +16,13 @@ import updateUserProfileAction from './_actions/update-user-profile.action';
 import RemoveAccountButton from './_components/remove-acount-button';
 
 export default async function AccountDataPage() {
-  const me = await getMeAction();
+  const { user } = await getUserAuth();
 
-  if (!me?.user) {
+  if (!user) {
     return redirect('/');
   }
 
-  const { id, name, email, birthday, rg, cpf, tshirt, address } = me.user;
+  const { id, name, email, birthday, rg, cpf, tshirt, address } = user as User;
 
   return (
     <div>
@@ -35,7 +36,7 @@ export default async function AccountDataPage() {
           label={'Nome'}
           name={'name'}
           readonly
-          defaultValue={name}
+          defaultValue={name ?? ''}
           required
         />
         <TextInput
@@ -49,13 +50,13 @@ export default async function AccountDataPage() {
           label={'Data de Nascimento'}
           name={'birthday'}
           type={'date'}
-          defaultValue={birthday}
+          defaultValue={birthday ?? ''}
           required
         />
         <TextArea
           label={'Endereço'}
           name={'address'}
-          defaultValue={address}
+          defaultValue={address ?? ''}
           required
         />
         <h3 className={'my-4 text-lg leading-none text-[--primary]'}>
@@ -64,13 +65,13 @@ export default async function AccountDataPage() {
         <TextInput
           label={'CPF (Certidão de Pessoa Física)'}
           name={'cpf'}
-          defaultValue={cpf}
+          defaultValue={cpf ?? ''}
           required
         />
         <TextInput
           label={'RG (Registro Geral)'}
           name={'rg'}
-          defaultValue={rg}
+          defaultValue={rg ?? ''}
           required
         />
         <h3 className={'my-4 text-lg leading-none text-[--primary]'}>
@@ -80,14 +81,14 @@ export default async function AccountDataPage() {
           name={'tshirt.type'}
           label={'Tipo da Camiseta'}
           options={tshirtTypes}
-          defaultValue={tshirt?.type}
+          defaultValue={tshirt?.type ?? ''}
           required
         />
         <SelectInput
           name={'tshirt.size'}
           label={'Tamanho da Camiseta'}
           options={tshirtSizes}
-          defaultValue={tshirt?.size}
+          defaultValue={tshirt?.size ?? ''}
           required
         />
         <br />

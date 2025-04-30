@@ -1,3 +1,5 @@
+import { UserProvider } from '@/context/user.context';
+import { User } from '@/payload-types';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -14,7 +16,7 @@ import Navbar from '@/components/navbar';
 import RecoverAccount from '@/components/recover-account';
 import ToastWrapper from '@/components/toast';
 
-import getMeAction from '@/actions/get-me.action';
+import { getUserAuth } from '@/actions/get-user-auth.action';
 import saveCookiesPreferencesAction from '@/actions/save-cookies-preferences.action';
 
 import '../globals.scss';
@@ -52,7 +54,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
 
   const hasConsented = cookieStore.has('cookie-consent');
-  const me = await getMeAction();
+  const auth = await getUserAuth();
 
   return (
     <html lang='pt'>
@@ -65,31 +67,33 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar me={me} />
-        <main className='mx-auto max-w-screen-xl p-4'>{children}</main>
-        <Footer />
-        <Suspense>
-          <ToastWrapper />
-          <CookieConsent
-            hasConsented={hasConsented}
-            action={saveCookiesPreferencesAction}
-          />
-          <RecoverAccount />
-        </Suspense>
-        <ConfirmationAlert />
-        <RemoveAlert />
-        <Script
-          strategy={'beforeInteractive'}
-          src='https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js'
-        ></Script>
-        <Script
-          strategy={'beforeInteractive'}
-          src={
-            'https://www.google.com/recaptcha/api.js?render=' +
-            process.env.NEXT_PUBLIC_GRECAPTCHA_SITE_KEY
-          }
-        ></Script>
-        <GoogleAnalytics gaId={'G-QBTZB6ZD7N'} />
+        <UserProvider value={{ user: auth.user as User }}>
+          <Navbar />
+          <main className='mx-auto max-w-screen-xl p-4'>{children}</main>
+          <Footer />
+          <Suspense>
+            <ToastWrapper />
+            <CookieConsent
+              hasConsented={hasConsented}
+              action={saveCookiesPreferencesAction}
+            />
+            <RecoverAccount />
+          </Suspense>
+          <ConfirmationAlert />
+          <RemoveAlert />
+          <Script
+            strategy={'beforeInteractive'}
+            src='https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js'
+          ></Script>
+          <Script
+            strategy={'beforeInteractive'}
+            src={
+              'https://www.google.com/recaptcha/api.js?render=' +
+              process.env.NEXT_PUBLIC_GRECAPTCHA_SITE_KEY
+            }
+          ></Script>
+          <GoogleAnalytics gaId={'G-QBTZB6ZD7N'} />
+        </UserProvider>
       </body>
     </html>
   );

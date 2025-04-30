@@ -1,5 +1,4 @@
-'use server';
-
+import { Event, Media } from '@/payload-types';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,17 +9,15 @@ import EventStatus from '@/components/events/event-status';
 import makeEventLink from '@/helpers/make-event-link.helper';
 
 type EventProps = {
-  event: EventDTO;
+  event: Event;
 };
 
-export default async function EventItem(props: EventProps) {
-  const {
-    title,
-    location,
-    date,
-    standFirst,
-    image: { height, width, url },
-  } = props.event;
+export default function EventItem(props: EventProps) {
+  const { title, location, date, standFirst, image } = props.event;
+
+  const imageWidth = (image as Media).width ?? 0;
+  const imageHeight = (image as Media).height ?? 0;
+  const imageUrl = (image as Media).url ?? '';
 
   const path = makeEventLink(props.event);
 
@@ -28,10 +25,10 @@ export default async function EventItem(props: EventProps) {
     <div className={'grid gap-4 lg:grid-cols-6 mb-6'}>
       <div className={'col-span-3 flex flex-col items-end lg:col-span-2'}>
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + url}
+          src={process.env.NEXT_PUBLIC_CMS_URL + imageUrl}
           alt={'alt'}
-          width={width}
-          height={height}
+          width={imageWidth}
+          height={imageHeight}
           className={'rounded-lg object-cover h-56'}
         />
       </div>

@@ -4,19 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import PrimaryButton from '@/components/button/primary-button';
 import Dropdown from '@/components/dropdown';
 import LinkButton from '@/components/link-button';
+import { UserContext } from '@/components/navbar/components/user-context';
 
 import getPages from '@/services/get-pages.service';
 
-import LogoutButton from './components/logout-button';
-
-type NavbarProps = {
-  me: { user?: UserDTO } | null;
-};
-
-export default async function Navbar(props: NavbarProps) {
+export default async function Navbar() {
   const pages = await getPages();
 
   const navigation = (pages?.docs ?? []).reduce(
@@ -124,34 +118,7 @@ export default async function Navbar(props: NavbarProps) {
             <li className={'m-auto'}>
               <LinkButton href='/contato'>Contato</LinkButton>
             </li>
-            {!props.me?.user && (
-              <>
-                <li className={'m-auto'}>
-                  <PrimaryButton tag={'anchor'} href={'/entrar'}>
-                    Entrar
-                  </PrimaryButton>
-                </li>
-              </>
-            )}
-            <hr className='my-2 h-px border-0 bg-gray-200 md:hidden' />
-            {props.me?.user && (
-              <>
-                <li className={'m-auto text-[--primary-darker]'}>
-                  <LinkButton href='/conta'>
-                    Olá, {props.me.user.name.split(' ')[0]}
-                  </LinkButton>
-                </li>
-                <li className={'m-auto md:hidden'}>
-                  <LinkButton href='/conta/eventos'>Meus eventos</LinkButton>
-                </li>
-                <li className={'m-auto md:hidden'}>
-                  <LinkButton href='/conta/dados'>Minha conta</LinkButton>
-                </li>
-                <li className={'m-auto text-red-700 md:hidden'}>
-                  <LogoutButton />
-                </li>
-              </>
-            )}
+            <UserContext />
           </ul>
         </div>
       </div>

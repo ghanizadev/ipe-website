@@ -2,7 +2,7 @@ type SelectProps = {
   name: string;
   label: string;
   options: { label: string; value: string }[];
-  defaultValue?: string;
+  defaultValue?: string | null;
   className?: string;
   required?: boolean;
 };

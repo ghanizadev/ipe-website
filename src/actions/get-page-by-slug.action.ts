@@ -1,18 +1,21 @@
 'use server';
 
+import { Page } from '@/payload-types';
 import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
 
-export default async function findEnrollmentsAction(userId: string) {
+export default async function getPageBySlug(
+  pageSlug: string
+): Promise<Page | undefined> {
   const payload = await getPayload({ config: payloadConfig });
   const paginatedResponse = await payload.find({
-    collection: 'enrollments',
+    collection: 'pages',
     where: {
-      user: {
-        equals: userId,
+      slug: {
+        equals: pageSlug,
       },
     },
   });
 
-  return paginatedResponse.docs;
+  return paginatedResponse.docs[0];
 }

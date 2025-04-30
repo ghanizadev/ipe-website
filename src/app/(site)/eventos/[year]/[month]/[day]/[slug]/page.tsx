@@ -1,5 +1,6 @@
 'use server';
 
+import { Media, User } from '@/payload-types';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import Image from 'next/image';
@@ -14,13 +15,13 @@ import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 import { H3 } from '@/components/typography';
 
-import getEventBySlug from '@/services/get-event-by-slug.service';
-
-import getMeAction from '@/actions/get-me.action';
+import { getUserAuth } from '@/actions/get-user-auth.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
+
+import getEventBySlugAction from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_actions/get-event-by-slug.action';
 
 import confirmAndEnrollAction from './_actions/confirm-and-enroll.action';
 import EnrollmentButton from './_components/enrollment-button';
@@ -37,8 +38,9 @@ export default async function EventPage(props: PageProps) {
   const heads = await headers();
   const pathname = heads.get('next-url');
 
-  const me = await getMeAction();
-  const event = await getEventBySlug(slug);
+  const event = await getEventBySlugAction(slug);
+  const auth = await getUserAuth();
+  const user = auth?.user as User;
 
   if (!event) {
     return notFound();
@@ -49,6 +51,11 @@ export default async function EventPage(props: PageProps) {
   if (url !== makeEventLink(event)) {
     return notFound();
   }
+
+  const image = event.image as Media;
+  const imageWidth = image.width ?? 0;
+  const imageHeight = image.height ?? 0;
+  const imageUrl = image.url ?? '';
 
   return (
     <>
@@ -70,10 +77,10 @@ export default async function EventPage(props: PageProps) {
           </div>
         </div>
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + event.image.url}
+          src={process.env.NEXT_PUBLIC_CMS_URL + imageUrl}
           alt={''}
-          width={event.image.width}
-          height={event.image.height}
+          width={imageWidth}
+          height={imageHeight}
           className={
             'w-full h-72 max-h-72 md:h-[32em] md:max-h-[32em] object-cover'
           }
@@ -90,7 +97,7 @@ export default async function EventPage(props: PageProps) {
           />
         </div>
         {event?.content && (
-          <RichText nodes={event.content} className={'my-8'} />
+          <RichText nodes={event.content as LexicalNodes} className={'my-8'} />
         )}
         <div className={'mb-16 flex items-center justify-center'}>
           {new Date(event.dueDate ?? 0).getTime() > Date.now() ? (
@@ -110,7 +117,7 @@ export default async function EventPage(props: PageProps) {
             action={confirmAndEnrollAction}
             additionalData={{
               eventId: event.id,
-              userId: me?.user?.id,
+              userId: user?.id,
               redirectUrl: pathname ?? '/',
             }}
           >
@@ -118,7 +125,7 @@ export default async function EventPage(props: PageProps) {
               className={'mb-2'}
               label={'Nome'}
               name={'name'}
-              defaultValue={me?.user?.name}
+              defaultValue={user?.name}
               readonly
               required
             />
@@ -126,14 +133,14 @@ export default async function EventPage(props: PageProps) {
               className={'mb-2'}
               label={'E-mail'}
               name={'email'}
-              defaultValue={me?.user?.email}
+              defaultValue={user?.email}
               readonly
               required
             />
             <TextArea
               label={'Endereço'}
               name={'address'}
-              defaultValue={me?.user?.address}
+              defaultValue={user?.address}
               required
             />
             <H3>Documentação</H3>
@@ -142,21 +149,21 @@ export default async function EventPage(props: PageProps) {
               label={'Data de Nascimento'}
               name={'birthday'}
               type={'date'}
-              defaultValue={me?.user?.birthday}
+              defaultValue={user?.birthday}
               required
             />
             <TextInput
               className={'mb-2'}
               label={'CPF (Certidão de Pessoa Física)'}
               name={'cpf'}
-              defaultValue={me?.user?.cpf}
+              defaultValue={user?.cpf}
               required
             />
             <TextInput
               className={'mb-2'}
               label={'RG (Registro Geral)'}
               name={'rg'}
-              defaultValue={me?.user?.rg}
+              defaultValue={user?.rg}
               required
             />
             {event.modality?.length ? (
@@ -182,7 +189,7 @@ export default async function EventPage(props: PageProps) {
               className={'mb-2'}
               label={'Tipo da Camiseta'}
               name={'tshirt.type'}
-              defaultValue={me?.user?.tshirt?.type}
+              defaultValue={user?.tshirt?.type}
               options={tshirtTypes}
               required
             />
@@ -190,7 +197,7 @@ export default async function EventPage(props: PageProps) {
               className={'mb-4'}
               label={'Tamanho da Camiseta'}
               name={'tshirt.size'}
-              defaultValue={me?.user?.tshirt?.size}
+              defaultValue={user?.tshirt?.size}
               options={tshirtSizes}
               required
             />
@@ -213,9 +220,15 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const event = await getEventBySlug(slug);
+  const event = await getEventBySlugAction(slug);
 
   if (!event) return {};
+
+  const image = event.image as Media;
+  const imageWidth = image.width ?? 0;
+  const imageHeight = image.height ?? 0;
+  const imageAltText = image.altText ?? '';
+  const imageUrl = image.url ?? '';
 
   return {
     title: `${event?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
@@ -226,10 +239,10 @@ export async function generateMetadata({
       url: process.env.NEXT_PUBLIC_URL + makeEventLink(event),
       siteName: 'IPE - Inclusão Pelo Esporte',
       images: {
-        height: event?.image.height,
-        width: event?.image.width,
-        alt: event?.image.altText,
-        url: `${process.env.NEXT_PUBLIC_URL}${event?.image.url}`,
+        height: imageHeight,
+        width: imageWidth,
+        alt: imageAltText,
+        url: `${process.env.NEXT_PUBLIC_URL}${imageUrl}`,
       },
     },
   };

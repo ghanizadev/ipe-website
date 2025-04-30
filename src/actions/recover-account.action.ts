@@ -1,13 +1,26 @@
 'use server';
 
-import UserService from '@/services/user.service';
-
-import getUserAction from '@/actions/get-user.action';
+import payloadConfig from '@payload-config';
+import { headers as nextHeaders } from 'next/headers';
+import { getPayload } from 'payload';
 
 export default async function recoverAccount() {
-  const user = await getUserAction();
+  const headers = await nextHeaders();
 
-  if (!user) return;
-  const userService = new UserService();
-  await userService.recoverAccount(user.id);
+  const payload = await getPayload({ config: payloadConfig });
+  const auth = await payload.auth({ headers });
+
+  if (auth.user) {
+    await payload.update({
+      collection: 'users',
+      where: {
+        id: {
+          equals: auth.user.id,
+        },
+      },
+      data: {
+        softDelete: null,
+      },
+    });
+  }
 }

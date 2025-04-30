@@ -1,18 +1,19 @@
 'use client';
 
+import { Testimonial } from '@/payload-types';
 import { useEffect, useState } from 'react';
 
 import TestimonialItem from '@/components/testimonials/testimonial-item';
 
 type TestimonialSwitchProps = {
-  testimonials: TestimonialDTO[];
+  testimonials: Testimonial[];
   static?: boolean;
 };
 
 let TESTIMONIAL_SWITCH_CAROUSEL: NodeJS.Timeout;
 
 export default function TestimonialSwitch(props: TestimonialSwitchProps) {
-  const [current, setCurrent] = useState<TestimonialDTO>(props.testimonials[0]);
+  const [current, setCurrent] = useState<Testimonial>(props.testimonials[0]);
 
   const handleSwitch = (direction: number) => {
     return () => {

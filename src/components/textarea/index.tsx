@@ -3,7 +3,7 @@ type TextAreaProps = {
   name: string;
   className?: string;
   placeholder?: string;
-  defaultValue?: string;
+  defaultValue?: string | null;
   required?: boolean;
 };
 
@@ -38,7 +38,7 @@ export default function TextArea({
         className={classes.join(' ').trim()}
         placeholder={placeholder}
         name={name}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ?? undefined}
       ></textarea>
     </>
   );

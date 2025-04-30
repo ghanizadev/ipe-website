@@ -1,18 +1,21 @@
+import { Avatar, Testimonial } from '@/payload-types';
 import Image from 'next/image';
 
-type TestimonialSwitchProps = TestimonialDTO;
-
-export default function TestimonialItem(props: TestimonialSwitchProps) {
+export default function TestimonialItem(props: Testimonial) {
   const { avatar, occupation, testimonial, name } = props;
+
+  const avatarUrl = (avatar as Avatar).sizes?.sm?.url ?? '';
+  const avatarWidth = (avatar as Avatar).sizes?.sm?.width ?? 0;
+  const avatarHeight = (avatar as Avatar).sizes?.sm?.height ?? 0;
 
   return (
     <>
       {avatar && (
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + avatar.sizes.sm.url!}
+          src={process.env.NEXT_PUBLIC_CMS_URL + avatarUrl}
           alt={'testimonial'}
-          width={avatar.sizes.sm.width!}
-          height={avatar.sizes.sm.height!}
+          width={avatarWidth}
+          height={avatarHeight}
           className={'mb-4 h-16 w-16 rounded-[50%]'}
         />
       )}

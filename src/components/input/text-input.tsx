@@ -7,7 +7,7 @@ type TextInputProps = {
   readonly?: boolean;
   required?: boolean;
   className?: string;
-  defaultValue?: string;
+  defaultValue?: string | null;
   pattern?: string;
   title?: string;
   hidden?: boolean;
@@ -36,7 +36,9 @@ export default function TextInput(props: TextInputProps) {
     wrapperClassNames.push('hidden');
   }
 
-  const getDefaultValue = (defaultValue?: string): string | undefined => {
+  const getDefaultValue = (
+    defaultValue?: string | null
+  ): string | undefined => {
     if (!defaultValue) return;
     const date = new Date(defaultValue);
 

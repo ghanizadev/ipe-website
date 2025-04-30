@@ -1,6 +1,9 @@
+import { Event } from '@/payload-types';
+
 type EventStatusProps = {
-  event: EventDTO;
+  event: Event;
 };
+
 export default function EventStatus(props: EventStatusProps) {
   const { event } = props;
 
