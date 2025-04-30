@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useActionState, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
@@ -12,10 +12,9 @@ import Link from '@/components/link';
 import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
-import createAccount from '@/services/create-account.service';
 import grecaptchaService from '@/services/grecapcha.service';
 
-import formEventParser from '@/helpers/form-event-parser.helper';
+import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
 
 type SelectButtonProps = {
   label: string;
@@ -46,8 +45,14 @@ function SelectButton({ label, onClick, selected }: SelectButtonProps) {
 export default function CreateAccountForm() {
   const [step, setStep] = useState('first');
   const [role, setRole] = useState('');
-  const [errors, setErrors] = useState<Record<string, string | boolean>>({});
+  const [formState, formAction] = useActionState(createAccountAction, {
+    success: false,
+    errors: {},
+  });
+
   const router = useRouter();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleTypeSelect = (role: string) => () => {
     setRole(role);
@@ -61,59 +66,22 @@ export default function CreateAccountForm() {
     setStep('first');
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (formState.success) router.push('/criar-conta/sucesso');
+  }, [formState, router]);
 
-    const grecaptchaToken = await grecaptchaService();
+  useEffect(() => {
+    const loadToken = async () => {
+      if (inputRef.current) {
+        inputRef.current.value = await grecaptchaService();
+      }
+    };
 
-    const data = formEventParser<CreateUserDTO>(e);
-    let isOk = true;
-
-    if (!data.email) {
-      setErrors((errors) => ({ ...errors, email: 'E-mail é obrigatório' }));
-      isOk = false;
-    }
-
-    if (!data.name) {
-      setErrors((errors) => ({ ...errors, name: 'Nome é obrigatório' }));
-      isOk = false;
-    }
-
-    if (!data.birthday) {
-      setErrors((errors) => ({
-        ...errors,
-        birthday: 'Data de nascimento é obrigatória',
-      }));
-      isOk = false;
-    }
-
-    if (data.password !== (data['confirm-password'] as string)) {
-      setErrors((errors) => ({
-        ...errors,
-        password: true,
-        'confirm-password': 'As senhas não conferem',
-      }));
-      isOk = false;
-    }
-
-    if (!data['accept-terms']) {
-      setErrors((errors) => ({
-        ...errors,
-        'accept-terms': 'Você deve aceitar os termos para prosseguir',
-      }));
-      isOk = false;
-    }
-
-    if (!isOk) return;
-
-    const response = await createAccount({ ...data, role, grecaptchaToken });
-    if (response) {
-      router.push('/criar-conta/sucesso');
-    }
-  };
+    loadToken();
+  }, [inputRef]);
 
   return (
-    <form onSubmit={handleSubmit} className={'flex flex-col'}>
+    <form action={formAction} className={'flex flex-col'}>
       {step === 'first' && (
         <>
           <p>Eu sou um:</p>
@@ -147,13 +115,13 @@ export default function CreateAccountForm() {
             </span>
           </p>
           <TextInput
-            error={errors['name']}
+            error={formState.errors?.name}
             label={'Nome completo'}
             name={'name'}
             required
           />
           <TextInput
-            error={errors['email']}
+            error={formState.errors?.email}
             label={'E-mail'}
             name={'email'}
             required
@@ -175,21 +143,21 @@ export default function CreateAccountForm() {
             <></>
           )}
           <TextInput
-            error={errors['birthday']}
+            error={formState.errors?.birthday}
             type={'date'}
             label={'Data de nascimento'}
             name={'birthday'}
           />
           <TextArea label={'Endereço'} name={'address'} className={'mb-8'} />
           <TextInput
-            error={errors['password']}
+            error={formState.errors?.password}
             label={'Senha'}
             name={'password'}
             type={'password'}
             required
           />
           <TextInput
-            error={errors['confirm-password']}
+            error={formState.errors?.['confirm-password']}
             label={'Confirmar senha'}
             name={'confirm-password'}
             type={'password'}
@@ -208,7 +176,7 @@ export default function CreateAccountForm() {
           </small>
           <CheckboxInput
             name={'accept-terms'}
-            error={errors['accept-terms']}
+            error={formState.errors?.['accept-terms']}
             title={'Você deve aceitar os termos de serviço para continuar.'}
             required
           >
@@ -234,6 +202,7 @@ export default function CreateAccountForm() {
           </SecondaryButton>
         </>
       )}
+      <input type={'hidden'} name={'grecaptchaToken'} ref={inputRef} />
     </form>
   );
 }

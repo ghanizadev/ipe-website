@@ -1,8 +1,8 @@
 'use server';
 
+import payloadConfig from '@payload-config';
 import { redirect } from 'next/navigation';
-
-import UserService from '@/services/user.service';
+import { getPayload } from 'payload';
 
 import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
 
@@ -14,10 +14,15 @@ export default async function updatePasswordAction(
   const isValid = await validateGRecaptcha(grecaptchaToken);
   if (!isValid) return;
 
-  const service = new UserService();
-  const success = await service.updatePassword({ password, token });
+  const payload = await getPayload({ config: payloadConfig });
+  await payload.resetPassword({
+    collection: 'users',
+    data: {
+      password,
+      token,
+    },
+    overrideAccess: true,
+  });
 
-  if (success) {
-    redirect('/entrar?create=password-updated');
-  }
+  redirect('/entrar?create=password-updated');
 }
