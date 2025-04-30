@@ -4,7 +4,7 @@ import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
 import { z } from 'zod';
 
-import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
 
 const createUserSchema = z.object({
   email: z
@@ -45,14 +45,14 @@ export default async function createAccountAction(
   initialState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  const recaptcha = formData.get('g-recaptcha')?.toString();
+  const recaptcha = formData.get('recaptcha')?.toString();
 
   if (!recaptcha)
     return {
       success: false,
     };
 
-  const isValid = validateGRecaptcha(recaptcha);
+  const isValid = validateRecaptcha(recaptcha);
 
   if (!isValid)
     return {

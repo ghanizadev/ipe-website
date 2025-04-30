@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation';
 import React, { useActionState, useEffect } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
-import { CaptchaInput } from '@/components/captchaInput';
 import { TextInput } from '@/components/input';
 import Link from '@/components/link';
+
+import { RecaptchaInput } from '../../../../components/recaptcha-input';
 
 type LoginFormProps = {
   redirect?: string;
@@ -58,7 +59,7 @@ export default function LoginForm(props: LoginFormProps) {
         type={'password'}
         error={formState.error?.password?.[0]}
       />
-      <CaptchaInput />
+      <RecaptchaInput />
       <Link
         href={'/esqueci-minha-senha'}
         className={'mb-8 self-end text-sm text-[--primary] underline'}

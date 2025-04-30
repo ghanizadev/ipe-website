@@ -4,14 +4,14 @@ import payloadConfig from '@payload-config';
 import { redirect } from 'next/navigation';
 import { getPayload } from 'payload';
 
-import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
 
 export default async function updatePasswordAction(
   password: string,
   token: string,
   grecaptchaToken: string
 ) {
-  const isValid = await validateGRecaptcha(grecaptchaToken);
+  const isValid = await validateRecaptcha(grecaptchaToken);
   if (!isValid) return;
 
   const payload = await getPayload({ config: payloadConfig });

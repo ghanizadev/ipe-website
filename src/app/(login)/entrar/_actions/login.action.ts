@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { getPayload } from 'payload';
 import { z } from 'zod';
 
-import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
 
 const loginForm = z.object({
   email: z
@@ -21,7 +21,7 @@ export default async function loginAction(
   },
   formData: FormData
 ): Promise<{ success: boolean; error?: Record<string, string[] | undefined> }> {
-  const recaptcha = formData.get('g-recaptcha')?.toString();
+  const recaptcha = formData.get('recaptcha')?.toString();
 
   if (!recaptcha) {
     return {
@@ -29,10 +29,9 @@ export default async function loginAction(
     };
   }
 
-  const isValid = await validateGRecaptcha(recaptcha);
+  const isValid = await validateRecaptcha(recaptcha);
 
   if (!isValid) {
-    console.warn('Login failed. Invalid Recaptcha.');
     return {
       success: false,
       error: {

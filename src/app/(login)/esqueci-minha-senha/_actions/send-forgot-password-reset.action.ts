@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 import UserService from '@/services/user.service';
 
-import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
 
 export default async function sendForgotPasswordResetAction({
   email,
@@ -12,7 +12,7 @@ export default async function sendForgotPasswordResetAction({
 }: Record<string, string>) {
   if (!email) return;
 
-  const isValid = await validateGRecaptcha(grecaptchaToken);
+  const isValid = await validateRecaptcha(grecaptchaToken);
   if (!isValid) return;
 
   const service = new UserService();

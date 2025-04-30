@@ -3,9 +3,9 @@
 import { headers } from 'next/headers';
 import qs from 'qs';
 
-const GRECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify';
+const G_RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
-export default async function validateGRecaptcha(
+export default async function validateRecaptcha(
   token: string
 ): Promise<boolean> {
   const requestHeaders = await headers();
@@ -23,7 +23,7 @@ export default async function validateGRecaptcha(
     }),
   };
 
-  const response = await fetch(GRECAPTCHA_URL, init);
+  const response = await fetch(G_RECAPTCHA_URL, init);
   if (!response.ok) {
     console.log('Recaptcha Error', await response.text());
     return true;

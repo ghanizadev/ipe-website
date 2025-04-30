@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
-import { CaptchaInput } from '@/components/captchaInput';
 import { TextInput } from '@/components/input';
 import CheckboxInput from '@/components/input/checkbox-input';
 import Link from '@/components/link';
@@ -14,6 +13,8 @@ import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
 import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
+
+import { RecaptchaInput } from '../../../../components/recaptcha-input';
 
 type SelectButtonProps = {
   label: string;
@@ -63,6 +64,7 @@ export default function CreateAccountForm() {
   };
 
   useEffect(() => {
+    console.log(formState);
     if (formState.success) router.push('/criar-conta/sucesso');
   }, [formState, router]);
 
@@ -149,7 +151,7 @@ export default function CreateAccountForm() {
             type={'password'}
             required
           />
-          <CaptchaInput />
+          <RecaptchaInput />
           <small className={'text-gray-400 my-4'}>
             Este site é protegido pelo reCAPTCHA e as{' '}
             <Link href='https://policies.google.com/privacy'>
