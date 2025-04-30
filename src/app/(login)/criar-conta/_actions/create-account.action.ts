@@ -1,9 +1,8 @@
 'use server';
 
-import type { User } from '@/payload-types';
 import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
-import { SafeParseReturnType, z } from 'zod';
+import { z } from 'zod';
 
 import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
 
@@ -12,7 +11,7 @@ const createUserSchema = z.object({
     .string({
       required_error: 'E-mail é obrigatório',
     })
-    .email(),
+    .email('O e-mail é inválido'),
   name: z.string({
     required_error: 'Nome é obrigatório',
   }),
@@ -20,7 +19,7 @@ const createUserSchema = z.object({
     .string({
       required_error: 'Data de nascimento é obrigatória',
     })
-    .date(),
+    .date('A data de nascimento deve ser no formato DD/MM/AAAA.'),
   password: z
     .string({
       required_error: 'A senha é obrigatória',
@@ -32,23 +31,25 @@ const createUserSchema = z.object({
   'confirm-password': z.string({
     required_error: 'Confirme a senha',
   }),
-  'accept-terms': z.boolean({
+  'accept-terms': z.enum(['on', 'off'], {
     required_error: 'Você deve aceitar os termos para prosseguir',
   }),
 });
 
-type CreateUserForm = z.infer<typeof createUserSchema>;
+type FormState = {
+  success: boolean;
+  error?: Record<string, string[] | undefined>;
+};
 
 export default async function createAccountAction(
-  initialState: SafeParseReturnType<CreateUserForm, CreateUserForm>,
+  initialState: FormState,
   formData: FormData
-): Promise<SafeParseReturnType<CreateUserForm, CreateUserForm>> {
+): Promise<FormState> {
   const grecaptchaToken = formData.get('grecaptchaToken')?.toString();
 
   if (!grecaptchaToken)
     return {
       success: false,
-      error: {},
     };
 
   const isValid = validateGRecaptcha(grecaptchaToken);
@@ -58,57 +59,45 @@ export default async function createAccountAction(
       success: false,
     };
 
-  const validateFields = createUserSchema.safeParse(formData);
+  const jsonData = Object.fromEntries(formData.entries());
+  const validateFields = createUserSchema.safeParse(jsonData);
 
-  const {
-    'confirm-password': confirmPassword,
-    'accept-terms': acceptTerms,
-    ...userData
-  } = formData
-    .entries()
-    .reduce(
-      (acc, curr) => ({ ...acc, [curr[0]]: curr[1] }),
-      {} as User & { 'confirm-password': string; 'accept-terms': boolean }
-    );
-  const errors: Record<string, string> = {};
-  let isOk = true;
-
-  if (!userData.email) {
-    errors.email = 'E-mail é obrigatório';
-    isOk = false;
-  }
-
-  if (!userData.name) {
-    errors.name = 'Nome é obrigatório';
-    isOk = false;
-  }
-
-  if (!userData.birthday) {
-    errors.birthday = 'Data de nascimento é obrigatória';
-    isOk = false;
-  }
-
-  if (userData.password !== confirmPassword) {
-    errors['confirm-password'] = 'As senhas não conferem';
-    isOk = false;
-  }
-
-  if (!acceptTerms) {
-    errors['accept-terms'] = 'Você deve aceitar os termos para prosseguir';
-    isOk = false;
-  }
-
-  if (!isOk)
+  if (!validateFields.success)
     return {
       success: false,
-      errors,
+      error: validateFields.error.flatten().fieldErrors,
+    };
+
+  const error: Record<string, string[]> = {};
+
+  if (
+    validateFields.data.password !== validateFields.data['confirm-password']
+  ) {
+    error.password = ['As senhas não conferem.'];
+    error['confirm-password'] = ['As senhas não conferem.'];
+  }
+
+  if (validateFields.data['accept-terms'] !== 'on') {
+    error['accept-terms'] = ['Você deve aceitar os termos para prosseguir'];
+  }
+
+  if (Object.keys(error).length > 0)
+    return {
+      success: false,
+      error,
     };
 
   const payload = await getPayload({ config: payloadConfig });
 
   await payload.create({
     collection: 'users',
-    data: userData,
+    data: {
+      email: validateFields.data.email,
+      name: validateFields.data.name,
+      birthday: validateFields.data.birthday,
+      password: validateFields.data.password,
+      gender: 'nda',
+    },
     overrideAccess: true,
   });
 

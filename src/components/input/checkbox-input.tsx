@@ -34,7 +34,6 @@ export default function CheckboxInput(props: CheckboxInputProps) {
         <input
           id={props.name + '-checkbox'}
           type='checkbox'
-          value=''
           name={props.name}
           title={props.title}
           required={props.required}

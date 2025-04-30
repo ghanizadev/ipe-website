@@ -47,7 +47,6 @@ export default function CreateAccountForm() {
   const [role, setRole] = useState('');
   const [formState, formAction] = useActionState(createAccountAction, {
     success: false,
-    errors: {},
   });
 
   const router = useRouter();
@@ -67,6 +66,7 @@ export default function CreateAccountForm() {
   };
 
   useEffect(() => {
+    console.log(formState);
     if (formState.success) router.push('/criar-conta/sucesso');
   }, [formState, router]);
 
@@ -115,13 +115,13 @@ export default function CreateAccountForm() {
             </span>
           </p>
           <TextInput
-            error={formState.errors?.name}
+            error={formState.error?.name?.[0]}
             label={'Nome completo'}
             name={'name'}
             required
           />
           <TextInput
-            error={formState.errors?.email}
+            error={formState.error?.email?.[0]}
             label={'E-mail'}
             name={'email'}
             required
@@ -143,21 +143,21 @@ export default function CreateAccountForm() {
             <></>
           )}
           <TextInput
-            error={formState.errors?.birthday}
+            error={formState.error?.birthday?.[0]}
             type={'date'}
             label={'Data de nascimento'}
             name={'birthday'}
           />
           <TextArea label={'Endereço'} name={'address'} className={'mb-8'} />
           <TextInput
-            error={formState.errors?.password}
+            error={formState.error?.password?.[0]}
             label={'Senha'}
             name={'password'}
             type={'password'}
             required
           />
           <TextInput
-            error={formState.errors?.['confirm-password']}
+            error={formState.error?.['confirm-password']?.[0]}
             label={'Confirmar senha'}
             name={'confirm-password'}
             type={'password'}
@@ -176,7 +176,7 @@ export default function CreateAccountForm() {
           </small>
           <CheckboxInput
             name={'accept-terms'}
-            error={formState.errors?.['accept-terms']}
+            error={formState.error?.['accept-terms']?.[0]}
             title={'Você deve aceitar os termos de serviço para continuar.'}
             required
           >
