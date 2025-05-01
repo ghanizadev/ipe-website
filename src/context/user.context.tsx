@@ -3,6 +3,7 @@
 import { User } from '@/payload-types';
 import React, { createContext, useCallback, useContext, useState } from 'react';
 
+import { getUserAuth } from '@/actions/get-user-auth.action';
 import { getUser } from '@/actions/get-user.action';
 
 const context = createContext<{ user?: User; refresh: () => Promise<void> }>({
@@ -16,7 +17,17 @@ export const UserProvider: React.FC<{
   const [user, setUser] = useState<User | undefined>(value.user);
 
   const refresh = useCallback(async () => {
-    if (!value.user) return;
+    if (!value.user) {
+      setUser(undefined);
+      return;
+    }
+    const auth = await getUserAuth();
+
+    if (!auth.user) {
+      setUser(undefined);
+      return;
+    }
+
     const updatedUser = await getUser(value.user.id);
     setUser(updatedUser);
   }, [value.user]);
