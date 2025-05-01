@@ -52,7 +52,7 @@ export default async function createAccountAction(
       success: false,
     };
 
-  const isValid = validateRecaptcha(recaptcha);
+  const isValid = await validateRecaptcha(recaptcha);
 
   if (!isValid)
     return {
