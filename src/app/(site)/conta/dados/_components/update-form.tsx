@@ -1,11 +1,10 @@
 'use client';
 
 import { useUser } from '@/context/user.context';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
-import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 
@@ -26,7 +25,13 @@ export default function UpdateForm(props: {
   const [formState, formAction] = useActionState(props.updateAction, {
     success: false,
   });
-  const user = useUser();
+  const [user, refresh] = useUser();
+
+  useEffect(() => {
+    if (formState.success) {
+      refresh();
+    }
+  }, [formState, refresh]);
 
   return (
     <form action={formAction} className={'grid gap-1'}>
@@ -94,7 +99,6 @@ export default function UpdateForm(props: {
         required
         error={formState.error?.['tshirt.size']?.[0]}
       />
-      <RecaptchaInput />
       <input type={'hidden'} name={'id'} value={user?.id} />
       <br />
       <small>

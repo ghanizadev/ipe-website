@@ -16,7 +16,7 @@ type ConfirmationAlertProps = {
 export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
   const [alertProps, setAlertProps] = useState<AlertProps>();
   const router = useRouter();
-  const user = useUser();
+  const [user] = useUser();
 
   const handleAction = (status: 'confirm' | 'deny' | 'dismiss') => {
     return async () => {
@@ -24,7 +24,7 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
         await props.recoverAccountAction();
         notificationEvent({
           title: 'Boas notícias',
-          message: 'A sua conta foi restaurada con sucesso!',
+          message: 'A sua conta foi restaurada com sucesso!',
           type: 'success',
         });
       } else {

@@ -47,6 +47,12 @@ export default async function updateUserProfileAction(
 
   const auth = await payload.auth({ headers });
 
+  if (!auth.user) {
+    return {
+      success: false,
+    };
+  }
+
   const jsonData = Object.fromEntries(formData.entries());
   const validateData = updateUserSchema.safeParse(jsonData);
 
@@ -57,15 +63,30 @@ export default async function updateUserProfileAction(
     };
   }
 
-  await payload.update({
+  const updateResult = await payload.update({
     collection: 'users',
-    where: {
-      id: {
-        equals: auth.user?.id,
+    id: auth.user?.id,
+    data: {
+      gender: 'nda',
+      name: validateData.data.name,
+      email: validateData.data.email,
+      address: validateData.data.address,
+      birthday: new Date(validateData.data.birthday).toISOString(),
+      cpf: validateData.data.cpf,
+      rg: validateData.data.rg,
+      tshirt: {
+        type: validateData.data['tshirt.type'],
+        size: validateData.data['tshirt.size'],
       },
     },
-    data: validateData.data,
   });
+
+  if (!updateResult) {
+    return {
+      success: false,
+    };
+  }
+
   return {
     success: true,
   };

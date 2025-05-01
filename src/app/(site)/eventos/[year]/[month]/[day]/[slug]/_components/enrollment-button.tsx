@@ -9,7 +9,7 @@ type EnrollmentButtonProps = {
 };
 
 export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
-  const user = useUser();
+  const [user] = useUser();
   const router = useRouter();
 
   const handleEnrollment = async () => {

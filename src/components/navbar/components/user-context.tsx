@@ -8,7 +8,7 @@ import LinkButton from '@/components/link-button';
 import LogoutButton from '@/components/navbar/components/logout-button';
 
 export function UserContext() {
-  const user = useUser();
+  const [user] = useUser();
 
   return (
     <>

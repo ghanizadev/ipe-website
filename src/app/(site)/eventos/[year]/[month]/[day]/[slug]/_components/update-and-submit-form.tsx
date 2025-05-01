@@ -30,7 +30,7 @@ export default function UpdateAndSubmitForm(props: {
   const [formState, formAction] = useActionState(props.updateAndEnrollAction, {
     success: false,
   });
-  const user = useUser();
+  const [user] = useUser();
 
   return (
     <form action={formAction}>
