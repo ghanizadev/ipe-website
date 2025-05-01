@@ -152,6 +152,7 @@ export default function CreateAccountForm() {
             required
           />
           <RecaptchaInput />
+          <input type={'hidden'} name={'role'} value={role} />
           <small className={'text-gray-400 my-4'}>
             Este site é protegido pelo reCAPTCHA e as{' '}
             <Link href='https://policies.google.com/privacy'>

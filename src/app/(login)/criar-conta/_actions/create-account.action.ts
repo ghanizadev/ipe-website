@@ -12,6 +12,9 @@ const createUserSchema = z.object({
       required_error: 'E-mail é obrigatório',
     })
     .email('O e-mail é inválido'),
+  role: z.enum(['guide', 'parathlete'], {
+    required_error: 'O tipo de conta é obrigatório',
+  }),
   name: z.string({
     required_error: 'Nome é obrigatório',
   }),
@@ -92,6 +95,7 @@ export default async function createAccountAction(
   await payload.create({
     collection: 'users',
     data: {
+      role: validateFields.data.role,
       email: validateFields.data.email,
       name: validateFields.data.name,
       birthday: validateFields.data.birthday,
