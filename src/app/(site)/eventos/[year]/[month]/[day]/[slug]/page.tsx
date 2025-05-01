@@ -1,27 +1,18 @@
 'use server';
 
-import { Media, User } from '@/payload-types';
+import { Media } from '@/payload-types';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import PrimaryButton from '@/components/button/primary-button';
-import Form from '@/components/form';
-import { TextInput } from '@/components/input';
 import Modal from '@/components/modal';
 import RichText from '@/components/rich-text';
-import SelectInput from '@/components/select';
-import TextArea from '@/components/textarea';
-import { H3 } from '@/components/typography';
-
-import { getUserAuth } from '@/actions/get-user-auth.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
-import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
-
 import getEventBySlugAction from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_actions/get-event-by-slug.action';
+import UpdateAndSubmitForm from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_components/update-and-submit-form';
 
 import confirmAndEnrollAction from './_actions/confirm-and-enroll.action';
 import EnrollmentButton from './_components/enrollment-button';
@@ -39,8 +30,6 @@ export default async function EventPage(props: PageProps) {
   const pathname = heads.get('next-url');
 
   const event = await getEventBySlugAction(slug);
-  const auth = await getUserAuth();
-  const user = auth?.user as User;
 
   if (!event) {
     return notFound();
@@ -110,106 +99,11 @@ export default async function EventPage(props: PageProps) {
       {register && (
         <Modal title={'Inscrição'}>
           <p className={'mb-4'}>Confirme seus dados e envie sua inscrição</p>
-          <Form<
-            Partial<UserDTO>,
-            { eventId: string; redirectUrl: string; userId?: string }
-          >
-            action={confirmAndEnrollAction}
-            additionalData={{
-              eventId: event.id,
-              userId: user?.id,
-              redirectUrl: pathname ?? '/',
-            }}
-          >
-            <TextInput
-              className={'mb-2'}
-              label={'Nome'}
-              name={'name'}
-              defaultValue={user?.name}
-              readonly
-              required
-            />
-            <TextInput
-              className={'mb-2'}
-              label={'E-mail'}
-              name={'email'}
-              defaultValue={user?.email}
-              readonly
-              required
-            />
-            <TextArea
-              label={'Endereço'}
-              name={'address'}
-              defaultValue={user?.address}
-              required
-            />
-            <H3>Documentação</H3>
-            <TextInput
-              className={'mb-2'}
-              label={'Data de Nascimento'}
-              name={'birthday'}
-              type={'date'}
-              defaultValue={user?.birthday}
-              required
-            />
-            <TextInput
-              className={'mb-2'}
-              label={'CPF (Certidão de Pessoa Física)'}
-              name={'cpf'}
-              defaultValue={user?.cpf}
-              required
-            />
-            <TextInput
-              className={'mb-2'}
-              label={'RG (Registro Geral)'}
-              name={'rg'}
-              defaultValue={user?.rg}
-              required
-            />
-            {event.modality?.length ? (
-              <>
-                <H3>Corrida</H3>
-                <SelectInput
-                  options={event.modality.map(function (modality) {
-                    return {
-                      label: modality,
-                      value: modality,
-                    };
-                  })}
-                  label={'Modalidade'}
-                  name={'modality'}
-                  required
-                />
-              </>
-            ) : (
-              <></>
-            )}
-            <H3>Camiseta</H3>
-            <SelectInput
-              className={'mb-2'}
-              label={'Tipo da Camiseta'}
-              name={'tshirt.type'}
-              defaultValue={user?.tshirt?.type}
-              options={tshirtTypes}
-              required
-            />
-            <SelectInput
-              className={'mb-4'}
-              label={'Tamanho da Camiseta'}
-              name={'tshirt.size'}
-              defaultValue={user?.tshirt?.size}
-              options={tshirtSizes}
-              required
-            />
-            <small>
-              <span className={'text-red-600'}>*</span> Campos obrigatórios.
-            </small>
-            <div className='mt-4 flex items-center justify-end rounded-b border-t border-gray-200 py-4 md:py-5'>
-              <PrimaryButton tag={'button'} type={'submit'}>
-                Salvar e Inscrever-se
-              </PrimaryButton>
-            </div>
-          </Form>
+          <UpdateAndSubmitForm
+            event={event}
+            redirectTo={pathname}
+            updateAndEnrollAction={confirmAndEnrollAction}
+          />
         </Modal>
       )}
     </>

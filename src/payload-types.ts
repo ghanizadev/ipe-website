@@ -272,8 +272,9 @@ export interface Category {
  */
 export interface Enrollment {
   id: string;
-  user?: (string | null) | User;
-  event?: (string | null) | Event;
+  user: string | User;
+  event: string | Event;
+  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km') | null;
   payment?: {
     paid?: boolean | null;
     docNumber?: string | null;
@@ -289,7 +290,7 @@ export interface Enrollment {
  */
 export interface User {
   id: string;
-  role?: ('admin' | 'guide' | 'parathlete') | null;
+  role?: ('guide' | 'parathlete') | null;
   softDelete?: string | null;
   name?: string | null;
   gender: 'f' | 'm' | 'nda';
@@ -839,6 +840,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface EnrollmentsSelect<T extends boolean = true> {
   user?: T;
   event?: T;
+  modality?: T;
   payment?:
     | T
     | {

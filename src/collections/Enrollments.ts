@@ -49,15 +49,23 @@ const Enrollments: CollectionConfig = {
   fields: [
     {
       name: 'user',
-      label: 'Usuario',
+      label: 'Usuário',
       type: 'relationship',
       relationTo: 'users',
+      required: true,
     },
     {
       name: 'event',
       label: 'Evento',
       type: 'relationship',
       relationTo: 'events',
+      required: true,
+    },
+    {
+      name: 'modality',
+      label: 'Modalidade',
+      type: 'select',
+      options: ['3km (caminhada)', '5km', '10km', '21km', '42km'],
     },
     {
       name: 'payment',

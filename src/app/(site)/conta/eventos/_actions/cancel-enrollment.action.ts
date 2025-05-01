@@ -1,11 +1,17 @@
 'use server';
 
+import payloadConfig from '@payload-config';
+import { getPayload } from 'payload';
+
 export default async function cancelEnrollmentAction({
   enrollmentId,
 }: {
   enrollmentId: string;
 }) {
-  console.log(enrollmentId);
-  // const enrollmentService = new EnrollmentService();
-  // await enrollmentService.deleteById(enrollmentId);
+  const payload = await getPayload({ config: payloadConfig });
+  await payload.delete({
+    collection: 'enrollments',
+    id: enrollmentId,
+    overrideAccess: true,
+  });
 }

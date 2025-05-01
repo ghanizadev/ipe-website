@@ -1,27 +1,107 @@
 'use server';
 
+import payloadConfig from '@payload-config';
 import { redirect } from 'next/navigation';
+import { getPayload } from 'payload';
+import { z } from 'zod';
 
-export default async function confirmAndEnrollAction({
-  eventId,
-  userId,
-  redirectUrl,
-  ...userData
-}: Partial<UserDTO> & {
-  eventId: string;
-  redirectUrl: string;
-  userId?: string;
-}) {
-  if (!userId) {
-    return redirect('/entrar?redirect=' + redirectUrl);
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
+
+const confirmAndEnrollSchema = z.object({
+  userId: z.string(),
+  eventId: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  birthday: z.date(),
+  address: z.string(),
+  cpf: z.string(),
+  rg: z.string(),
+  modality: z
+    .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'])
+    .optional(),
+  redirectTo: z.string(),
+  'tshirt.type': z.enum(['masc', 'fem', 'inf']),
+  'tshirt.size': z.enum(['P', 'M', 'G', 'XG']),
+});
+
+export default async function confirmAndEnrollAction(
+  initialState: {
+    success: boolean;
+    error?: Record<string, string[] | undefined>;
+  },
+  formData: FormData
+): Promise<{ success: boolean; error?: Record<string, string[] | undefined> }> {
+  const recaptcha = formData.get('recaptcha')?.toString();
+
+  if (!recaptcha) {
+    return {
+      success: false,
+    };
   }
 
-  console.log(eventId, userData);
-  // const userService = new UserService();
-  // await userService.updateById(userId, userData);
-  //
-  // const enrollmentService = new EnrollmentService();
-  // await enrollmentService.create({ event: eventId, user: userId });
+  const validRecaptcha = await validateRecaptcha(recaptcha);
+
+  if (!validRecaptcha) {
+    return {
+      success: false,
+    };
+  }
+
+  const jsonData = Object.fromEntries(formData.entries());
+  const validateData = confirmAndEnrollSchema.safeParse(jsonData);
+
+  if (!validateData.success) {
+    return {
+      success: false,
+      error: validateData.error.flatten().fieldErrors,
+    };
+  }
+
+  if (!validateData.data.userId) {
+    return redirect('/entrar?redirect=' + validateData.data.redirectTo);
+  }
+
+  const payload = await getPayload({ config: payloadConfig });
+  const updatedUser = await payload.update({
+    collection: 'users',
+    id: validateData.data.userId,
+    data: {
+      gender: 'nda',
+      name: validateData.data.name,
+      email: validateData.data.email,
+      address: validateData.data.address,
+      birthday: validateData.data.birthday.toISOString(),
+      cpf: validateData.data.cpf,
+      rg: validateData.data.rg,
+      tshirt: {
+        type: validateData.data['tshirt.type'],
+        size: validateData.data['tshirt.size'],
+      },
+    },
+    overrideAccess: true,
+  });
+
+  if (!updatedUser) {
+    return {
+      success: false,
+    };
+  }
+
+  const enrollment = await payload.create({
+    collection: 'enrollments',
+    data: {
+      user: validateData.data.userId,
+      event: validateData.data.eventId,
+      modality: validateData.data.modality,
+    },
+    overrideAccess: true,
+  });
+
+  if (!enrollment) {
+    return {
+      success: false,
+    };
+  }
 
   redirect('/conta/eventos');
 }
