@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: process.env.HEROKU_APP_DEFAULT_DOMAIN_NAME ?? '<PLACEHOLDER>',
+        hostname: 'ipe-website-stg-30b75539d629.herokuapp.com',
         pathname: '/**',
       },
     ],
