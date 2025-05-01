@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
         port: '3400',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'instituto-ipe.org',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: process.env.HEROKU_APP_DEFAULT_DOMAIN_NAME ?? '',
+        pathname: '/**',
+      },
     ],
   },
   env: {
