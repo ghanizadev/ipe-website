@@ -1,5 +1,6 @@
 'use server';
 
+import { Category } from '@/payload-types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -8,25 +9,28 @@ import Dropdown from '@/components/dropdown';
 import LinkButton from '@/components/link-button';
 import { UserContext } from '@/components/navbar/components/user-context';
 
-import getPages from '@/services/get-pages.service';
+import getPagesAction from '@/actions/get-pages.action';
 
 export default async function Navbar() {
-  const pages = await getPages();
+  const pages = await getPagesAction();
 
-  const navigation = (pages?.docs ?? []).reduce(
+  const navigation = pages.reduce(
     (previous, current) => {
       if (!current.shownOnNavbar) return previous;
 
-      if (current.category) {
+      const category = current.category as Category;
+      const title = category?.title as string;
+
+      if (category) {
         return {
           ...previous,
-          [current.category.title]: {
+          [title]: {
             path: '#',
             items: [
-              ...(previous[current.category.title]?.items ?? []),
+              ...(previous[title]?.items ?? []),
               {
-                label: current.title,
-                path: '/' + current.category.slug + '/' + current.slug,
+                label: title,
+                path: '/' + category.slug + '/' + current.slug,
               },
             ],
           },
@@ -35,7 +39,7 @@ export default async function Navbar() {
 
       return {
         ...previous,
-        [current.title]: {
+        [title]: {
           path: `/${current.slug}`,
           items: [],
         },

@@ -16,7 +16,10 @@ export default async function updateUserProfileAction(
     error?: Record<string, string[] | undefined>;
   },
   formData: FormData
-) {
+): Promise<{
+  success: boolean;
+  error?: Record<string, string[] | undefined>;
+}> {
   const headers = await nextHeaders();
   const payload = await getPayload({ config: payloadConfig });
 
@@ -41,4 +44,7 @@ export default async function updateUserProfileAction(
     },
     data: validateData.data,
   });
+  return {
+    success: true,
+  };
 }

@@ -2,9 +2,6 @@
 
 import { redirect } from 'next/navigation';
 
-import { EnrollmentService } from '@/services/enrollment.service';
-import UserService from '@/services/user.service';
-
 export default async function confirmAndEnrollAction({
   eventId,
   userId,
@@ -19,11 +16,12 @@ export default async function confirmAndEnrollAction({
     return redirect('/entrar?redirect=' + redirectUrl);
   }
 
-  const userService = new UserService();
-  await userService.updateById(userId, userData);
-
-  const enrollmentService = new EnrollmentService();
-  await enrollmentService.create({ event: eventId, user: userId });
+  console.log(eventId, userData);
+  // const userService = new UserService();
+  // await userService.updateById(userId, userData);
+  //
+  // const enrollmentService = new EnrollmentService();
+  // await enrollmentService.create({ event: eventId, user: userId });
 
   redirect('/conta/eventos');
 }

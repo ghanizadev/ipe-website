@@ -1,8 +1,12 @@
-export default function makePageLink(page: PageDTO): string {
+import { Category, Page } from '@/payload-types';
+
+export default function makePageLink(page: Page): string {
   let url = '';
 
-  if (page.category?.slug) {
-    url += `/${page.category.slug}`;
+  const category = page.category as Category;
+
+  if (category.slug) {
+    url += `/${category.slug}`;
   }
 
   url += `/${page.slug}`;

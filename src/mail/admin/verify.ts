@@ -1,4 +1,5 @@
 import Handlebars from 'handlebars';
+import 'server-only';
 
 import { GenerateEmailFn, PayloadEmailTemplate } from '@/types/mail';
 

@@ -1,8 +1,8 @@
 'use server';
 
 import payloadConfig from '@payload-config';
+import { login } from '@payloadcms/next/auth';
 import { cookies } from 'next/headers';
-import { getPayload } from 'payload';
 import { z } from 'zod';
 
 import validateRecaptcha from '@/actions/validate-recaptcha.action';
@@ -53,15 +53,12 @@ export default async function loginAction(
 
   const cookieStore = await cookies();
 
-  const payload = await getPayload({ config: payloadConfig });
-
   try {
-    const response = await payload.login({
+    const response = await login({
       collection: 'users',
-      data: {
-        email: validateFields.data.email,
-        password: validateFields.data.password,
-      },
+      email: validateFields.data.email,
+      password: validateFields.data.password,
+      config: payloadConfig,
     });
 
     if (!response.token) {

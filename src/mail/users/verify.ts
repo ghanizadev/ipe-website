@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
+import 'server-only';
 
-import { GenerateEmailFn, PayloadEmailTemplate } from '../../types/mail';
+import { GenerateEmailFn, PayloadEmailTemplate } from '@/types/mail';
 
 const template = Handlebars.compile(`
     <p>Verifique sua conta aqui {{ baseUrl }}/verificar?token={{ token }}.</p>

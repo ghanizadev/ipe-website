@@ -4,9 +4,9 @@ import Image from 'next/image';
 export default function TestimonialItem(props: Testimonial) {
   const { avatar, occupation, testimonial, name } = props;
 
-  const avatarUrl = (avatar as Avatar).sizes?.sm?.url ?? '';
-  const avatarWidth = (avatar as Avatar).sizes?.sm?.width ?? 0;
-  const avatarHeight = (avatar as Avatar).sizes?.sm?.height ?? 0;
+  const avatarUrl = (avatar as Avatar)?.sizes?.sm?.url ?? '';
+  const avatarWidth = (avatar as Avatar)?.sizes?.sm?.width ?? 0;
+  const avatarHeight = (avatar as Avatar)?.sizes?.sm?.height ?? 0;
 
   return (
     <>

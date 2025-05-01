@@ -2,18 +2,16 @@ import { Metadata } from 'next';
 
 import Gallery from '@/components/gallery';
 
-import getPhotos from '@/services/get-photos.service';
+import getPhotosAction from '@/actions/get-photos.action';
 
 import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
 
 export default async function GalleryPage() {
-  const photos = await getPhotos(1);
-
-  const ps = photos?.docs ?? [];
+  const { docs: photos } = await getPhotosAction(1);
 
   return (
     <div>
-      <Gallery photos={ps} />
+      <Gallery photos={photos} />
     </div>
   );
 }

@@ -1,15 +1,10 @@
-import { User } from '@/payload-types';
-import { redirect } from 'next/navigation';
+'use server';
 
-import PrimaryButton from '@/components/button/primary-button';
-import Form from '@/components/form';
-import { TextInput } from '@/components/input';
-import SelectInput from '@/components/select';
-import TextArea from '@/components/textarea';
+import { redirect } from 'next/navigation';
 
 import { getUserAuth } from '@/actions/get-user-auth.action';
 
-import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
+import UpdateForm from '@/app/(site)/conta/dados/_components/update-form';
 
 import removeAccountAction from './_actions/remove-account.action';
 import updateUserProfileAction from './_actions/update-user-profile.action';
@@ -22,86 +17,12 @@ export default async function AccountDataPage() {
     return redirect('/');
   }
 
-  const { id, name, email, birthday, rg, cpf, tshirt, address } = user as User;
-
   return (
     <div>
-      <Form<Partial<UserDTO>, { id: string }>
-        action={updateUserProfileAction}
-        additionalData={{ id: id }}
-        className={'grid gap-1'}
-      >
-        <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Geral</h3>
-        <TextInput
-          label={'Nome'}
-          name={'name'}
-          readonly
-          defaultValue={name ?? ''}
-          required
-        />
-        <TextInput
-          label={'E-mail'}
-          name={'email'}
-          readonly
-          defaultValue={email}
-          required
-        />
-        <TextInput
-          label={'Data de Nascimento'}
-          name={'birthday'}
-          type={'date'}
-          defaultValue={birthday ?? ''}
-          required
-        />
-        <TextArea
-          label={'Endereço'}
-          name={'address'}
-          defaultValue={address ?? ''}
-          required
-        />
-        <h3 className={'my-4 text-lg leading-none text-[--primary]'}>
-          Documentação
-        </h3>
-        <TextInput
-          label={'CPF (Certidão de Pessoa Física)'}
-          name={'cpf'}
-          defaultValue={cpf ?? ''}
-          required
-        />
-        <TextInput
-          label={'RG (Registro Geral)'}
-          name={'rg'}
-          defaultValue={rg ?? ''}
-          required
-        />
-        <h3 className={'my-4 text-lg leading-none text-[--primary]'}>
-          Camiseta
-        </h3>
-        <SelectInput
-          name={'tshirt.type'}
-          label={'Tipo da Camiseta'}
-          options={tshirtTypes}
-          defaultValue={tshirt?.type ?? ''}
-          required
-        />
-        <SelectInput
-          name={'tshirt.size'}
-          label={'Tamanho da Camiseta'}
-          options={tshirtSizes}
-          defaultValue={tshirt?.size ?? ''}
-          required
-        />
-        <br />
-        <small>
-          <span className={'text-red-600'}>*</span> Campos obrigatórios.
-        </small>
-        <PrimaryButton tag={'button'} className={'w-min justify-self-end'}>
-          Salvar
-        </PrimaryButton>
-      </Form>
+      <UpdateForm updateAction={updateUserProfileAction} />
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Outros</h3>
       <RemoveAccountButton
-        userId={id}
+        userId={user?.id}
         removeAccountAction={removeAccountAction}
       />
     </div>

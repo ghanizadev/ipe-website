@@ -15,9 +15,9 @@ type EventProps = {
 export default function EventItem(props: EventProps) {
   const { title, location, date, standFirst, image } = props.event;
 
-  const imageWidth = (image as Media).width ?? 0;
-  const imageHeight = (image as Media).height ?? 0;
-  const imageUrl = (image as Media).url ?? '';
+  const imageWidth = (image as Media)?.width ?? 0;
+  const imageHeight = (image as Media)?.height ?? 0;
+  const imageUrl = (image as Media)?.url ?? '';
 
   const path = makeEventLink(props.event);
 

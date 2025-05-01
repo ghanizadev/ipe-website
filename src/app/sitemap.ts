@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
 
-import getPages from '@/services/get-pages.service';
-
 import getEventsAction from '@/actions/get-events.action';
+import getPagesAction from '@/actions/get-pages.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 import makePageLink from '@/helpers/make-page-link.helper';
@@ -29,9 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const pages = await getPages();
+  const pages = await getPagesAction();
 
-  for (const page of pages?.docs ?? []) {
+  for (const page of pages) {
     routes.push({
       url: `${process.env.NEXT_PUBLIC_URL}${makePageLink(page)}`,
       lastModified: new Date(page.updatedAt),
