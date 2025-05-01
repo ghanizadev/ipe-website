@@ -23,13 +23,13 @@ export default function UpdateForm(props: {
     error?: Record<string, string[] | undefined>;
   }>;
 }) {
-  const form = useActionState(props.updateAction, {
+  const [formState, formAction] = useActionState(props.updateAction, {
     success: false,
   });
   const user = useUser();
 
   return (
-    <form action={form[1]} className={'grid gap-1'}>
+    <form action={formAction} className={'grid gap-1'}>
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Geral</h3>
       <TextInput
         label={'Nome'}
@@ -37,6 +37,7 @@ export default function UpdateForm(props: {
         readonly
         defaultValue={user?.name}
         required
+        error={formState.error?.name?.[0]}
       />
       <TextInput
         label={'E-mail'}
@@ -44,6 +45,7 @@ export default function UpdateForm(props: {
         readonly
         defaultValue={user?.email}
         required
+        error={formState.error?.email?.[0]}
       />
       <TextInput
         label={'Data de Nascimento'}
@@ -51,12 +53,14 @@ export default function UpdateForm(props: {
         type={'date'}
         defaultValue={user?.birthday}
         required
+        error={formState.error?.birthday?.[0]}
       />
       <TextArea
         label={'Endereço'}
         name={'address'}
         defaultValue={user?.address}
         required
+        error={formState.error?.address?.[0]}
       />
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>
         Documentação
@@ -66,12 +70,14 @@ export default function UpdateForm(props: {
         name={'cpf'}
         defaultValue={user?.cpf}
         required
+        error={formState.error?.cpf?.[0]}
       />
       <TextInput
         label={'RG (Registro Geral)'}
         name={'rg'}
         defaultValue={user?.rg}
         required
+        error={formState.error?.rg?.[0]}
       />
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Camiseta</h3>
       <SelectInput
@@ -80,6 +86,7 @@ export default function UpdateForm(props: {
         options={tshirtTypes}
         defaultValue={user?.tshirt?.type}
         required
+        error={formState.error?.['tshirt.type']?.[0]}
       />
       <SelectInput
         name={'tshirt.size'}
@@ -87,6 +94,7 @@ export default function UpdateForm(props: {
         options={tshirtSizes}
         defaultValue={user?.tshirt?.size}
         required
+        error={formState.error?.['tshirt.size']?.[0]}
       />
       <RecaptchaInput />
       <input type={'hidden'} name={'id'} value={user?.id} />
