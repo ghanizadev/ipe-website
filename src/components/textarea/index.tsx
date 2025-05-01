@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 type TextAreaProps = {
   label: string;
   name: string;
@@ -5,6 +7,7 @@ type TextAreaProps = {
   placeholder?: string;
   defaultValue?: string | null;
   required?: boolean;
+  error?: string | boolean;
 };
 
 export default function TextArea({
@@ -14,6 +17,7 @@ export default function TextArea({
   placeholder,
   defaultValue,
   required,
+  error,
 }: TextAreaProps) {
   const classes = [
     'block p-2.5 my-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300',
@@ -35,11 +39,17 @@ export default function TextArea({
       <textarea
         id={`${name}-textarea`}
         rows={4}
-        className={classes.join(' ').trim()}
+        className={twMerge(
+          ...classes,
+          error ? 'bg-red-50 border-red-500 text-red-900' : ''
+        )}
         placeholder={placeholder}
         name={name}
         defaultValue={defaultValue ?? undefined}
       ></textarea>
+      {typeof error === 'string' && (
+        <p className='mt-2 text-sm text-red-600'>{error}</p>
+      )}
     </>
   );
 }

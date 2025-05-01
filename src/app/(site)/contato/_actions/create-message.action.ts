@@ -11,11 +11,11 @@ const messageSchema = z.object({
     .string({
       required_error: 'Por favor, informe seu e-mail.',
     })
-    .email(),
-  message: z
-    .string({ required_error: 'Por favor, informe sua mensagem' })
-    .min(10),
-  name: z.string().min(3).optional(),
+    .email('O formato do e-mail é inválido'),
+  message: z.string({ required_error: 'Por favor, informe sua mensagem' }),
+  name: z.string({
+    required_error: 'Por favor, informe seu nome.',
+  }),
   phone: z.string().optional(),
 });
 

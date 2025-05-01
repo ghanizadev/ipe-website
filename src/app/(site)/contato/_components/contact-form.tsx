@@ -4,6 +4,7 @@ import React, { useActionState, useEffect, useRef } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
+import { RecaptchaInput } from '@/components/recaptcha-input';
 import TextArea from '@/components/textarea';
 import notificationEvent from '@/components/toast/toast-event';
 
@@ -49,26 +50,36 @@ export default function ContactForm(props: ContactFormProps) {
 
   return (
     <form ref={formRef} id={'contact-form'} action={formAction}>
-      <TextInput className={'mb-2'} label={'Nome'} name={'name'} required />
+      <TextInput
+        className={'mb-2'}
+        label={'Nome'}
+        name={'name'}
+        required
+        error={formState.error?.name?.[0]}
+      />
       <TextInput
         className={'mb-2'}
         label={'E-mail'}
         name={'email'}
         type={'email'}
         required
+        error={formState.error?.email?.[0]}
       />
       <TextInput
         className={'mb-2'}
         label={'Telefone/Whatsapp'}
         name={'phone'}
         type={'phone'}
+        error={formState.error?.phone?.[0]}
       />
       <TextArea
         className={'mb-2'}
         label={'Mensagem'}
         name={'message'}
         required
+        error={formState.error?.message?.[0]}
       />
+      <RecaptchaInput />
       <PrimaryButton tag={'button'} className={'float-right'} type={'submit'}>
         Enviar
       </PrimaryButton>
