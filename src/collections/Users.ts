@@ -93,7 +93,7 @@ const Users: CollectionConfig = {
     {
       name: 'role',
       type: 'select',
-      options: ['admin', 'guide', 'parathlete'],
+      options: ['guide', 'parathlete'],
       admin: {
         condition: (data, siblingData, { user }) => user?.role === 'admin',
       },

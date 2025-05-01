@@ -30,20 +30,21 @@ export default function ContactForm(props: ContactFormProps) {
   });
 
   useEffect(() => {
-    if (formState.success && formState.done) {
-      notificationEvent({
-        title: 'Sucesso',
-        message: 'a mensagem foi enviada.',
-        type: 'success',
-      });
-      formRef.current?.reset();
-    } else {
-      notificationEvent({
-        title: 'Erro',
-        message: 'a mensagem não foi enviada, tente novamente mais tarde.',
-        type: 'error',
-      });
-    }
+    if (formState.done)
+      if (formState.success) {
+        notificationEvent({
+          title: 'Sucesso',
+          message: 'a mensagem foi enviada.',
+          type: 'success',
+        });
+        formRef.current?.reset();
+      } else {
+        notificationEvent({
+          title: 'Erro',
+          message: 'a mensagem não foi enviada, tente novamente mais tarde.',
+          type: 'error',
+        });
+      }
   }, [formState]);
 
   return (
