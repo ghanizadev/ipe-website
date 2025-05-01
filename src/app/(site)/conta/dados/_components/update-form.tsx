@@ -34,7 +34,6 @@ export default function UpdateForm(props: {
       <TextInput
         label={'Nome'}
         name={'name'}
-        readonly
         defaultValue={user?.name}
         required
         error={formState.error?.name?.[0]}
@@ -42,7 +41,6 @@ export default function UpdateForm(props: {
       <TextInput
         label={'E-mail'}
         name={'email'}
-        readonly
         defaultValue={user?.email}
         required
         error={formState.error?.email?.[0]}
