@@ -22,15 +22,21 @@ const messageSchema = z.object({
 export default async function createMessageAction(
   initialState: {
     success: boolean;
+    done: boolean;
     error?: Record<string, string[] | undefined>;
   },
   formData: FormData
-): Promise<{ success: boolean; error?: Record<string, string[] | undefined> }> {
+): Promise<{
+  success: boolean;
+  done: boolean;
+  error?: Record<string, string[] | undefined>;
+}> {
   const recaptcha = formData.get('recaptcha')?.toString();
 
   if (!recaptcha) {
     return {
       success: false,
+      done: true,
     };
   }
 
@@ -39,6 +45,7 @@ export default async function createMessageAction(
   if (!validRecaptcha) {
     return {
       success: false,
+      done: true,
     };
   }
 
@@ -48,6 +55,7 @@ export default async function createMessageAction(
   if (!validateData.success) {
     return {
       success: false,
+      done: true,
       error: validateData.error.flatten().fieldErrors,
     };
   }
@@ -67,10 +75,12 @@ export default async function createMessageAction(
   if (!message) {
     return {
       success: false,
+      done: true,
     };
   }
 
   return {
     success: true,
+    done: true,
   };
 }

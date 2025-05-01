@@ -11,11 +11,13 @@ type ContactFormProps = {
   action: (
     initialState: {
       success: boolean;
+      done: boolean;
       error?: Record<string, string[] | undefined>;
     },
     formData: FormData
   ) => Promise<{
     success: boolean;
+    done: boolean;
     error?: Record<string, string[] | undefined>;
   }>;
 };
@@ -24,10 +26,11 @@ export default function ContactForm(props: ContactFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [formState, formAction] = useActionState(props.action, {
     success: false,
+    done: false,
   });
 
   useEffect(() => {
-    if (formState.success) {
+    if (formState.success && formState.done) {
       notificationEvent({
         title: 'Sucesso',
         message: 'a mensagem foi enviada.',
