@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 type SelectProps = {
   name: string;
   label: string;
@@ -5,6 +7,7 @@ type SelectProps = {
   defaultValue?: string | null;
   className?: string;
   required?: boolean;
+  error?: string | boolean;
 };
 
 export default function SelectInput(props: SelectProps) {
@@ -27,7 +30,12 @@ export default function SelectInput(props: SelectProps) {
       </label>
       <select
         id={`${props.name}-input`}
-        className={classes.join(' ').trim()}
+        className={twMerge(
+          ...classes,
+          props.error
+            ? 'bg-red-50 border-red-500 text-red-900 placeholder-red-700'
+            : ''
+        )}
         name={props.name}
         required={props.required}
       >
@@ -46,6 +54,9 @@ export default function SelectInput(props: SelectProps) {
           </option>
         ))}
       </select>
+      {typeof props.error === 'string' && (
+        <p className='mt-2 text-sm text-red-600'>{props.error}</p>
+      )}
     </>
   );
 }

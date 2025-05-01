@@ -6,6 +6,7 @@ import { useActionState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
+import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
 import TextArea from '@/components/textarea';
 import { H3 } from '@/components/typography';
@@ -38,7 +39,6 @@ export default function UpdateAndSubmitForm(props: {
         label={'Nome'}
         name={'name'}
         defaultValue={user?.name}
-        readonly
         required
         error={formState.error?.name?.[0]}
       />
@@ -47,7 +47,6 @@ export default function UpdateAndSubmitForm(props: {
         label={'E-mail'}
         name={'email'}
         defaultValue={user?.email}
-        readonly
         required
         error={formState.error?.email?.[0]}
       />
@@ -97,6 +96,7 @@ export default function UpdateAndSubmitForm(props: {
             label={'Modalidade'}
             name={'modality'}
             required
+            error={formState.error?.modality?.[0]}
           />
         </>
       ) : (
@@ -110,6 +110,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.tshirt?.type}
         options={tshirtTypes}
         required
+        error={formState.error?.['tshirt.type']?.[0]}
       />
       <SelectInput
         className={'mb-4'}
@@ -118,7 +119,9 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.tshirt?.size}
         options={tshirtSizes}
         required
+        error={formState.error?.['tshirt.size']?.[0]}
       />
+      <RecaptchaInput />
       <input type={'hidden'} name={'userId'} value={user?.id} />
       <input type={'hidden'} name={'eventId'} value={props.event?.id} />
       <input

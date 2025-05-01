@@ -10,18 +10,31 @@ import validateRecaptcha from '@/actions/validate-recaptcha.action';
 const confirmAndEnrollSchema = z.object({
   userId: z.string(),
   eventId: z.string(),
-  name: z.string(),
-  email: z.string().email(),
-  birthday: z.date(),
-  address: z.string(),
-  cpf: z.string(),
-  rg: z.string(),
-  modality: z
-    .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'])
-    .optional(),
   redirectTo: z.string(),
-  'tshirt.type': z.enum(['masc', 'fem', 'inf']),
-  'tshirt.size': z.enum(['P', 'M', 'G', 'XG']),
+  name: z.string({ required_error: 'Por favor, informe seu nome.' }),
+  email: z
+    .string({ required_error: 'Por favor, informe seu e-mail.' })
+    .email('O formato do e-mail é inválido'),
+  birthday: z
+    .string({ required_error: 'Por favor, informe sua data de aniversário.' })
+    .date('O formato da data de aniversário é inválido'),
+  address: z.string({ required_error: 'Por favor, informe o seu endereço.' }),
+  cpf: z.string({ required_error: 'Por favor, informe seu CPF.' }),
+  rg: z.string({ required_error: 'Por favor, informe seu RG.' }),
+  modality: z
+    .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'], {
+      required_error: 'Por favor, informe a modalidade da sua corrida.',
+      message: 'Por favor, informe a modalidade da sua corrida.',
+    })
+    .optional(),
+  'tshirt.type': z.enum(['masc', 'fem', 'inf'], {
+    required_error: 'Por favor, informe o tipo da sua camiseta.',
+    message: 'Por favor, informe o tipo da sua camiseta.',
+  }),
+  'tshirt.size': z.enum(['P', 'M', 'G', 'XG'], {
+    required_error: 'Por favor, informe o tamanho da sua camiseta.',
+    message: 'Por favor, informe o tamanho da sua camiseta.',
+  }),
 });
 
 export default async function confirmAndEnrollAction(
@@ -70,7 +83,7 @@ export default async function confirmAndEnrollAction(
       name: validateData.data.name,
       email: validateData.data.email,
       address: validateData.data.address,
-      birthday: validateData.data.birthday.toISOString(),
+      birthday: new Date(validateData.data.birthday).toISOString(),
       cpf: validateData.data.cpf,
       rg: validateData.data.rg,
       tshirt: {
