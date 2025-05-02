@@ -96,6 +96,8 @@ export default async function loginAction(
 
     return { success: true };
   } catch (error: unknown) {
+    console.error(error);
+
     if ((error as Error).name === 'UnverifiedEmail') {
       return {
         success: false,

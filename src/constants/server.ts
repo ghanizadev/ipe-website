@@ -15,3 +15,5 @@ export const SERVER_URL =
   typeof window === 'undefined'
     ? `${SERVER_PROTOCOL}://${SERVER_HOST}${['443', '80'].includes(SERVER_PORT) ? '' : `:${SERVER_PORT}`}`
     : process.env.SERVER_URL!;
+
+export const IS_LOCALHOST = SERVER_URL.includes('localhost');
