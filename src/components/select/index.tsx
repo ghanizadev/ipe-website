@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type SelectProps = {
@@ -24,6 +26,11 @@ export default function SelectInput(props: SelectProps) {
     classes.push(props.className);
   }
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setSelected(value);
+  };
+
   return (
     <>
       <label
@@ -43,6 +50,8 @@ export default function SelectInput(props: SelectProps) {
         )}
         name={props.name}
         required={props.required}
+        value={selected}
+        onChange={handleOnChange}
       >
         {!props.defaultValue && (
           <option selected hidden>

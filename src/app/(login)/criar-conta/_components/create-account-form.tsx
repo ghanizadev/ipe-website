@@ -8,11 +8,10 @@ import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
 import { CheckboxInput, TextAreaInput, TextInput } from '@/components/input';
 import Link from '@/components/link';
+import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
 
 import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
-
-import { RecaptchaInput } from '../../../../components/recaptcha-input';
 
 type SelectButtonProps = {
   label: string;
