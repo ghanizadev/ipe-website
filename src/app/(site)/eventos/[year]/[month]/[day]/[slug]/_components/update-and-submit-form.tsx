@@ -5,10 +5,9 @@ import { Event } from '@/payload-types';
 import { useActionState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
-import { TextInput } from '@/components/input';
+import { TextAreaInput, TextInput } from '@/components/input';
 import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
-import TextArea from '@/components/textarea';
 import { H3 } from '@/components/typography';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
@@ -50,7 +49,7 @@ export default function UpdateAndSubmitForm(props: {
         required
         error={formState.error?.email?.[0]}
       />
-      <TextArea
+      <TextAreaInput
         label={'Endereço'}
         name={'address'}
         defaultValue={user?.address}

@@ -1,3 +1,7 @@
+'use client';
+
+import React, { useState } from 'react';
+
 type TextInputProps = {
   name: string;
   label?: string;
@@ -13,7 +17,22 @@ type TextInputProps = {
   hidden?: boolean;
 };
 
+const getDefaultValue = (defaultValue?: string | null): string | undefined => {
+  if (!defaultValue) return;
+  const date = new Date(defaultValue);
+
+  if (!Number.isNaN(date.valueOf()) && date.toISOString() === defaultValue) {
+    return date.toISOString().split('T')[0];
+  }
+
+  return defaultValue;
+};
+
 export default function TextInput(props: TextInputProps) {
+  const [value, setValue] = useState<string | undefined>(
+    getDefaultValue(props.defaultValue)
+  );
+
   const successClassNames =
     'bg-green-50 border-green-500 text-green-900 placeholder-green-700';
   const errorClassNames =
@@ -36,17 +55,9 @@ export default function TextInput(props: TextInputProps) {
     wrapperClassNames.push('hidden');
   }
 
-  const getDefaultValue = (
-    defaultValue?: string | null
-  ): string | undefined => {
-    if (!defaultValue) return;
-    const date = new Date(defaultValue);
-
-    if (!Number.isNaN(date.valueOf()) && date.toISOString() === defaultValue) {
-      return date.toISOString().split('T')[0];
-    }
-
-    return defaultValue;
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setValue(value);
   };
 
   return (
@@ -67,7 +78,8 @@ export default function TextInput(props: TextInputProps) {
         pattern={props.pattern}
         title={props.title}
         hidden={props.hidden}
-        defaultValue={getDefaultValue(props.defaultValue)}
+        value={value}
+        onChange={handleOnChange}
         className={commonClassNames.join(' ').trim()}
       />
       {typeof props.success === 'string' && (

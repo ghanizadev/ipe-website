@@ -4,9 +4,8 @@ import { useUser } from '@/context/user.context';
 import { useActionState, useEffect } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
-import { TextInput } from '@/components/input';
+import { TextAreaInput, TextInput } from '@/components/input';
 import SelectInput from '@/components/select';
-import TextArea from '@/components/textarea';
 
 import { tshirtSizes, tshirtTypes } from '@/constants/account.constants';
 
@@ -58,7 +57,7 @@ export default function UpdateForm(props: {
         required
         error={formState.error?.birthday?.[0]}
       />
-      <TextArea
+      <TextAreaInput
         label={'Endereço'}
         name={'address'}
         defaultValue={user?.address}

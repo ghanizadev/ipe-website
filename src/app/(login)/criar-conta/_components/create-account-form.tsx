@@ -6,11 +6,9 @@ import { twMerge } from 'tailwind-merge';
 
 import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
-import { TextInput } from '@/components/input';
-import CheckboxInput from '@/components/input/checkbox-input';
+import { CheckboxInput, TextAreaInput, TextInput } from '@/components/input';
 import Link from '@/components/link';
 import SelectInput from '@/components/select';
-import TextArea from '@/components/textarea';
 
 import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
 
@@ -136,7 +134,11 @@ export default function CreateAccountForm() {
             label={'Data de nascimento'}
             name={'birthday'}
           />
-          <TextArea label={'Endereço'} name={'address'} className={'mb-8'} />
+          <TextAreaInput
+            label={'Endereço'}
+            name={'address'}
+            className={'mb-8'}
+          />
           <TextInput
             error={formState.error?.password?.[0]}
             label={'Senha'}

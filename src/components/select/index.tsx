@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type SelectProps = {
@@ -11,6 +12,10 @@ type SelectProps = {
 };
 
 export default function SelectInput(props: SelectProps) {
+  const [selected, setSelected] = useState<string | undefined>(
+    props.defaultValue ?? undefined
+  );
+
   const classes = [
     'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5',
   ];
@@ -48,7 +53,7 @@ export default function SelectInput(props: SelectProps) {
           <option
             key={opt.value}
             value={opt.value}
-            selected={props.defaultValue === opt.value}
+            selected={selected === opt.value}
           >
             {opt.label}
           </option>

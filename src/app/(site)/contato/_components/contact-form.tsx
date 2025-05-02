@@ -3,9 +3,8 @@
 import React, { useActionState, useEffect, useRef } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
-import { TextInput } from '@/components/input';
+import { TextAreaInput, TextInput } from '@/components/input';
 import { RecaptchaInput } from '@/components/recaptcha-input';
-import TextArea from '@/components/textarea';
 import notificationEvent from '@/components/toast/toast-event';
 
 type ContactFormProps = {
@@ -72,7 +71,7 @@ export default function ContactForm(props: ContactFormProps) {
         type={'phone'}
         error={formState.error?.phone?.[0]}
       />
-      <TextArea
+      <TextAreaInput
         className={'mb-2'}
         label={'Mensagem'}
         name={'message'}
