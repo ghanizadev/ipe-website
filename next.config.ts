@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     SERVER_URL: SERVER_URL,
   },
   webpack: (config) => {

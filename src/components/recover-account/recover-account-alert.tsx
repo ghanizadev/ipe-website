@@ -16,7 +16,7 @@ type ConfirmationAlertProps = {
 export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
   const [alertProps, setAlertProps] = useState<AlertProps>();
   const router = useRouter();
-  const [user] = useUser();
+  const [user, refresh] = useUser();
 
   const handleAction = (status: 'confirm' | 'deny' | 'dismiss') => {
     return async () => {
@@ -29,6 +29,7 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
         });
       } else {
         await logoutService();
+        await refresh();
         router.push('/');
       }
 
