@@ -6,8 +6,9 @@ import React, { useActionState, useEffect } from 'react';
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
 import Link from '@/components/link';
+import { RecaptchaInput } from '@/components/recaptcha-input';
 
-import { RecaptchaInput } from '../../../../components/recaptcha-input';
+import { SERVER_URL } from '@/constants/server';
 
 type LoginFormProps = {
   redirect?: string;
@@ -33,9 +34,7 @@ export default function LoginForm(props: LoginFormProps) {
     if (formState.success) {
       if (props.redirect) {
         try {
-          const url = new URL(
-            `${process.env.NEXT_PUBLIC_URL}${props.redirect}`
-          );
+          const url = new URL(`${SERVER_URL}${props.redirect}`);
           router.push(url.pathname + url.search);
         } catch {
           router.push('/conta');

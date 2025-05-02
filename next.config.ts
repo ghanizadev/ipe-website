@@ -2,6 +2,8 @@ import { withPayload } from '@payloadcms/next/withPayload';
 import _ from 'lodash';
 import type { NextConfig } from 'next';
 
+import { SERVER_HOST, SERVER_PROTOCOL, SERVER_URL } from '@/constants/server';
+
 const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
@@ -9,33 +11,15 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3400',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'instituto-ipe.org',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'ipe-website-stg-30b75539d629.herokuapp.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: `ipe-web-pr-${process.env.HEROKU_PR_NUMBER}.herokuapp.com`,
+        protocol: SERVER_PROTOCOL,
+        hostname: SERVER_HOST,
         pathname: '/**',
       },
     ],
   },
   env: {
-    CMS_API_URL: process.env.CMS_API_URL,
-    CMS_API_KEY: process.env.CMS_API_KEY,
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-    NEXT_PUBLIC_CMS_URL: process.env.NEXT_PUBLIC_CMS_URL,
+    SERVER_URL: SERVER_URL,
   },
   webpack: (config) => {
     return _.merge(config, {

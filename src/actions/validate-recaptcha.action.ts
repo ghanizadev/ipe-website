@@ -8,6 +8,8 @@ const G_RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify';
 export default async function validateRecaptcha(
   token: string
 ): Promise<boolean> {
+  if (process.env.HEROKU_PR_NUMBER) return true;
+
   const requestHeaders = await headers();
   const remoteip = requestHeaders.get('x-forwarded-for')?.split(',')[0]?.trim();
 

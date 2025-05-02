@@ -11,6 +11,8 @@ import RichText from '@/components/rich-text';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
+import { SERVER_URL } from '@/constants/server';
+
 import getEventBySlugAction from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_actions/get-event-by-slug.action';
 import UpdateAndSubmitForm from '@/app/(site)/eventos/[year]/[month]/[day]/[slug]/_components/update-and-submit-form';
 
@@ -81,7 +83,7 @@ export default async function EventPage(props: PageProps) {
         >
           <p className={'text-gray-600'}>Compartilhe:</p>
           <ShareBar
-            link={`${process.env.NEXT_PUBLIC_URL}${makeEventLink(event)}`}
+            link={`${SERVER_URL}${makeEventLink(event)}`}
             title={event.title}
           />
         </div>
@@ -130,13 +132,13 @@ export async function generateMetadata({
     openGraph: {
       title: event?.title,
       description: event?.standFirst,
-      url: process.env.NEXT_PUBLIC_URL + makeEventLink(event),
+      url: SERVER_URL + makeEventLink(event),
       siteName: 'IPE - Inclusão Pelo Esporte',
       images: {
         height: imageHeight,
         width: imageWidth,
         alt: imageAltText,
-        url: `${process.env.NEXT_PUBLIC_URL}${imageUrl}`,
+        url: `${SERVER_URL}${imageUrl}`,
       },
     },
   };
