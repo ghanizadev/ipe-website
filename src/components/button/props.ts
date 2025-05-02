@@ -3,7 +3,9 @@ import React from 'react';
 export type CommonButtonProps = {
   className?: string;
   tag: 'button' | 'anchor';
+  loading?: boolean;
   children?: React.ReactNode | React.ReactNode[];
+  disabled?: boolean;
 };
 
 export type AnchorProps = CommonButtonProps & {

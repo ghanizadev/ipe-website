@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useActionState, useEffect } from 'react';
+import React, { useActionState, useEffect, useState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
@@ -26,9 +26,10 @@ type LoginFormProps = {
 
 export default function LoginForm(props: LoginFormProps) {
   const router = useRouter();
-  const [formState, formAction] = useActionState(props.loginAction, {
+  const [formState, formAction, pending] = useActionState(props.loginAction, {
     success: false,
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (formState.success) {
@@ -42,8 +43,14 @@ export default function LoginForm(props: LoginFormProps) {
       } else {
         router.push('/conta');
       }
+    } else {
+      setLoading(false);
     }
   }, [formState, router, props.redirect]);
+
+  useEffect(() => {
+    if (pending) setLoading(true);
+  }, [pending]);
 
   return (
     <form action={formAction} className={'flex flex-col'}>
@@ -51,12 +58,14 @@ export default function LoginForm(props: LoginFormProps) {
         label={'E-mail'}
         name={'email'}
         error={formState.error?.email?.[0]}
+        disabled={loading}
       />
       <TextInput
         label={'Senha'}
         name={'password'}
         type={'password'}
         error={formState.error?.password?.[0]}
+        disabled={loading}
       />
       <RecaptchaInput />
       <Link
@@ -65,7 +74,9 @@ export default function LoginForm(props: LoginFormProps) {
       >
         Esqueci minha senha
       </Link>
-      <PrimaryButton tag={'button'}>Entrar</PrimaryButton>
+      <PrimaryButton tag={'button'} loading={loading}>
+        Entrar
+      </PrimaryButton>
     </form>
   );
 }

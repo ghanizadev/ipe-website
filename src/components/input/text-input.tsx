@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type TextInputProps = {
   name: string;
@@ -8,13 +9,13 @@ type TextInputProps = {
   type?: string;
   error?: string | boolean;
   success?: string | boolean;
-  readonly?: boolean;
   required?: boolean;
   className?: string;
   defaultValue?: string | null;
   pattern?: string;
   title?: string;
   hidden?: boolean;
+  disabled?: boolean;
 };
 
 const getDefaultValue = (defaultValue?: string | null): string | undefined => {
@@ -74,13 +75,13 @@ export default function TextInput(props: TextInputProps) {
         type={props.type ?? 'text'}
         name={props.name}
         id={props.name}
-        disabled={props.readonly}
+        disabled={props.disabled}
         pattern={props.pattern}
         title={props.title}
         hidden={props.hidden}
         value={value}
         onChange={handleOnChange}
-        className={commonClassNames.join(' ').trim()}
+        className={twMerge(...commonClassNames)}
       />
       {typeof props.success === 'string' && (
         <p className='mt-2 text-sm text-green-600'>{props.success}</p>
