@@ -12,7 +12,7 @@ export default function TestimonialItem(props: Testimonial) {
     <>
       {avatar && (
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + avatarUrl}
+          src={avatarUrl}
           alt={'testimonial'}
           width={avatarWidth}
           height={avatarHeight}

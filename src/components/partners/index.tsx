@@ -28,7 +28,7 @@ export default function Partners(props: { partners: Partner[] }) {
                 rel={'noreferrer,noopener'}
               >
                 <Image
-                  src={process.env.NEXT_PUBLIC_CMS_URL + logoUrl}
+                  src={logoUrl}
                   alt={partner.name + ' logo'}
                   width={128}
                   height={128}
@@ -53,7 +53,7 @@ export default function Partners(props: { partners: Partner[] }) {
                 rel={'noreferrer,noopener'}
               >
                 <Image
-                  src={process.env.NEXT_PUBLIC_CMS_URL + logoUrl}
+                  src={logoUrl}
                   alt={partner.name + ' logo'}
                   width={128}
                   height={128}

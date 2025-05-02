@@ -25,7 +25,7 @@ export default function EventItem(props: EventProps) {
     <div className={'grid gap-4 lg:grid-cols-6 mb-6'}>
       <div className={'col-span-3 flex flex-col items-end lg:col-span-2'}>
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + imageUrl}
+          src={imageUrl}
           alt={'alt'}
           width={imageWidth}
           height={imageHeight}

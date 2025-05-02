@@ -66,7 +66,7 @@ export default async function EventPage(props: PageProps) {
           </div>
         </div>
         <Image
-          src={process.env.NEXT_PUBLIC_CMS_URL + imageUrl}
+          src={imageUrl}
           alt={''}
           width={imageWidth}
           height={imageHeight}
