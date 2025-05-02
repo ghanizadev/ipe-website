@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         hostname: 'ipe-website-stg-30b75539d629.herokuapp.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: `ipe-web-pr-${process.env.HEROKU_PR_NUMBER}.herokuapp.com`,
+        pathname: '/**',
+      },
     ],
   },
   env: {
