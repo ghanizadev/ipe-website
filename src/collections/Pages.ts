@@ -33,6 +33,7 @@ const Pages: CollectionConfig = {
       name: 'title',
       label: 'Título',
       type: 'text',
+      required: true,
     },
     {
       name: 'slug',

@@ -29,7 +29,7 @@ export default async function Navbar() {
             items: [
               ...(previous[title]?.items ?? []),
               {
-                label: title,
+                label: current.title,
                 path: '/' + category.slug + '/' + current.slug,
               },
             ],
