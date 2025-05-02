@@ -98,7 +98,9 @@ export default async function loginAction(
   } catch (error: unknown) {
     console.error(error);
 
-    if ((error as Error).name === 'UnverifiedEmail') {
+    const { message, name } = error as Error;
+
+    if (name === 'UnverifiedEmail') {
       return {
         success: false,
         error: {
@@ -107,10 +109,37 @@ export default async function loginAction(
       };
     }
 
+    if (message.includes('The email or password provided is incorrect')) {
+      return {
+        success: false,
+        error: {
+          email: [' '],
+          password: ['E-mail e/ou senha incorretos.'],
+        },
+      };
+    }
+
+    if (
+      message.includes(
+        'This user is locked due to having too many failed login attempts'
+      )
+    ) {
+      return {
+        success: false,
+        error: {
+          email: [' '],
+          password: [
+            'Sua conta possui muitas tentativas de login. Tente novamente mais tarde.',
+          ],
+        },
+      };
+    }
+
     return {
       success: false,
       error: {
-        email: ['Erro ao tentar fazer login. Tente novamente mais tarde.'],
+        email: [' '],
+        password: ['Erro ao tentar fazer login. Tente novamente mais tarde.'],
       },
     };
   }
