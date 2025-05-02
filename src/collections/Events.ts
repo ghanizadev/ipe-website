@@ -163,6 +163,7 @@ const Events: CollectionConfig = {
             exportName: 'CustomButton',
             clientProps: {
               url: `/admin/collections/enrollments?limit=10&page=1&${encodeURI(`where[or][0][and][0][event][equals]=`)}:virtualId`,
+              label: 'Ver inscrições',
             },
           },
         },
@@ -180,6 +181,7 @@ const Events: CollectionConfig = {
             exportName: 'CustomButton',
             clientProps: {
               url: `/api/events/:virtualId/export`,
+              label: 'Exportar inscrições',
             },
           },
         },

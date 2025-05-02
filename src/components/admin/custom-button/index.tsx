@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, useWatchForm } from '@payloadcms/ui';
+import { useWatchForm } from '@payloadcms/ui';
 import React, { useMemo } from 'react';
 
 export function CustomButton(props: { url: string; label: string }) {
@@ -17,8 +17,18 @@ export function CustomButton(props: { url: string; label: string }) {
   }, [props]);
 
   return (
-    <Button url={url} el={'anchor'} newTab className={'full-width no-margin'}>
-      {props.label}
-    </Button>
+    <div>
+      <a
+        href={url}
+        target={'_blank'}
+        rel={'noreferrer'}
+        style={{ width: '100%', textAlign: 'center', alignSelf: 'start' }}
+        className={
+          'btn btn--icon-style-without-border btn--withoutPopup btn--style-primary btn--size-large'
+        }
+      >
+        {props.label}
+      </a>
+    </div>
   );
 }

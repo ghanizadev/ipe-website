@@ -15,7 +15,7 @@ type RemoveAccountButtonProps = {
 
 export default function RemoveAccountButton(props: RemoveAccountButtonProps) {
   const router = useRouter();
-  const userCtx = useUser();
+  const [, refresh] = useUser();
 
   const handleRemoveAccount = async () => {
     const response = await callAlert('remove', {
@@ -24,10 +24,11 @@ export default function RemoveAccountButton(props: RemoveAccountButtonProps) {
         'Você deseja mesmo remover sua conta?\n\nA remoção da sua conta será programada para exclusão definitiva após 30 dias. Caso você mude de ideia e queira mantê-la, basta entrar normalmente dentro de 30 dias.',
     });
 
+    await logoutService();
+    await refresh();
+
     if (response.accepted) {
       await props.removeAccountAction(props.userId);
-      await logoutService();
-      await userCtx[1]();
       router.push('/');
     }
   };
