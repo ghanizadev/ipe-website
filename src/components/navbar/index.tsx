@@ -73,7 +73,7 @@ export default async function Navbar() {
           aria-controls='navbar-dropdown'
           aria-expanded='false'
         >
-          <span className='sr-only'>Open main menu</span>
+          <span className='sr-only'>Abrir o menu principal</span>
           <svg
             className='h-5 w-5'
             aria-hidden='true'

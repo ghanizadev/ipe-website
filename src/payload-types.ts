@@ -466,7 +466,7 @@ export interface Message {
  */
 export interface Page {
   id: string;
-  title?: string | null;
+  title: string;
   slug?: string | null;
   category?: (string | null) | Category;
   content?: {
