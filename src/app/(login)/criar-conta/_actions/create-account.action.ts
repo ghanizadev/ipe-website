@@ -108,7 +108,7 @@ export default async function createAccountAction(
     overrideAccess: true,
   });
 
-  if (exists)
+  if (exists.totalDocs)
     return {
       success: false,
       error: {
