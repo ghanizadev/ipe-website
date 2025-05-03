@@ -98,6 +98,24 @@ export default async function createAccountAction(
 
   const payload = await getPayload({ config: payloadConfig });
 
+  const exists = await payload.find({
+    collection: 'users',
+    where: {
+      email: {
+        equals: validateFields.data.email,
+      },
+    },
+    overrideAccess: true,
+  });
+
+  if (exists)
+    return {
+      success: false,
+      error: {
+        email: ['O e-mail já está em uso'],
+      },
+    };
+
   await payload.create({
     collection: 'users',
     data: {

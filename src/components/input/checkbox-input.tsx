@@ -1,4 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type CheckboxInputProps = {
   name: string;
@@ -9,6 +12,7 @@ type CheckboxInputProps = {
   required?: boolean;
   children?: React.ReactNode;
   defaultChecked?: boolean;
+  disabled?: boolean;
 };
 
 export default function CheckboxInput(props: CheckboxInputProps) {
@@ -48,7 +52,8 @@ export default function CheckboxInput(props: CheckboxInputProps) {
           required={props.required}
           checked={checked}
           onChange={handleOnChange}
-          className={inputClasses.join(' ').trim()}
+          className={twMerge(...inputClasses)}
+          disabled={props.disabled}
         />
       </div>
       <label

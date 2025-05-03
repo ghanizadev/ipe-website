@@ -42,9 +42,10 @@ function SelectButton({ label, onClick, selected }: SelectButtonProps) {
 export default function CreateAccountForm() {
   const [step, setStep] = useState('first');
   const [role, setRole] = useState('');
-  const [formState, formAction] = useActionState(createAccountAction, {
+  const [formState, formAction, pending] = useActionState(createAccountAction, {
     success: false,
   });
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -61,8 +62,16 @@ export default function CreateAccountForm() {
   };
 
   useEffect(() => {
-    if (formState.success) router.push('/criar-conta/sucesso');
+    if (formState.success) {
+      router.push('/criar-conta/sucesso');
+    } else {
+      setLoading(false);
+    }
   }, [formState, router]);
+
+  useEffect(() => {
+    if (pending) setLoading(true);
+  }, [pending]);
 
   return (
     <form action={formAction} className={'flex flex-col'}>
@@ -85,6 +94,7 @@ export default function CreateAccountForm() {
             tag={'button'}
             type={'button'}
             onClick={handleSelect}
+            disabled={!role}
           >
             Selecionar
           </SecondaryButton>
@@ -103,12 +113,14 @@ export default function CreateAccountForm() {
             label={'Nome completo'}
             name={'name'}
             required
+            disabled={loading}
           />
           <TextInput
             error={formState.error?.email?.[0]}
             label={'E-mail'}
             name={'email'}
             required
+            disabled={loading}
           />
           <SelectInput
             options={[
@@ -119,6 +131,7 @@ export default function CreateAccountForm() {
             label={'Gênero'}
             name={'gender'}
             required
+            disabled={loading}
           />
           {role === 'parathlete' ? (
             <SelectInput
@@ -130,6 +143,7 @@ export default function CreateAccountForm() {
               label={'Classificação PCD'}
               name={'pwdClassification'}
               required
+              disabled={loading}
             />
           ) : (
             <></>
@@ -139,11 +153,13 @@ export default function CreateAccountForm() {
             type={'date'}
             label={'Data de nascimento'}
             name={'birthday'}
+            disabled={loading}
           />
           <TextAreaInput
             label={'Endereço'}
             name={'address'}
             className={'mb-8'}
+            disabled={loading}
           />
           <TextInput
             error={formState.error?.password?.[0]}
@@ -151,6 +167,7 @@ export default function CreateAccountForm() {
             name={'password'}
             type={'password'}
             required
+            disabled={loading}
           />
           <TextInput
             error={formState.error?.['confirm-password']?.[0]}
@@ -158,6 +175,7 @@ export default function CreateAccountForm() {
             name={'confirm-password'}
             type={'password'}
             required
+            disabled={loading}
           />
           <RecaptchaInput />
           <input type={'hidden'} name={'role'} value={role} />
@@ -177,6 +195,7 @@ export default function CreateAccountForm() {
             error={formState.error?.['accept-terms']?.[0]}
             title={'Você deve aceitar os termos de serviço para continuar.'}
             required
+            disabled={loading}
           >
             Eu concordo com os{' '}
             <Link href={'/termos-de-uso'} target={'_blank'}>
@@ -188,7 +207,12 @@ export default function CreateAccountForm() {
             </Link>
             .
           </CheckboxInput>
-          <PrimaryButton tag={'button'} type={'submit'} className={'mb-2'}>
+          <PrimaryButton
+            tag={'button'}
+            type={'submit'}
+            className={'mb-2'}
+            loading={loading}
+          >
             Criar conta
           </PrimaryButton>
           <SecondaryButton
