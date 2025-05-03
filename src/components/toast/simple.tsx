@@ -1,4 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
 
 import { ToastProps } from './types';
 
@@ -8,7 +9,7 @@ export default function SimpleToast({ type, message, title }: ToastProps) {
   const pathName = usePathname();
 
   const classes = [
-    'p-4 mb-4 w-max-xs text-sm rounded-lg border shadow md:w-max-auto',
+    'p-4 mb-4 w-max-xs text-sm rounded-lg border shadow md:w-max-auto flex items-center justify-between',
   ];
   let messageTitle = title;
 
@@ -42,7 +43,10 @@ export default function SimpleToast({ type, message, title }: ToastProps) {
   };
 
   return (
-    <div className={classes.join(' ').trim()} role='alert'>
+    <div className={twMerge(...classes)} role='alert'>
+      <span>
+        <strong className={'font-bold'}>{messageTitle}</strong> {message}
+      </span>
       <button
         type='button'
         onClick={handleClose}
@@ -69,7 +73,6 @@ export default function SimpleToast({ type, message, title }: ToastProps) {
           />
         </svg>
       </button>
-      <span className={'font-bold'}>{messageTitle}</span> {message}
     </div>
   );
 }
