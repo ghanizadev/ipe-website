@@ -54,6 +54,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.name}
         required
         error={formState.error?.name?.[0]}
+        disabled={loading}
       />
       <TextInput
         className={'mb-2'}
@@ -62,6 +63,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.email}
         required
         error={formState.error?.email?.[0]}
+        disabled={loading}
       />
       <SelectInput
         options={[
@@ -73,6 +75,7 @@ export default function UpdateAndSubmitForm(props: {
         name={'gender'}
         defaultValue={user?.gender}
         required
+        disabled={loading}
       />
       {user?.role === 'parathlete' ? (
         <SelectInput
@@ -85,6 +88,7 @@ export default function UpdateAndSubmitForm(props: {
           name={'pwdClassification'}
           defaultValue={user?.pwdClassification}
           required
+          disabled={loading}
         />
       ) : (
         <></>
@@ -95,6 +99,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.address}
         required
         error={formState.error?.address?.[0]}
+        disabled={loading}
       />
       <H3>Documentação</H3>
       <TextInput
@@ -105,6 +110,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.birthday}
         required
         error={formState.error?.birthday?.[0]}
+        disabled={loading}
       />
       <TextInput
         className={'mb-2'}
@@ -113,6 +119,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.cpf}
         required
         error={formState.error?.cpf?.[0]}
+        disabled={loading}
       />
       <TextInput
         className={'mb-2'}
@@ -121,6 +128,7 @@ export default function UpdateAndSubmitForm(props: {
         defaultValue={user?.rg}
         required
         error={formState.error?.rg?.[0]}
+        disabled={loading}
       />
       {props.event.modality?.length ? (
         <>
@@ -136,6 +144,7 @@ export default function UpdateAndSubmitForm(props: {
             name={'modality'}
             required
             error={formState.error?.modality?.[0]}
+            disabled={loading}
           />
         </>
       ) : (
@@ -150,6 +159,7 @@ export default function UpdateAndSubmitForm(props: {
         options={tshirtTypes}
         required
         error={formState.error?.['tshirt.type']?.[0]}
+        disabled={loading}
       />
       <SelectInput
         className={'mb-4'}
@@ -159,6 +169,7 @@ export default function UpdateAndSubmitForm(props: {
         options={tshirtSizes}
         required
         error={formState.error?.['tshirt.size']?.[0]}
+        disabled={loading}
       />
       <RecaptchaInput />
       <input type={'hidden'} name={'userId'} value={user?.id} />
