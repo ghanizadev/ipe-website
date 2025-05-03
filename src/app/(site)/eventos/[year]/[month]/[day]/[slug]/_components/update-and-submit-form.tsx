@@ -2,7 +2,7 @@
 
 import { useUser } from '@/context/user.context';
 import { Event } from '@/payload-types';
-import React, { useActionState } from 'react';
+import React, { useActionState, useEffect, useState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextAreaInput, TextInput } from '@/components/input';
@@ -26,10 +26,24 @@ export default function UpdateAndSubmitForm(props: {
   event: Event;
   redirectTo?: string | null;
 }) {
-  const [formState, formAction] = useActionState(props.updateAndEnrollAction, {
-    success: false,
-  });
+  const [formState, formAction, pending] = useActionState(
+    props.updateAndEnrollAction,
+    {
+      success: false,
+    }
+  );
   const [user] = useUser();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!formState.success) {
+      setLoading(false);
+    }
+  }, [formState]);
+
+  useEffect(() => {
+    if (pending) setLoading(true);
+  }, [pending]);
 
   return (
     <form action={formAction}>
@@ -158,7 +172,7 @@ export default function UpdateAndSubmitForm(props: {
         <span className={'text-red-600'}>*</span> Campos obrigatórios.
       </small>
       <div className='mt-4 flex items-center justify-end rounded-b border-t border-gray-200 py-4 md:py-5'>
-        <PrimaryButton tag={'button'} type={'submit'}>
+        <PrimaryButton tag={'button'} type={'submit'} loading={loading}>
           Salvar e Inscrever-se
         </PrimaryButton>
       </div>

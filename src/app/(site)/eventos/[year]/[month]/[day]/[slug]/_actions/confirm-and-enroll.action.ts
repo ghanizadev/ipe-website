@@ -11,34 +11,43 @@ const confirmAndEnrollSchema = z.object({
   userId: z.string(),
   eventId: z.string(),
   redirectTo: z.string(),
-  name: z.string({ required_error: 'Por favor, informe seu nome.' }),
+  name: z
+    .string({ message: 'Por favor, informe seu nome.' })
+    .min(3, 'O nome deve conter pelo menos 3 caracteres.'),
   email: z
-    .string({ required_error: 'Por favor, informe seu e-mail.' })
+    .string({ message: 'Por favor, informe seu e-mail.' })
     .email('O formato do e-mail é inválido'),
   birthday: z
-    .string({ required_error: 'Por favor, informe sua data de aniversário.' })
+    .string({ message: 'Por favor, informe sua data de aniversário.' })
     .date('O formato da data de aniversário é inválido'),
-  address: z.string({ required_error: 'Por favor, informe o seu endereço.' }),
-  cpf: z.string({ required_error: 'Por favor, informe seu CPF.' }),
-  rg: z.string({ required_error: 'Por favor, informe seu RG.' }),
+  address: z
+    .string({ message: 'Por favor, informe o seu endereço.' })
+    .min(3, 'O nome deve conter pelo menos 3 caracteres.'),
+  cpf: z
+    .string({ message: 'Por favor, informe seu CPF.' })
+    .regex(
+      /^\d{11}$/,
+      'O CPF deve conter exatamente 11 dígitos numéricos, sem pontos ou traços.'
+    ),
+  rg: z
+    .string({ message: 'Por favor, informe seu RG.' })
+    .regex(
+      /^[a-zA-Z0-9]{1,14}$/,
+      'O RG deve conter entre 1 e 14 caracteres alfanuméricos, sem pontos, traços ou espaços.'
+    ),
   gender: z.enum(['m', 'f', 'other'], {
-    required_error:
-      'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
     message:
       'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
   }),
   modality: z
     .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'], {
-      required_error: 'Por favor, informe a modalidade da sua corrida.',
       message: 'Por favor, informe a modalidade da sua corrida.',
     })
     .optional(),
   'tshirt.type': z.enum(['masc', 'fem', 'inf'], {
-    required_error: 'Por favor, informe o tipo da sua camiseta.',
     message: 'Por favor, informe o tipo da sua camiseta.',
   }),
   'tshirt.size': z.enum(['P', 'M', 'G', 'XG'], {
-    required_error: 'Por favor, informe o tamanho da sua camiseta.',
     message: 'Por favor, informe o tamanho da sua camiseta.',
   }),
 });
