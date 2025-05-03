@@ -11,6 +11,7 @@ type SelectProps = {
   className?: string;
   required?: boolean;
   error?: string | boolean;
+  disabled?: boolean;
 };
 
 export default function SelectInput(props: SelectProps) {
@@ -50,20 +51,15 @@ export default function SelectInput(props: SelectProps) {
         )}
         name={props.name}
         required={props.required}
-        value={selected}
+        value={selected ?? props.defaultValue ?? 'Selecione'}
         onChange={handleOnChange}
+        disabled={props.disabled}
       >
-        {!props.defaultValue && (
-          <option selected hidden>
-            Selecione
-          </option>
-        )}
+        <option hidden value={'Selecione'}>
+          Selecione
+        </option>
         {props.options.map((opt) => (
-          <option
-            key={opt.value}
-            value={opt.value}
-            selected={selected === opt.value}
-          >
+          <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
         ))}

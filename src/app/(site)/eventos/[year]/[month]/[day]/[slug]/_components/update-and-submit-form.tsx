@@ -2,7 +2,7 @@
 
 import { useUser } from '@/context/user.context';
 import { Event } from '@/payload-types';
-import { useActionState } from 'react';
+import React, { useActionState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextAreaInput, TextInput } from '@/components/input';
@@ -49,6 +49,32 @@ export default function UpdateAndSubmitForm(props: {
         required
         error={formState.error?.email?.[0]}
       />
+      <SelectInput
+        options={[
+          { label: 'Feminino', value: 'f' },
+          { label: 'Masculino', value: 'm' },
+          { label: 'Prefiro não dizer', value: 'other' },
+        ]}
+        label={'Gênero'}
+        name={'gender'}
+        defaultValue={user?.gender}
+        required
+      />
+      {user?.role === 'parathlete' ? (
+        <SelectInput
+          options={[
+            { label: 'Deficiente Físico', value: 'physical' },
+            { label: 'Deficiente Intelectual', value: 'intelectual' },
+            { label: 'Deficiente Visual', value: 'visual' },
+          ]}
+          label={'Classificação PCD'}
+          name={'pwdClassification'}
+          defaultValue={user?.pwdClassification}
+          required
+        />
+      ) : (
+        <></>
+      )}
       <TextAreaInput
         label={'Endereço'}
         name={'address'}

@@ -9,33 +9,39 @@ import validateRecaptcha from '@/actions/validate-recaptcha.action';
 const createUserSchema = z.object({
   email: z
     .string({
-      required_error: 'E-mail é obrigatório',
+      message: 'E-mail é obrigatório',
     })
     .email('O e-mail é inválido'),
   role: z.enum(['guide', 'parathlete'], {
-    required_error: 'O tipo de conta é obrigatório',
+    message: 'O tipo de conta é obrigatório',
   }),
-  name: z.string({
-    required_error: 'Nome é obrigatório',
+  gender: z.enum(['m', 'f', 'other'], {
+    message:
+      'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
   }),
+  name: z
+    .string({
+      message: 'Nome é obrigatório',
+    })
+    .min(2, 'O nome deve ter pelo menos 3 caracteres'),
   birthday: z
     .string({
-      required_error: 'Data de nascimento é obrigatória',
+      message: 'Data de nascimento é obrigatória',
     })
     .date('A data de nascimento deve ser no formato DD/MM/AAAA.'),
   password: z
     .string({
-      required_error: 'A senha é obrigatória',
+      message: 'A senha é obrigatória',
     })
     .regex(
       /(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/,
       'A senha deve possuir letras maiúsculas, letras minúsculas, e números, com 8 letras no mínimo.'
     ),
   'confirm-password': z.string({
-    required_error: 'Confirme a senha',
+    message: 'Confirme a senha',
   }),
   'accept-terms': z.enum(['on', 'off'], {
-    required_error: 'Você deve aceitar os termos para prosseguir',
+    message: 'Você deve aceitar os termos para prosseguir',
   }),
 });
 
@@ -100,7 +106,7 @@ export default async function createAccountAction(
       name: validateFields.data.name,
       birthday: validateFields.data.birthday,
       password: validateFields.data.password,
-      gender: 'nda',
+      gender: validateFields.data.gender,
     },
     overrideAccess: true,
   });

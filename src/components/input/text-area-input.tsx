@@ -11,6 +11,7 @@ type TextAreaProps = {
   defaultValue?: string | null;
   required?: boolean;
   error?: string | boolean;
+  disabled?: boolean;
 };
 
 export default function TextAreaInput({
@@ -21,6 +22,7 @@ export default function TextAreaInput({
   defaultValue,
   required,
   error,
+  disabled,
 }: TextAreaProps) {
   const [value, setValue] = useState<string | undefined>(
     defaultValue ?? undefined
@@ -59,6 +61,7 @@ export default function TextAreaInput({
         name={name}
         value={value}
         onChange={handleOnChange}
+        disabled={disabled}
       ></textarea>
       {typeof error === 'string' && (
         <p className='mt-2 text-sm text-red-600'>{error}</p>

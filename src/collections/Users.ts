@@ -114,7 +114,6 @@ const Users: CollectionConfig = {
       name: 'gender',
       label: 'Gênero',
       type: 'select',
-      required: true,
       options: [
         {
           label: 'Feminino',
@@ -126,7 +125,7 @@ const Users: CollectionConfig = {
         },
         {
           label: 'Prefiro não dizer',
-          value: 'nda',
+          value: 'other',
         },
       ],
     },

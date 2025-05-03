@@ -293,7 +293,7 @@ export interface User {
   role?: ('guide' | 'parathlete') | null;
   softDelete?: string | null;
   name?: string | null;
-  gender: 'f' | 'm' | 'nda';
+  gender?: ('f' | 'm' | 'other') | null;
   pwdClassification?: ('physical' | 'intelectual' | 'visual') | null;
   birthday?: string | null;
   address?: string | null;

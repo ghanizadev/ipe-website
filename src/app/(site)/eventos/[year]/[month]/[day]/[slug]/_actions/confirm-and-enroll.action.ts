@@ -21,6 +21,12 @@ const confirmAndEnrollSchema = z.object({
   address: z.string({ required_error: 'Por favor, informe o seu endereço.' }),
   cpf: z.string({ required_error: 'Por favor, informe seu CPF.' }),
   rg: z.string({ required_error: 'Por favor, informe seu RG.' }),
+  gender: z.enum(['m', 'f', 'other'], {
+    required_error:
+      'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
+    message:
+      'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
+  }),
   modality: z
     .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'], {
       required_error: 'Por favor, informe a modalidade da sua corrida.',
@@ -79,7 +85,7 @@ export default async function confirmAndEnrollAction(
     collection: 'users',
     id: validateData.data.userId,
     data: {
-      gender: 'nda',
+      gender: validateData.data.gender,
       name: validateData.data.name,
       email: validateData.data.email,
       address: validateData.data.address,

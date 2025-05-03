@@ -61,7 +61,6 @@ export default function CreateAccountForm() {
   };
 
   useEffect(() => {
-    console.log(formState);
     if (formState.success) router.push('/criar-conta/sucesso');
   }, [formState, router]);
 
@@ -111,19 +110,27 @@ export default function CreateAccountForm() {
             name={'email'}
             required
           />
+          <SelectInput
+            options={[
+              { label: 'Feminino', value: 'f' },
+              { label: 'Masculino', value: 'm' },
+              { label: 'Prefiro não dizer', value: 'other' },
+            ]}
+            label={'Gênero'}
+            name={'gender'}
+            required
+          />
           {role === 'parathlete' ? (
-            <>
-              <SelectInput
-                options={[
-                  { label: 'Deficiente Físico', value: 'physical' },
-                  { label: 'Deficiente Intelectual', value: 'intelectual' },
-                  { label: 'Deficiente Visual', value: 'visual' },
-                ]}
-                label={'Classificação PCD'}
-                name={'pwd-classification'}
-                required
-              />
-            </>
+            <SelectInput
+              options={[
+                { label: 'Deficiente Físico', value: 'physical' },
+                { label: 'Deficiente Intelectual', value: 'intelectual' },
+                { label: 'Deficiente Visual', value: 'visual' },
+              ]}
+              label={'Classificação PCD'}
+              name={'pwdClassification'}
+              required
+            />
           ) : (
             <></>
           )}
