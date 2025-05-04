@@ -15,20 +15,27 @@ export default function EventStatus(props: EventStatusProps) {
       return (
         <span
           className={'text-gray-600  w-min text-nowrap rounded px-1 py-0.5'}
+          data-testid={'event-status'}
         >
           Finalizado
         </span>
       );
 
     return (
-      <span className={'text-gray-600  w-min text-nowrap rounded px-1 py-0.5'}>
+      <span
+        className={'text-gray-600  w-min text-nowrap rounded px-1 py-0.5'}
+        data-testid={'event-status'}
+      >
         Inscrições encerradas
       </span>
     );
   }
 
   return (
-    <span className={'text-gray-600 w-min text-nowrap rounded px-1 py-0.5'}>
+    <span
+      className={'text-gray-600 w-min text-nowrap rounded px-1 py-0.5'}
+      data-testid={'event-status'}
+    >
       Inscrições abertas
     </span>
   );

@@ -10,7 +10,7 @@ type TestimonialSwitchProps = {
   static?: boolean;
 };
 
-let TESTIMONIAL_SWITCH_CAROUSEL: NodeJS.Timeout;
+let TESTIMONIAL_SWITCH_CAROUSEL: NodeJS.Timeout | undefined;
 
 export default function TestimonialSwitch(props: TestimonialSwitchProps) {
   const [current, setCurrent] = useState<Testimonial>(props.testimonials[0]);

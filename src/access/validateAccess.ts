@@ -1,12 +1,10 @@
-import { Access } from 'payload';
+import { User } from '@/payload-types';
+import { AccessArgs } from 'payload';
 
-type Role = 'admin' | 'parathlete' | 'guide' | 'service'
+type Role = 'admin' | 'parathlete' | 'guide' | 'service';
 
-function validateAccess(
-  roles: Role[] | '*',
-  allowUI = true
-) {
-  return <Access>function (access) {
+function validateAccess(roles: Role[] | '*', allowUI = true) {
+  return function (access: AccessArgs<User>): boolean {
     const me = access.req.user?.role as Role;
 
     if (!allowUI && access.req.url === '/api/access' && me !== 'admin')

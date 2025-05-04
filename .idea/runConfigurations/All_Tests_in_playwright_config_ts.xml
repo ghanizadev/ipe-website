@@ -1,0 +1,25 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All Tests in playwright.config.ts" type="JavaScriptTestRunnerPlaywright" nameIsGenerated="true">
+    <config value="$PROJECT_DIR$/playwright.config.ts" />
+    <node-interpreter value="project" />
+    <playwright-package value="$PROJECT_DIR$/node_modules/@playwright/test" />
+    <working-dir value="$PROJECT_DIR$" />
+    <envs>
+      <env name="DATABASE_URI" value="mongodb://localhost:27017/__TEST__" />
+      <env name="PW_TEST_HTML_REPORT_OPEN" value="never" />
+      <env name="REDIRECT_REFRESH_INTERVAL" value="0" />
+    </envs>
+    <scope-kind value="ALL" />
+    <method v="2">
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="build" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>
