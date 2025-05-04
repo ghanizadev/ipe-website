@@ -22,7 +22,10 @@ export default function EventItem(props: EventProps) {
   const path = makeEventLink(props.event);
 
   return (
-    <div className={'grid gap-4 lg:grid-cols-6 mb-6'}>
+    <div
+      className={'grid gap-4 lg:grid-cols-6 mb-6'}
+      data-testid={'event-card'}
+    >
       <div className={'col-span-3 flex flex-col items-end lg:col-span-2'}>
         <Image
           src={imageUrl}

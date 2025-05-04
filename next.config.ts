@@ -7,6 +7,7 @@ import { SERVER_HOST, SERVER_PROTOCOL, SERVER_URL } from '@/constants/server';
 const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
+    nodeMiddleware: true,
   },
   images: {
     remotePatterns: [
