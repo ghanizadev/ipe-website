@@ -1,11 +1,12 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 jobs:
   test:
+    environment: test
     timeout-minutes: 60
     runs-on: ubuntu-22.04
     services:
@@ -19,41 +20,40 @@ jobs:
           --health-timeout 5s
           --health-retries 3
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install mongosh
-      run: |
-        sudo apt-get install gnupg
-        wget -qO- https://www.mongodb.org/static/pgp/server-8.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-8.0.asc
-        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
-        sudo apt-get update
-        sudo apt-get install -y mongodb-mongosh
-        mongosh --version
-    - name: Wait for MongoDB to be ready
-      run: |
-        for i in {1..30}; do
-          nc -z localhost 27017 && break
-          echo "Waiting for MongoDB..."
-          sleep 2
-        done
-    - name: Install Yarn
-      run: npm install -g yarn
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Build the application
-      run: yarn build
-    - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps
-    - name: Run Playwright tests
-      env:
-        DATABASE_URI: mongodb://localhost:27017/testdb
-        REDIRECT_REFRESH_INTERVAL: 0
-      run: yarn playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install mongosh
+        run: |
+          sudo apt-get install gnupg
+          wget -qO- https://www.mongodb.org/static/pgp/server-8.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-8.0.asc
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-mongosh
+          mongosh --version
+      - name: Wait for MongoDB to be ready
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 27017 && break
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build the application
+        run: yarn build
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+      - name: Run Playwright tests
+        env:
+          REDIRECT_REFRESH_INTERVAL: 0
+        run: yarn playwright test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
