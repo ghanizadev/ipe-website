@@ -39,6 +39,11 @@ const confirmAndEnrollSchema = z.object({
     message:
       'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
   }),
+  pwdClassification: z
+    .enum(['physical', 'intelectual', 'visual'], {
+      message: 'Por favor, informe a sua classificação PCD.',
+    })
+    .optional(),
   modality: z
     .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'], {
       message: 'Por favor, informe a modalidade da sua corrida.',
@@ -101,6 +106,7 @@ export default async function confirmAndEnrollAction(
       birthday: new Date(validateData.data.birthday).toISOString(),
       cpf: validateData.data.cpf,
       rg: validateData.data.rg,
+      pwdClassification: validateData.data.pwdClassification,
       tshirt: {
         type: validateData.data['tshirt.type'],
         size: validateData.data['tshirt.size'],

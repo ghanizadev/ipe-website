@@ -37,6 +37,11 @@ const createUserSchema = z.object({
       /(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/,
       'A senha deve possuir letras maiúsculas, letras minúsculas, e números, com 8 letras no mínimo.'
     ),
+  pwdClassification: z
+    .enum(['physical', 'intelectual', 'visual'], {
+      message: 'Por favor, informe a sua classificação PCD.',
+    })
+    .optional(),
   'confirm-password': z.string({
     message: 'Confirme a senha',
   }),
@@ -125,6 +130,7 @@ export default async function createAccountAction(
       birthday: validateFields.data.birthday,
       password: validateFields.data.password,
       gender: validateFields.data.gender,
+      pwdClassification: validateFields.data.pwdClassification,
     },
     overrideAccess: true,
   });

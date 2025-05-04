@@ -39,6 +39,11 @@ const updateUserSchema = z.object({
       message: 'Por favor, informe a modalidade da sua corrida.',
     })
     .optional(),
+  pwdClassification: z
+    .enum(['physical', 'intelectual', 'visual'], {
+      message: 'Por favor, informe a sua classificação PCD.',
+    })
+    .optional(),
   'tshirt.type': z.enum(['masc', 'fem', 'inf'], {
     message: 'Por favor, informe o tipo da sua camiseta.',
   }),
@@ -89,6 +94,7 @@ export default async function updateUserProfileAction(
       birthday: new Date(validateData.data.birthday).toISOString(),
       cpf: validateData.data.cpf,
       rg: validateData.data.rg,
+      pwdClassification: validateData.data.pwdClassification,
       tshirt: {
         type: validateData.data['tshirt.type'],
         size: validateData.data['tshirt.size'],
