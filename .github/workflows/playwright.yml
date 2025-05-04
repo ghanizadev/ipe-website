@@ -8,6 +8,19 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-22.04
+    env:
+      GRECAPTCHA_SECRET_KEY: ${{secrets.GRECAPTCHA_SECRET_KEY}}
+      NEXT_PUBLIC_GRECAPTCHA_SITE_KEY: ${{secrets.NEXT_PUBLIC_GRECAPTCHA_SITE_KEY}}
+      S3_ACCESS_KEY_ID: ${{secrets.S3_ACCESS_KEY_ID}}
+      S3_BUCKET: ${{vars.S3_BUCKET}}
+      S3_SECRET_ACCESS_KEY: ${{secrets.S3_SECRET_ACCESS_KEY}}
+      SMTP_HOST: ${{vars.SMTP_HOST}}
+      SMTP_PASS: ${{secrets.SMTP_PASS}}
+      SMTP_PORT: ${{vars.SMTP_PORT}}
+      SMTP_USER: ${{vars.SMTP_USER}}
+      AWS_REGION: ${{vars.AWS_REGION}}
+      DATABASE_URI: ${{vars.DATABASE_URI}}
+      PAYLOAD_SECRET: ${{secrets.PAYLOAD_SECRET}}
     services:
       mongodb:
         image: mongo:6.0
