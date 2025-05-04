@@ -7,22 +7,30 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     services:
       mongodb:
         image: mongo:6.0
         ports:
           - 27017:27017
         options: >-
-          --health-cmd mongo
+          --health-cmd "mongo --eval 'db.runCommand({ping: 1})'"
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 3
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+    - name: Install mongosh
+      run: |
+        sudo apt-get install gnupg
+        wget -qO- https://www.mongodb.org/static/pgp/server-8.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-8.0.asc
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+        sudo apt-get update
+        sudo apt-get install -y mongodb-mongosh
+        mongosh --version
     - name: Wait for MongoDB to be ready
       run: |
         for i in {1..30}; do
