@@ -1,15 +1,15 @@
 'use client';
 
+import { useUser } from '@/context/user.context';
+import { Event } from '@/payload-types';
 import { useRouter } from 'next/navigation';
 
-import useMe from '@/hooks/use-me';
-
 type EnrollmentButtonProps = {
-  event: EventDTO;
+  event: Event;
 };
 
 export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
-  const { data: me } = useMe();
+  const [user] = useUser();
   const router = useRouter();
 
   const handleEnrollment = async () => {
@@ -18,7 +18,7 @@ export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
       return;
     }
 
-    if (!me?.user) {
+    if (!user) {
       const url = new URL(window.location.href);
       url.searchParams.set('register', '1');
       router.push(

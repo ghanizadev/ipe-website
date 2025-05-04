@@ -1,64 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useActionState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
 import Link from '@/components/link';
-
-import grecaptchaService from '@/services/grecapcha.service';
-
-import formEventParser from '@/helpers/form-event-parser.helper';
-
-type UpdatePasswordParams = { password: string; 'confirm-password': string };
+import { RecaptchaInput } from '@/components/recaptcha-input';
 
 type UpdatePasswordFromProps = {
-  action: (
-    password: string,
-    token: string,
-    grecaptchaString: string
-  ) => Promise<ActionResponse | void>;
+  updatePasswordAction: (
+    initialState: {
+      success: boolean;
+      error?: Record<string, string[] | undefined>;
+    },
+    formData: FormData
+  ) => Promise<{
+    success: boolean;
+    error?: Record<string, string[] | undefined>;
+  }>;
   token: string;
 };
 
 export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
-  const [errors, setErrors] = useState<{ [field: string]: string | boolean }>(
-    {}
-  );
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { password, 'confirm-password': confirmPassword } =
-      formEventParser<UpdatePasswordParams>(e);
-
-    if (!password || password !== confirmPassword) {
-      setErrors({
-        'confirm-password': 'As senhas não conferem',
-        password: true,
-      });
-      return;
-    }
-
-    const grecaptchaToken = await grecaptchaService();
-    const response = await props.action(password, props.token, grecaptchaToken);
-    if (response?.success) setErrors({});
-  };
+  const [formState, formAction] = useActionState(props.updatePasswordAction, {
+    success: false,
+  });
 
   return (
-    <form onSubmit={handleSubmit} className={'flex flex-col'}>
+    <form action={formAction} className={'flex flex-col'}>
       <TextInput
-        error={errors.password}
+        error={formState.error?.password?.[0]}
         label={'Nova senha'}
         name={'password'}
         type={'password'}
       />
       <TextInput
-        error={errors['confirm-password']}
+        error={formState.error?.['confirm-password']?.[0]}
         label={'Confirme a senha'}
         name={'confirm-password'}
         type={'password'}
         className={'mb-4'}
       />
+      <input type={'hidden'} name={'token'} value={props.token} />
+      <RecaptchaInput />
       <PrimaryButton tag={'button'}>Salvar</PrimaryButton>
       <small className={'text-gray-400 my-4'}>
         Este site é protegido pelo reCAPTCHA e a{' '}

@@ -1,19 +1,20 @@
 'use client';
 
+import { Photo } from '@/payload-types';
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import getPhotos from '@/services/get-photos.service';
+import getPhotosAction from '@/actions/get-photos.action';
 
 type GalleryProps = {
-  photos?: PhotoDTO[];
+  photos: Photo[];
 };
 
 let touchStart = 0;
 let touchEnd = 0;
 
 export default function Gallery({ photos: init }: GalleryProps) {
-  const [photos, setPhotos] = useState<PhotoDTO[]>(init ?? []);
+  const [photos, setPhotos] = useState<Photo[]>(init);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasNext, setHasNext] = useState(true);
@@ -23,7 +24,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
   const ref = useRef<HTMLElement>(null);
 
   const units = useMemo(() => {
-    const result: (PhotoDTO & { currentIndex: number })[][] = [];
+    const result: (Photo & { currentIndex: number })[][] = [];
     for (let currentIndex = 0; currentIndex < photos.length; currentIndex++) {
       const currentPhoto = photos[currentIndex];
       const mod = currentIndex % columns;
@@ -141,7 +142,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
 
   useEffect(() => {
     if (loading && hasNext)
-      getPhotos(page, 3).then((res) => {
+      getPhotosAction(page, 3).then((res) => {
         if (!res?.hasNextPage) setHasNext(false);
         if (res?.docs) {
           setPhotos((photos) => [...photos, ...res.docs]);
@@ -165,11 +166,11 @@ export default function Gallery({ photos: init }: GalleryProps) {
                     <Image
                       data-image
                       key={photo.id}
-                      src={photo.url}
+                      src={photo.url ?? ''}
                       alt={photo.altText ?? ''}
-                      blurDataURL={photo.url} //TODO check how it works
-                      width={photo.width}
-                      height={photo.height}
+                      blurDataURL={photo.url ?? ''} //TODO check how it works
+                      width={photo.width ?? 0}
+                      height={photo.height ?? 0}
                       className={'mb-1 object-contain'}
                       onClick={handlePreview(photo.currentIndex)}
                     />
@@ -191,10 +192,10 @@ export default function Gallery({ photos: init }: GalleryProps) {
               <div className={'relative'}>
                 <Image
                   className={'m-auto h-[75vh] object-contain lg:h-[80vh]'}
-                  src={currentPreview.url}
+                  src={currentPreview.url ?? ''}
+                  width={currentPreview.width ?? 0}
+                  height={currentPreview.height ?? 0}
                   alt={''}
-                  width={currentPreview.width}
-                  height={currentPreview.height}
                 />
                 <button
                   onClick={handleChangePreview(1)}

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import grecaptchaService from '@/services/grecapcha.service';
+import recaptchaService from '@/services/recapcha.service';
 
 import formEventParser from '@/helpers/form-event-parser.helper';
 
@@ -27,7 +27,7 @@ export default function Form<
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const grecaptchaToken = await grecaptchaService();
+    const grecaptchaToken = await recaptchaService();
     const formData = formEventParser<T>(e);
     _.merge(formData, additionalData, { grecaptchaToken });
     await action(formData as T & U);

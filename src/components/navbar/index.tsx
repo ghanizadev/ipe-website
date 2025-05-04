@@ -1,38 +1,36 @@
 'use server';
 
+import { Category } from '@/payload-types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import PrimaryButton from '@/components/button/primary-button';
 import Dropdown from '@/components/dropdown';
 import LinkButton from '@/components/link-button';
+import { UserContext } from '@/components/navbar/components/user-context';
 
-import getPages from '@/services/get-pages.service';
+import getPagesAction from '@/actions/get-pages.action';
 
-import LogoutButton from './components/logout-button';
+export default async function Navbar() {
+  const pages = await getPagesAction();
 
-type NavbarProps = {
-  me: { user?: UserDTO } | null;
-};
-
-export default async function Navbar(props: NavbarProps) {
-  const pages = await getPages();
-
-  const navigation = (pages?.docs ?? []).reduce(
+  const navigation = pages.reduce(
     (previous, current) => {
       if (!current.shownOnNavbar) return previous;
 
-      if (current.category) {
+      const category = current.category as Category;
+      const title = category?.title as string;
+
+      if (category) {
         return {
           ...previous,
-          [current.category.title]: {
+          [title]: {
             path: '#',
             items: [
-              ...(previous[current.category.title]?.items ?? []),
+              ...(previous[title]?.items ?? []),
               {
                 label: current.title,
-                path: '/' + current.category.slug + '/' + current.slug,
+                path: '/' + category.slug + '/' + current.slug,
               },
             ],
           },
@@ -41,7 +39,7 @@ export default async function Navbar(props: NavbarProps) {
 
       return {
         ...previous,
-        [current.title]: {
+        [title]: {
           path: `/${current.slug}`,
           items: [],
         },
@@ -75,7 +73,7 @@ export default async function Navbar(props: NavbarProps) {
           aria-controls='navbar-dropdown'
           aria-expanded='false'
         >
-          <span className='sr-only'>Open main menu</span>
+          <span className='sr-only'>Abrir o menu principal</span>
           <svg
             className='h-5 w-5'
             aria-hidden='true'
@@ -124,34 +122,7 @@ export default async function Navbar(props: NavbarProps) {
             <li className={'m-auto'}>
               <LinkButton href='/contato'>Contato</LinkButton>
             </li>
-            {!props.me?.user && (
-              <>
-                <li className={'m-auto'}>
-                  <PrimaryButton tag={'anchor'} href={'/entrar'}>
-                    Entrar
-                  </PrimaryButton>
-                </li>
-              </>
-            )}
-            <hr className='my-2 h-px border-0 bg-gray-200 md:hidden' />
-            {props.me?.user && (
-              <>
-                <li className={'m-auto text-[--primary-darker]'}>
-                  <LinkButton href='/conta'>
-                    Olá, {props.me.user.name.split(' ')[0]}
-                  </LinkButton>
-                </li>
-                <li className={'m-auto md:hidden'}>
-                  <LinkButton href='/conta/eventos'>Meus eventos</LinkButton>
-                </li>
-                <li className={'m-auto md:hidden'}>
-                  <LinkButton href='/conta/dados'>Minha conta</LinkButton>
-                </li>
-                <li className={'m-auto text-red-700 md:hidden'}>
-                  <LogoutButton />
-                </li>
-              </>
-            )}
+            <UserContext />
           </ul>
         </div>
       </div>

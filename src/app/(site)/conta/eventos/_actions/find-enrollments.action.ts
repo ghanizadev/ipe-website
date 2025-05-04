@@ -1,8 +1,18 @@
-import { EnrollmentService } from '@/services/enrollment.service';
+'use server';
+
+import payloadConfig from '@payload-config';
+import { getPayload } from 'payload';
 
 export default async function findEnrollmentsAction(userId: string) {
-  const service = new EnrollmentService();
-  const myEnrollmentsResponse = await service.findEnrollmentsByUserId(userId);
+  const payload = await getPayload({ config: payloadConfig });
+  const paginatedResponse = await payload.find({
+    collection: 'enrollments',
+    where: {
+      user: {
+        equals: userId,
+      },
+    },
+  });
 
-  return { myEnrollments: myEnrollmentsResponse?.docs };
+  return paginatedResponse.docs;
 }

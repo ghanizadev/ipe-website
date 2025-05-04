@@ -34,7 +34,7 @@ export default async function Hero() {
       <div className={'col-span-6 hidden p-4 lg:block'}>
         <Image
           src={'/hero.jpg'}
-          alt={'descricao'}
+          alt={''}
           width={1920}
           height={850}
           className={'h-[100%] rounded-2xl object-cover'}

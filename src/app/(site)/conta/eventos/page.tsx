@@ -1,3 +1,5 @@
+import { Enrollment } from '@/payload-types';
+import { Event } from '@/payload-types';
 import moment from 'moment';
 import { RedirectType, redirect } from 'next/navigation';
 import React from 'react';
@@ -5,26 +7,27 @@ import React from 'react';
 import Link from '@/components/link';
 import RichText from '@/components/rich-text';
 
-import getMeAction from '@/actions/get-me.action';
+import { getUserAuth } from '@/actions/get-user-auth.action';
 
 import cancelEnrollmentAction from './_actions/cancel-enrollment.action';
 import findEnrollmentsAction from './_actions/find-enrollments.action';
 import CancelEnrollmentButton from './_components/cancel-enrollment-button';
 
-function getStatus(enrollment?: EnrollmentDTO) {
+function getStatus(enrollment?: Enrollment) {
   let label = 'Inscrição confirmada';
   let color = 'text-yellow-700';
   let message =
     'Sua vaga está reservada, porém ainda não identificamos o pagamento da sua taxa de inscrição. Page a taxa de inscrição antes do término do prazo para garantir sua vaga.';
 
+  const event = enrollment?.event as Event;
   if (enrollment?.payment?.paid) {
     label = 'Pagamento confirmado';
     color = 'text-green-700';
     message =
       'Está tudo certo! Por agora, veja como se preparar para o evento logo abaixo, no campo de instruções.';
   } else if (
-    enrollment?.event?.dueDate &&
-    new Date(enrollment?.event?.dueDate).getTime() <= Date.now()
+    event?.dueDate &&
+    new Date(event?.dueDate).getTime() <= Date.now()
   ) {
     label = 'Encerrado';
     color = 'text-gray-700';
@@ -40,13 +43,12 @@ function getStatus(enrollment?: EnrollmentDTO) {
 }
 
 export default async function Account() {
-  const me = await getMeAction();
-
-  if (!me?.user) {
+  const { user } = await getUserAuth();
+  if (!user) {
     return redirect('/', RedirectType.replace);
   }
 
-  const { myEnrollments } = await findEnrollmentsAction(me.user.id);
+  const myEnrollments = await findEnrollmentsAction(user.id);
 
   const enrollments = (myEnrollments ?? []).filter(
     (enrollment) => typeof enrollment.event === 'object' && enrollment.event?.id
@@ -69,7 +71,7 @@ export default async function Account() {
         <></>
       )}
       {enrollments.map((enrollment) => {
-        const event = enrollment.event;
+        const event = enrollment.event as Event;
         return (
           <div
             key={enrollment.id}
@@ -82,22 +84,18 @@ export default async function Account() {
             <p className={'my-4 text-lg leading-none text-[--primary]'}>
               Geral
             </p>
-            <p>Data do evento: {moment(enrollment.event?.date).format('L')}</p>
+            <p>Data do evento: {moment(event?.date).format('L')}</p>
+            <p>Término das inscrições: {moment(event?.dueDate).format('L')}</p>
+            <p>Local: {event?.location}</p>
             <p>
-              Término das inscrições:{' '}
-              {moment(enrollment.event?.dueDate).format('L')}
-            </p>
-            <p>Local: {enrollment.event?.location}</p>
-            <p>
-              Taxa de inscrição: R${' '}
-              {enrollment.event?.fee?.toFixed(2).replace('.', ',')}
+              Taxa de inscrição: R$ {event?.fee?.toFixed(2).replace('.', ',')}
             </p>
             <p className={'my-1'}>{getStatus(enrollment)}</p>
             <p className={'my-4 text-lg leading-none text-[--primary]'}>
               Instruções
             </p>
-            {enrollment.event?.instructions && (
-              <RichText nodes={enrollment.event?.instructions} />
+            {event?.instructions && (
+              <RichText nodes={event?.instructions as LexicalNodes} />
             )}
             <div className={'absolute right-2 top-2 my-2'}></div>
             {!enrollment.payment?.paid && (

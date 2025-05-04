@@ -1,15 +1,12 @@
 import { Metadata } from 'next';
 
-import PrimaryButton from '@/components/button/primary-button';
-import { TextInput } from '@/components/input';
 import Link from '@/components/link';
-import TextArea from '@/components/textarea';
 import { H1, H2, H3 } from '@/components/typography';
 
 import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
 
 import createMessageAction from './_actions/create-message.action';
-import Form from './_components/form';
+import ContactForm from './_components/contact-form';
 
 export default function ContactPage() {
   return (
@@ -43,40 +40,7 @@ export default function ContactPage() {
         </div>
         <div>
           <H2>Envie-nos uma mensagem</H2>
-          <Form action={createMessageAction}>
-            <TextInput
-              className={'mb-2'}
-              label={'Nome'}
-              name={'name'}
-              required
-            />
-            <TextInput
-              className={'mb-2'}
-              label={'E-mail'}
-              name={'email'}
-              type={'email'}
-              required
-            />
-            <TextInput
-              className={'mb-2'}
-              label={'Telefone/Whatsapp'}
-              name={'phone'}
-              type={'phone'}
-            />
-            <TextArea
-              className={'mb-2'}
-              label={'Mensagem'}
-              name={'message'}
-              required
-            />
-            <PrimaryButton
-              tag={'button'}
-              className={'float-right'}
-              type={'submit'}
-            >
-              Enviar
-            </PrimaryButton>
-          </Form>
+          <ContactForm action={createMessageAction} />
         </div>
       </div>
     </>

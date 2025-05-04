@@ -1,35 +1,52 @@
 'use server';
 
-import UserService from '@/services/user.service';
+import payloadConfig from '@payload-config';
+import { getPayload } from 'payload';
 
-import validateGRecaptcha from '@/actions/validate-grecaptcha.action';
-
-const GENERIC_MESSAGE = {
-  success: false,
-  errors: [
-    {
-      field: '*',
-      message:
-        'Não foi possível verificar sua conta. Tente novamente mais tarde.',
-    },
-  ],
-};
+import validateRecaptcha from '@/actions/validate-recaptcha.action';
 
 export default async function verifyAccountAction(
-  token: string,
-  grecaptchaToken: string
-): Promise<ActionResponse> {
-  const isValid = await validateGRecaptcha(grecaptchaToken);
+  initialState: { success: boolean; done: boolean },
+  formData: FormData
+): Promise<{ success: boolean; done: boolean }> {
+  const recaptcha = formData.get('recaptcha')?.toString();
+
+  if (!recaptcha) {
+    return {
+      success: false,
+      done: true,
+    };
+  }
+  const isValid = await validateRecaptcha(recaptcha);
   if (!isValid) {
-    return GENERIC_MESSAGE;
+    return {
+      success: false,
+      done: true,
+    };
   }
 
-  const service = new UserService();
-  const success = await service.verifyEmail({ token });
+  const token = formData.get('token')?.toString();
+
+  if (!token) {
+    return {
+      success: false,
+      done: true,
+    };
+  }
+
+  const payload = await getPayload({ config: payloadConfig });
+
+  const success = await payload.verifyEmail({
+    collection: 'users',
+    token,
+  });
 
   if (!success) {
-    return GENERIC_MESSAGE;
+    return {
+      success: false,
+      done: true,
+    };
   }
 
-  return { success };
+  return { success: true, done: true };
 }

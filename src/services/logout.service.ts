@@ -1,14 +1,18 @@
-export default async function logoutService() {
-  const url = process.env.NEXT_PUBLIC_URL + '/api/users/logout';
-  const init: RequestInit = {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+'use server';
 
-  const response = await fetch(url, init);
-  if (!response.ok) return;
-  return response.json();
+import payloadConfig from '@payload-config';
+import { logout } from '@payloadcms/next/auth';
+import { headers as nextHeaders } from 'next/headers';
+import { getPayload } from 'payload';
+
+export default async function logoutService() {
+  const payload = await getPayload({ config: payloadConfig });
+  const headers = await nextHeaders();
+  const auth = await payload.auth({ headers });
+
+  if (!auth.user) return;
+
+  await logout({
+    config: payloadConfig,
+  });
 }

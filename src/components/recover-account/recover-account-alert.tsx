@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@/context/user.context';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -9,13 +10,13 @@ import notificationEvent from '@/components/toast/toast-event';
 import logoutService from '@/services/logout.service';
 
 type ConfirmationAlertProps = {
-  getUserAction: () => Promise<UserDTO | null>;
   recoverAccountAction: () => Promise<void>;
 };
 
 export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
   const [alertProps, setAlertProps] = useState<AlertProps>();
   const router = useRouter();
+  const [user, refresh] = useUser();
 
   const handleAction = (status: 'confirm' | 'deny' | 'dismiss') => {
     return async () => {
@@ -23,11 +24,12 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
         await props.recoverAccountAction();
         notificationEvent({
           title: 'Boas notícias',
-          message: 'A sua conta foi restaurada con sucesso!',
+          message: 'A sua conta foi restaurada com sucesso!',
           type: 'success',
         });
       } else {
         await logoutService();
+        await refresh();
         router.push('/');
       }
 
@@ -38,20 +40,17 @@ export default function RecoverAccountAlert(props: ConfirmationAlertProps) {
   };
 
   useEffect(() => {
-    if (props.getUserAction)
-      props.getUserAction().then((user) => {
-        if (user?.softDelete) {
-          const date = new Date(user.softDelete);
-          const removeTime = new Date(user.softDelete);
-          removeTime.setDate(removeTime.getDate() + 30);
+    if (user?.softDelete) {
+      const date = new Date(user.softDelete);
+      const removeTime = new Date(user.softDelete);
+      removeTime.setDate(removeTime.getDate() + 30);
 
-          setAlertProps({
-            title: 'Recuperar conta',
-            message: `No dia ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}, esta conta foi temporariamente removida. Para continuar usando os nossos serviços, você precisa cancelar a exclusão marcada para o dia ${removeTime.getDate()}/${removeTime.getMonth() + 1}/${removeTime.getFullYear()}.\n\nVocê desejar realmente CANCELAR a exclusão definitiva desta conta?`,
-          });
-        }
+      setAlertProps({
+        title: 'Recuperar conta',
+        message: `No dia ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}, esta conta foi temporariamente removida. Para continuar usando os nossos serviços, você precisa cancelar a exclusão marcada para o dia ${removeTime.getDate()}/${removeTime.getMonth() + 1}/${removeTime.getFullYear()}.\n\nVocê desejar realmente CANCELAR a exclusão definitiva desta conta?`,
       });
-  }, []);
+    }
+  }, [user]);
 
   return (
     <>

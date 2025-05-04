@@ -22,7 +22,10 @@ export default async function UpdatePasswordPage({
       >
         <H1>Redefina sua senha</H1>
         <P>Informe o e-mail que você usa para acessar sua conta</P>
-        <UpdatePasswordForm token={token} action={updatePasswordAction} />
+        <UpdatePasswordForm
+          token={token}
+          updatePasswordAction={updatePasswordAction}
+        />
       </section>
     </div>
   );

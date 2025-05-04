@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 
 import Link from '@/components/link';
 
+import { SERVER_URL } from '@/constants/server';
+
 export default function GoBackLink() {
   const [path, setPath] = useState('');
   const search = useSearchParams();
@@ -15,7 +17,7 @@ export default function GoBackLink() {
       if (redirect) {
         try {
           const url = new URL(redirect);
-          const ownUrl = new URL(process.env.NEXT_PUBLIC_URL!);
+          const ownUrl = new URL(SERVER_URL);
 
           if (url.hostname === ownUrl.hostname) {
             url.searchParams.set('create', 'success');

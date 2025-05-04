@@ -1,10 +1,22 @@
 'use server';
 
-import UserService from '@/services/user.service';
+import payloadConfig from '@payload-config';
+import { getPayload } from 'payload';
 
 export default async function removeAccountAction(
   userId: string
 ): Promise<void> {
-  const userService = new UserService();
-  await userService.removeAccount(userId);
+  const payload = await getPayload({ config: payloadConfig });
+
+  await payload.update({
+    collection: 'users',
+    where: {
+      id: {
+        equals: userId,
+      },
+    },
+    data: {
+      softDelete: new Date().toISOString(),
+    },
+  });
 }

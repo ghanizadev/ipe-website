@@ -15,7 +15,7 @@ export default async function VerifyAccountPage({
     return redirect('/');
   }
 
-  return <Validate token={token} action={verifyAccountAction} />;
+  return <Validate token={token} validateAction={verifyAccountAction} />;
 }
 
 export const metadata: Metadata = {

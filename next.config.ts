@@ -1,74 +1,34 @@
+import { withPayload } from '@payloadcms/next/withPayload';
+import _ from 'lodash';
 import type { NextConfig } from 'next';
 
-import getRedirectsService from '@/services/get-redirects.service';
+import { SERVER_HOST, SERVER_PROTOCOL, SERVER_URL } from '@/constants/server';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    reactCompiler: false,
+  },
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3300',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cms.instituto-ipe.org',
-        port: '',
+        protocol: SERVER_PROTOCOL,
+        hostname: SERVER_HOST,
         pathname: '/**',
       },
     ],
   },
-  rewrites: async () => {
-    const redirects = await getRedirectsService();
-    const others = (redirects?.docs ?? []).map((redirect) => ({
-      source: redirect.source,
-      destination: redirect.target,
-    }));
-
-    return {
-      afterFiles: [
-        ...others,
-        {
-          source: '/admin/:path*',
-          destination: process.env.CMS_API_URL + '/admin/:path*',
-        },
-        {
-          source: '/avatars/:path*',
-          destination: process.env.CMS_API_URL + '/avatars/:path*',
-        },
-        {
-          source: '/media/:path*',
-          destination: process.env.CMS_API_URL + '/media/:path*',
-        },
-        {
-          source: '/logos/:path*',
-          destination: process.env.CMS_API_URL + '/logos/:path*',
-        },
-        {
-          source: '/photos/:path*',
-          destination: process.env.CMS_API_URL + '/photos/:path*',
-        },
-        {
-          source: '/graphql/:path*',
-          destination: process.env.CMS_API_URL + '/graphql/:path*',
-        },
-        {
-          source: '/api/:path*',
-          destination: process.env.CMS_API_URL + '/api/:path*',
-        },
-      ],
-      beforeFiles: [],
-      fallback: [],
-    };
-  },
   env: {
-    CMS_API_URL: process.env.CMS_API_URL,
-    CMS_API_KEY: process.env.CMS_API_KEY,
-    NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-    NEXT_PUBLIC_CMS_URL: process.env.NEXT_PUBLIC_CMS_URL,
+    SERVER_URL: SERVER_URL,
+  },
+  webpack: (config) => {
+    return _.merge(config, {
+      resolve: {
+        alias: {
+          handlebars: 'handlebars/dist/handlebars.js',
+        },
+      },
+    });
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);
