@@ -77,15 +77,8 @@ const Events: CollectionConfig = {
     {
       name: 'modality',
       label: 'Modalidade',
-      type: 'select',
+      type: 'text',
       hasMany: true,
-      options: [
-        { label: '3km (caminhada)', value: '3km (caminhada)' },
-        { label: '5km', value: '5km' },
-        { label: '10km', value: '10km' },
-        { label: '21km', value: '21km' },
-        { label: '42km', value: '42km' },
-      ],
     },
     {
       name: 'dueDate',
