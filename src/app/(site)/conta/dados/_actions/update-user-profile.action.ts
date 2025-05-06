@@ -35,7 +35,7 @@ const updateUserSchema = z.object({
       'Por favor, informe o seu gênero. Caso prefira não informar, selecione "Prefiro não dizer".',
   }),
   modality: z
-    .enum(['3km (caminhada)', '5km', '10km', '21km', '42km'], {
+    .string({
       message: 'Por favor, informe a modalidade da sua corrida.',
     })
     .optional(),

@@ -111,9 +111,15 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    'payload-locked-documents':
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences':
+      | PayloadPreferencesSelect<false>
+      | PayloadPreferencesSelect<true>;
+    'payload-migrations':
+      | PayloadMigrationsSelect<false>
+      | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: string;
@@ -274,7 +280,7 @@ export interface Enrollment {
   id: string;
   user: string | User;
   event: string | Event;
-  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km') | null;
+  modality?: string | null;
   payment?: {
     paid?: boolean | null;
     docNumber?: string | null;
@@ -326,7 +332,7 @@ export interface Event {
   slug?: string | null;
   title: string;
   date: string;
-  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km')[] | null;
+  modality?: string[] | null;
   dueDate: string;
   standFirst: string;
   location: string;
@@ -1162,7 +1168,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Auth {
   [k: string]: unknown;
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
