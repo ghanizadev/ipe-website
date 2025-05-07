@@ -5,7 +5,7 @@ export default [
     _id: new ObjectId('67d75b2c08e7492cd70f8ce9'),
     slug: 'maratona-ipe',
     title: 'MARATONA IPE',
-    date: new Date('2025-01-02T00:00:00.000Z'),
+    date: new Date(new Date().getFullYear() + 1 + '-01-02T00:00:00.000Z'),
     dueDate: new Date('2025-01-01T00:00:00.000Z'),
     standFirst: 'Venha participar da maratona IPE.',
     location: 'Florianópolis, Santa Catarina.',
