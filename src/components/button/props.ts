@@ -6,6 +6,7 @@ export type CommonButtonProps = {
   loading?: boolean;
   children?: React.ReactNode | React.ReactNode[];
   disabled?: boolean;
+  onClick?: () => void | Promise<void>;
 };
 
 export type AnchorProps = CommonButtonProps & {
@@ -18,5 +19,4 @@ export type AnchorProps = CommonButtonProps & {
 export type ButtonProps = CommonButtonProps & {
   tag: 'button';
   type?: 'submit' | 'reset' | 'button';
-  onClick?: () => void | Promise<void>;
 };

@@ -8,6 +8,7 @@ import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
 import { CheckboxInput, TextAreaInput, TextInput } from '@/components/input';
 import Link from '@/components/link';
+import Modal from '@/components/modal';
 import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
 
@@ -47,6 +48,7 @@ export default function CreateAccountForm() {
   });
   const [loading, setLoading] = useState(false);
 
+  const [modalAberto, setModalAberto] = useState(false);
   const router = useRouter();
 
   const handleTypeSelect = (role: string) => () => {
@@ -72,6 +74,14 @@ export default function CreateAccountForm() {
   useEffect(() => {
     if (pending) setLoading(true);
   }, [pending]);
+  function toggleModal(
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
+    return (event?: React.MouseEvent) => {
+      event?.preventDefault();
+      setModalAberto((modalAberto) => !modalAberto);
+    };
+  }
 
   return (
     <form action={formAction} className={'flex flex-col'}>
@@ -207,6 +217,52 @@ export default function CreateAccountForm() {
             </Link>
             .
           </CheckboxInput>
+
+          <CheckboxInput
+            name={'accept-image-terms'}
+            title={
+              'Você deve aceitar os termos do uso de imagem para continuar.'
+            }
+            required
+          >
+            Eu concordo com os{' '}
+            <Link onClick={toggleModal(setModalAberto)}>
+              Termos de Uso de Imagem
+            </Link>
+            {modalAberto && (
+              <Modal
+                onClose={toggleModal(setModalAberto)}
+                title={'Termos de Uso de Imagem'}
+              >
+                <p className={'mb-4'}>
+                  O projeto de Inclusão Social através do Esporte do IPE –
+                  Instituto Inclusão Pelo Esporte utiliza de imagens, fotos ou
+                  vídeos dos eventos que são promovidos. Este consentimento
+                  garante ao projeto o uso destas mídias de forma gratuita, sem
+                  qualquer tipo de cobrança futura.
+                </p>
+                <p className={'mb-4'}>
+                  O uso das imagens é liberado para todo o território nacional e
+                  internacional, podendo ser divulgado em redes sociais, folders
+                  e materiais de comunicação em geral.
+                </p>
+                <p className={'mb-4'}>
+                  Ao autorizar o uso de imagem, você confirma que nenhuma
+                  reivindicação de direitos sobre a imagem será feita
+                  posteriormente, em qualquer circunstância.
+                </p>
+                <PrimaryButton
+                  onClick={toggleModal(setModalAberto)}
+                  tag={'button'}
+                  type='button'
+                  className={'mb-2'}
+                >
+                  Fechar
+                </PrimaryButton>
+              </Modal>
+            )}
+          </CheckboxInput>
+
           <PrimaryButton
             tag={'button'}
             type={'submit'}
