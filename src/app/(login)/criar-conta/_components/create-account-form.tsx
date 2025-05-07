@@ -8,8 +8,8 @@ import PrimaryButton from '@/components/button/primary-button';
 import SecondaryButton from '@/components/button/secondary-button';
 import { CheckboxInput, TextAreaInput, TextInput } from '@/components/input';
 import Link from '@/components/link';
-import { RecaptchaInput } from '@/components/recaptcha-input';
 import Modal from '@/components/modal';
+import { RecaptchaInput } from '@/components/recaptcha-input';
 import SelectInput from '@/components/select';
 
 import createAccountAction from '@/app/(login)/criar-conta/_actions/create-account.action';
@@ -49,7 +49,6 @@ export default function CreateAccountForm() {
   const [loading, setLoading] = useState(false);
 
   const [modalAberto, setModalAberto] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string | boolean>>({});
   const router = useRouter();
 
   const handleTypeSelect = (role: string) => () => {
@@ -221,7 +220,6 @@ export default function CreateAccountForm() {
 
           <CheckboxInput
             name={'accept-image-terms'}
-            error={errors['accept-image-terms']}
             title={
               'Você deve aceitar os termos do uso de imagem para continuar.'
             }
