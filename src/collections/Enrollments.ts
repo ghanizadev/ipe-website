@@ -64,8 +64,7 @@ const Enrollments: CollectionConfig = {
     {
       name: 'modality',
       label: 'Modalidade',
-      type: 'select',
-      options: ['3km (caminhada)', '5km', '10km', '21km', '42km'],
+      type: 'text',
     },
     {
       name: 'payment',

@@ -280,7 +280,7 @@ export interface Enrollment {
   id: string;
   user: string | User;
   event: string | Event;
-  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km') | null;
+  modality?: string | null;
   payment?: {
     paid?: boolean | null;
     docNumber?: string | null;
@@ -332,7 +332,7 @@ export interface Event {
   slug?: string | null;
   title: string;
   date: string;
-  modality?: ('3km (caminhada)' | '5km' | '10km' | '21km' | '42km')[] | null;
+  modality?: string[] | null;
   dueDate: string;
   standFirst: string;
   location: string;
