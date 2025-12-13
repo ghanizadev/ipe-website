@@ -1,5 +1,5 @@
 import type { Enrollment, User } from '@/payload-types';
-import { Workbook } from 'exceljs';
+import * as exceljs from 'exceljs';
 import { PayloadHandler } from 'payload';
 
 function getRole(role?: string | null) {
@@ -40,7 +40,7 @@ const exportXLSX: PayloadHandler = async (req) => {
     depth: 1,
   });
 
-  const workbook = new Workbook();
+  const workbook = new exceljs.Workbook();
   const worksheet = workbook.addWorksheet('Export');
 
   worksheet.addRow([
