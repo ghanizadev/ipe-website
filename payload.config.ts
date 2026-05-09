@@ -99,7 +99,7 @@ const config: Config = {
 
 if (process.env.EMAIL_ENABLED) {
   config.email = nodemailerAdapter({
-    defaultFromAddress: 'no-reply@ghanizadev.com',
+    defaultFromAddress: 'contato@instituto-ipe.org',
     defaultFromName: 'IPE - Inclusão Pelo Esporte',
     skipVerify: false,
     transport: nodemailer.createTransport({
