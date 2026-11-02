@@ -2,11 +2,11 @@
 
 import { Media } from '@/payload-types';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import EventStatus from '@/components/events/event-status';
+import PayloadImage from '@/components/payload-image';
 import RichText from '@/components/rich-text';
 
 import getAllEventsAction from '@/actions/get-all-events.action';
@@ -50,10 +50,6 @@ export default async function EventPage(props: PageProps) {
   }
 
   const image = event.image as Media;
-  const imageWidth = image.width ?? 0;
-  const imageHeight = image.height ?? 0;
-  const imageUrl = image.url ?? '';
-
   return (
     <>
       <div className={'m-auto max-w-screen-xl'}>
@@ -73,11 +69,10 @@ export default async function EventPage(props: PageProps) {
             <p className={'text-gray-600'}>{event.standFirst}</p>
           </div>
         </div>
-        <Image
-          src={imageUrl}
+        <PayloadImage
+          image={image}
+          variant={image.sizes?.hero}
           alt={''}
-          width={imageWidth}
-          height={imageHeight}
           className={
             'w-full h-72 max-h-72 md:h-[32em] md:max-h-[32em] object-cover'
           }

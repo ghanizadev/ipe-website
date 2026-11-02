@@ -1,8 +1,8 @@
-import { Photo, Product } from '@/payload-types';
-import Image from 'next/image';
+import { Media, Product } from '@/payload-types';
 import React from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
+import PayloadImage from '@/components/payload-image';
 import { H3 } from '@/components/typography';
 
 type ProductItemProps = {
@@ -10,7 +10,7 @@ type ProductItemProps = {
 };
 
 export default function ProductItem({ product }: ProductItemProps) {
-  const photos = product.photos as { photo: Photo; description: string }[];
+  const photos = product.photos as { photo: Media; description: string }[];
   const productLink = product.link ?? '';
   const productPrice = product.price ?? 0;
 
@@ -18,18 +18,14 @@ export default function ProductItem({ product }: ProductItemProps) {
     <div className={'my-8 text-center'}>
       <div>
         {photos.map(({ photo, description }) => {
-          const photoUrl = photo.url ?? '';
           const photoAltText = photo.altText ?? '';
-          const photoWidth = photo.width ?? 0;
-          const photoHeight = photo.height ?? 0;
 
           return (
             <div key={photo.id}>
-              <Image
-                src={photoUrl}
+              <PayloadImage
+                image={photo}
+                variant={photo.sizes?.card}
                 alt={photoAltText}
-                width={photoWidth}
-                height={photoHeight}
               />
               <small>{description}</small>
             </div>

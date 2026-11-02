@@ -3,6 +3,8 @@ import { CollectionConfig } from 'payload';
 import generateImageId from '@/hooks/generate-image-id.hook';
 import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
 
+import setPublicUploadCacheHeaders from '@/helpers/set-public-upload-cache-headers.helper';
+
 import validateAccess from '../access/validateAccess';
 
 const Photos: CollectionConfig = {
@@ -26,6 +28,15 @@ const Photos: CollectionConfig = {
     mimeTypes: ['image/*'],
     focalPoint: false,
     crop: false,
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 640,
+        height: 640,
+        fit: 'inside',
+      },
+    ],
+    modifyResponseHeaders: setPublicUploadCacheHeaders,
   },
   hooks: {
     beforeOperation: [generateImageId],

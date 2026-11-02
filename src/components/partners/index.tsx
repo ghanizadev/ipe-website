@@ -1,7 +1,7 @@
 import { Logo, Partner } from '@/payload-types';
-import Image from 'next/image';
 import React from 'react';
 
+import PayloadImage from '@/components/payload-image';
 import { H2 } from '@/components/typography';
 
 export default function Partners(props: { partners: Partner[] }) {
@@ -18,7 +18,6 @@ export default function Partners(props: { partners: Partner[] }) {
       <div className={'flex flex-col lg:flex-row'}>
         {companies.map((partner) => {
           const logo = partner.logo as Logo;
-          const logoUrl = logo.url ?? '';
 
           return (
             <div key={partner.id} className={'m-2 w-36 lg:m-4'}>
@@ -27,8 +26,9 @@ export default function Partners(props: { partners: Partner[] }) {
                 target={'_blank'}
                 rel={'noreferrer,noopener'}
               >
-                <Image
-                  src={logoUrl}
+                <PayloadImage
+                  image={logo}
+                  variant={logo.sizes?.md}
                   alt={partner.name + ' logo'}
                   width={128}
                   height={128}
@@ -43,7 +43,6 @@ export default function Partners(props: { partners: Partner[] }) {
       <div className={'flex flex-row'}>
         {support.map((partner) => {
           const logo = partner.logo as Logo;
-          const logoUrl = logo.url ?? '';
 
           return (
             <div key={partner.id} className={'m-2 w-36 lg:m-4'}>
@@ -52,8 +51,9 @@ export default function Partners(props: { partners: Partner[] }) {
                 target={'_blank'}
                 rel={'noreferrer,noopener'}
               >
-                <Image
-                  src={logoUrl}
+                <PayloadImage
+                  image={logo}
+                  variant={logo.sizes?.md}
                   alt={partner.name + ' logo'}
                   width={128}
                   height={128}
