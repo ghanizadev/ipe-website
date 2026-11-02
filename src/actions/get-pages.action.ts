@@ -4,7 +4,9 @@ import { Page } from '@/payload-types';
 import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
 
-export default async function getPagesAction(): Promise<Page[]> {
+import cachePublicContent from '@/helpers/cache-public-content.helper';
+
+const getPages = cachePublicContent('pages', async (): Promise<Page[]> => {
   const payload = await getPayload({ config: payloadConfig });
   const paginatedResponse = await payload.find({
     collection: 'pages',
@@ -13,4 +15,8 @@ export default async function getPagesAction(): Promise<Page[]> {
   });
 
   return paginatedResponse.docs;
+});
+
+export default async function getPagesAction(): Promise<Page[]> {
+  return getPages();
 }
