@@ -7,35 +7,35 @@ import Link from '@/components/link';
 
 type CookiesConsentProps = {
   action: (accepts: boolean) => Promise<void>;
-  hasConsented?: boolean;
 };
 
 export default function CookieConsent(props: CookiesConsentProps) {
-  const [classStr, setClassStr] = useState(
-    'fixed z-50 bottom-0 left-0 right-0 overflow-y-auto overflow-x-hidden p-4 md:bottom-5 md:left-5 md:right-auto hidden'
-  );
+  const [isVisible, setIsVisible] = useState(false);
 
-  if (props.hasConsented) {
-  }
+  useEffect(() => {
+    const hasConsented = document.cookie
+      .split(';')
+      .some((cookie) => cookie.trim().startsWith('cookie-consent='));
+
+    if (hasConsented) return;
+
+    const timeout = setTimeout(() => setIsVisible(true), 3000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleConsent = (accept: boolean) => {
     return async () => {
       await props.action(accept);
+      setIsVisible(false);
     };
   };
 
-  useEffect(() => {
-    if (!props.hasConsented)
-      setTimeout(() => {
-        setClassStr((classStr) => classStr.slice(0, classStr.length - 7));
-      }, 3000);
-    else {
-      setClassStr((classStr) => classStr + ' hidden');
-    }
-  }, [props.hasConsented]);
-
   return (
-    <div id='cookie-modal' tabIndex={-1} className={classStr}>
+    <div
+      id='cookie-modal'
+      tabIndex={-1}
+      className={`fixed bottom-0 left-0 right-0 z-50 overflow-y-auto overflow-x-hidden p-4 md:bottom-5 md:left-5 md:right-auto ${isVisible ? '' : 'hidden'}`}
+    >
       <div className='relative inset-0 max-h-full w-full max-w-lg shadow-backdrop drop-shadow-lg'>
         <div className='relative rounded-lg bg-[--secondary] shadow text-white'>
           <div className='flex items-center justify-between rounded-t border-b p-4 md:p-5'>

@@ -1,5 +1,3 @@
-'use server';
-
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
@@ -9,6 +7,8 @@ import LogoutButton from '@/app/(site)/conta/_components/logout-button';
 type AccountLayoutPageProps = {
   children: React.ReactNode;
 };
+
+export const dynamic = 'force-dynamic';
 
 export default async function AccountLayout({
   children,

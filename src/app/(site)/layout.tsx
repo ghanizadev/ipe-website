@@ -1,10 +1,8 @@
 import { UserProvider } from '@/context/user.context';
-import { User } from '@/payload-types';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Head from 'next/head';
-import { cookies } from 'next/headers';
 import Script from 'next/script';
 import React, { Suspense } from 'react';
 
@@ -16,7 +14,6 @@ import Navbar from '@/components/navbar';
 import RecoverAccount from '@/components/recover-account';
 import ToastWrapper from '@/components/toast';
 
-import { getUserAuth } from '@/actions/get-user-auth.action';
 import saveCookiesPreferencesAction from '@/actions/save-cookies-preferences.action';
 
 import '../globals.scss';
@@ -46,16 +43,13 @@ export const metadata: Metadata = {
   ],
 };
 
+export const revalidate = 300;
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-
-  const hasConsented = cookieStore.has('cookie-consent');
-  const auth = await getUserAuth();
-
   return (
     <html lang='pt'>
       <Head>
@@ -67,16 +61,13 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider value={{ user: auth.user as User }}>
+        <UserProvider>
           <Navbar />
           <main className='mx-auto max-w-screen-xl p-4'>{children}</main>
           <Footer />
           <Suspense>
             <ToastWrapper />
-            <CookieConsent
-              hasConsented={hasConsented}
-              action={saveCookiesPreferencesAction}
-            />
+            <CookieConsent action={saveCookiesPreferencesAction} />
             <RecoverAccount />
           </Suspense>
           <ConfirmationAlert />
