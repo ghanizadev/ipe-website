@@ -3,6 +3,8 @@ import { lexicalHTML } from '@payloadcms/richtext-lexical';
 import { CollectionConfig } from 'payload';
 import slugify from 'slugify';
 
+import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
+
 const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {
@@ -22,6 +24,8 @@ const Pages: CollectionConfig = {
     update: validateAccess(['admin']),
   },
   hooks: {
+    afterChange: [revalidatePublicContentCache],
+    afterDelete: [revalidatePublicContentCache],
     beforeChange: [
       ({ data }) => {
         data.slug = slugify(data.title).toLowerCase();

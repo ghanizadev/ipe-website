@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload';
 
 import generateImageId from '@/hooks/generate-image-id.hook';
+import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
 
 import validateAccess from '../access/validateAccess';
 
@@ -28,6 +29,8 @@ const Photos: CollectionConfig = {
   },
   hooks: {
     beforeOperation: [generateImageId],
+    afterChange: [revalidatePublicContentCache],
+    afterDelete: [revalidatePublicContentCache],
   },
   fields: [
     {

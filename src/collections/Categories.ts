@@ -2,6 +2,8 @@ import validateAccess from '@/access/validateAccess';
 import { CollectionConfig } from 'payload';
 import slugify from 'slugify';
 
+import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
+
 const Categories: CollectionConfig = {
   slug: 'categories',
   labels: {
@@ -21,6 +23,8 @@ const Categories: CollectionConfig = {
     update: validateAccess(['admin']),
   },
   hooks: {
+    afterChange: [revalidatePublicContentCache],
+    afterDelete: [revalidatePublicContentCache],
     beforeChange: [
       ({ data }) => {
         data.slug = slugify(data.title).toLowerCase();
