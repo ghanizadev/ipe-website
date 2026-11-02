@@ -124,16 +124,10 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user:
-    | (Admin & {
-        collection: 'admins';
-      })
-    | (Service & {
-        collection: 'services';
-      })
-    | (User & {
-        collection: 'users';
-      });
+  widgets: {
+    collections: CollectionsWidget;
+  };
+  user: Admin | Service | User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -208,6 +202,7 @@ export interface Admin {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   _verified?: boolean | null;
   _verificationToken?: string | null;
   loginAttempts?: number | null;
@@ -220,6 +215,7 @@ export interface Admin {
       }[]
     | null;
   password?: string | null;
+  collection: 'admins';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -227,6 +223,7 @@ export interface Admin {
  */
 export interface Avatar {
   id: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -320,6 +317,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   _verified?: boolean | null;
   _verificationToken?: string | null;
   loginAttempts?: number | null;
@@ -332,6 +330,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -393,6 +392,7 @@ export interface Event {
 export interface Media {
   id: string;
   altText?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -410,6 +410,7 @@ export interface Media {
 export interface Receipt {
   id: string;
   notes?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -426,6 +427,7 @@ export interface Receipt {
  */
 export interface Logo {
   id: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -563,6 +565,7 @@ export interface Photo {
   description?: string | null;
   altText?: string | null;
   tags?: string[] | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -617,6 +620,8 @@ export interface Service {
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
+  hasAPIKey?: boolean | null;
+  collection: 'services';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -801,6 +806,7 @@ export interface AdminsSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   _verified?: T;
   _verificationToken?: T;
   loginAttempts?: T;
@@ -818,6 +824,7 @@ export interface AdminsSelect<T extends boolean = true> {
  * via the `definition` "avatars_select".
  */
 export interface AvatarsSelect<T extends boolean = true> {
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -922,6 +929,7 @@ export interface EventsSelect<T extends boolean = true> {
  * via the `definition` "logos_select".
  */
 export interface LogosSelect<T extends boolean = true> {
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -974,6 +982,7 @@ export interface LogosSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   altText?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1052,6 +1061,7 @@ export interface PhotosSelect<T extends boolean = true> {
   description?: T;
   altText?: T;
   tags?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1086,6 +1096,7 @@ export interface ProductsSelect<T extends boolean = true> {
  */
 export interface ReceiptsSelect<T extends boolean = true> {
   notes?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1119,6 +1130,7 @@ export interface ServicesSelect<T extends boolean = true> {
   enableAPIKey?: T;
   apiKey?: T;
   apiKeyIndex?: T;
+  hasAPIKey?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1159,6 +1171,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   _verified?: T;
   _verificationToken?: T;
   loginAttempts?: T;
@@ -1210,6 +1223,16 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
