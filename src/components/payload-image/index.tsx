@@ -1,5 +1,7 @@
 import Image, { type ImageProps } from 'next/image';
 
+import makeStaticImageUrl from '@/helpers/make-static-image-url.helper';
+
 type UploadedImageFile = {
   url?: string | null;
   width?: number | null;
@@ -23,7 +25,7 @@ export default function PayloadImage({
     <Image
       {...imageProps}
       alt={alt}
-      src={source.url ?? ''}
+      src={makeStaticImageUrl(source.url)}
       width={width ?? source.width ?? image.width ?? 0}
       height={height ?? source.height ?? image.height ?? 0}
       unoptimized

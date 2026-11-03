@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: SERVER_HOST,
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.instituto-ipe.org',
+        pathname: '/**',
+      },
     ],
     unoptimized: true,
   },

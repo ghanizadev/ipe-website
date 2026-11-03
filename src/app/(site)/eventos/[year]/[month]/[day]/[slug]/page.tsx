@@ -12,6 +12,7 @@ import RichText from '@/components/rich-text';
 import getAllEventsAction from '@/actions/get-all-events.action';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
+import makeStaticImageUrl from '@/helpers/make-static-image-url.helper';
 
 import { SERVER_URL } from '@/constants/server';
 
@@ -118,7 +119,7 @@ export async function generateMetadata({
   const imageWidth = image.width ?? 0;
   const imageHeight = image.height ?? 0;
   const imageAltText = image.altText ?? '';
-  const imageUrl = image.url ?? '';
+  const imageUrl = makeStaticImageUrl(image.url);
 
   return {
     title: `${event?.title ?? ''} / IPE - Inclusão Pelo Esporte`,
@@ -132,7 +133,7 @@ export async function generateMetadata({
         height: imageHeight,
         width: imageWidth,
         alt: imageAltText,
-        url: `${SERVER_URL}${imageUrl}`,
+        url: imageUrl,
       },
     },
   };
