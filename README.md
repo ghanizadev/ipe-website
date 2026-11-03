@@ -20,6 +20,10 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Startup performance metrics
+
+Set `DEBUG_STARTUP_METRICS=true` to log server startup timing from the Next.js instrumentation hook, including runtime elapsed time, instrumentation registration duration, and Sentry configuration import duration. The metrics are emitted as a `[startup-metrics]` JSON log entry.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
