@@ -6,6 +6,8 @@ import React from 'react';
 
 import '../globals.scss';
 
+export const revalidate = 3600;
+
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
   variable: '--font-geist-sans',

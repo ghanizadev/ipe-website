@@ -1,19 +1,15 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import Pagination from '@/components/pagination';
 import { H1, H2, P } from '@/components/typography';
 
 import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
 
 import getProducts from '@/app/(site)/loja/_actions/get-products.action';
-import ProductItem from '@/app/(site)/loja/_components/product-item';
+import StoreProducts from '@/app/(site)/loja/_components/store-products';
 
-export default async function StorePage(props: {
-  searchParams: Promise<Record<string, string>>;
-}) {
-  const searchParams = await props.searchParams;
-  const products = await getProducts(+(searchParams.page ?? '1'));
+export default async function StorePage() {
+  const products = await getProducts();
 
   return (
     <div className={''}>
@@ -25,21 +21,9 @@ export default async function StorePage(props: {
           Instituto.
         </P>
       </div>
-      <div className={'mb-8 grid grid-cols-1 gap-4 md:grid-cols-3'}>
-        {(products?.docs ?? []).map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </div>
-      <div className={'mb-8 flex w-full justify-center'}>
-        <Suspense>
-          <Pagination
-            page={products?.page ?? 1}
-            totalPages={products?.totalPages ?? 1}
-            hasPrevious={!!products?.hasPrevPage}
-            hasNext={!!products?.hasNextPage}
-          />
-        </Suspense>
-      </div>
+      <Suspense fallback={null}>
+        <StoreProducts initialProducts={products} />
+      </Suspense>
     </div>
   );
 }

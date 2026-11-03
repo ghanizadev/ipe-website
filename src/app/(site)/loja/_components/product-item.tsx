@@ -1,3 +1,5 @@
+'use client';
+
 import { Media, Product } from '@/payload-types';
 import React from 'react';
 

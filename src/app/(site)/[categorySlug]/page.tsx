@@ -4,12 +4,24 @@ import { notFound } from 'next/navigation';
 import RichText from '@/components/rich-text';
 
 import getPageByCategorySlugAction from '@/actions/get-page-by-category-slug.action';
+import getPagesAction from '@/actions/get-pages.action';
 
 import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
 
 type PageProps = {
   params: Promise<Record<string, string>>;
 };
+
+export async function generateStaticParams() {
+  const pages = await getPagesAction();
+
+  return pages.flatMap((page) => {
+    const category = page.category as Category;
+    if (category?.slug || !page.slug) return [];
+
+    return [{ categorySlug: page.slug }];
+  });
+}
 
 export default async function CustomPage({ params }: PageProps) {
   const { categorySlug } = await params;

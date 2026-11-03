@@ -1,21 +1,15 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 import verifyAccountAction from '@/app/(login)/verificar/_actions/verify-account.action';
 import Validate from '@/app/(login)/verificar/_components/validate';
 
-export default async function VerifyAccountPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string>>;
-}) {
-  const { token } = await searchParams;
-
-  if (!token) {
-    return redirect('/');
-  }
-
-  return <Validate token={token} validateAction={verifyAccountAction} />;
+export default function VerifyAccountPage() {
+  return (
+    <Suspense fallback={null}>
+      <Validate validateAction={verifyAccountAction} />
+    </Suspense>
+  );
 }
 
 export const metadata: Metadata = {
