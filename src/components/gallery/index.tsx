@@ -9,7 +9,10 @@ import getPhotosAction from '@/actions/get-photos.action';
 
 type GalleryProps = {
   photos: Photo[];
+  hasNextPage: boolean;
 };
+
+const PHOTO_PAGE_SIZE = 3;
 
 type GalleryPhotoProps = {
   photo: Photo & { currentIndex: number };
@@ -41,11 +44,14 @@ function GalleryPhoto({ photo, onClick }: GalleryPhotoProps) {
 let touchStart = 0;
 let touchEnd = 0;
 
-export default function Gallery({ photos: init }: GalleryProps) {
+export default function Gallery({
+  photos: init,
+  hasNextPage: initialHasNextPage,
+}: GalleryProps) {
   const [photos, setPhotos] = useState<Photo[]>(init);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Math.ceil(init.length / PHOTO_PAGE_SIZE));
   const [loading, setLoading] = useState(false);
-  const [hasNext, setHasNext] = useState(true);
+  const [hasNext, setHasNext] = useState(initialHasNextPage);
   const [previewIndex, setPreviewIndex] = useState<number>(-1);
   const [columns, setColumns] = useState(0);
 
@@ -170,7 +176,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
 
   useEffect(() => {
     if (loading && hasNext)
-      getPhotosAction(page).then((res) => {
+      getPhotosAction(page, PHOTO_PAGE_SIZE).then((res) => {
         if (!res?.hasNextPage) setHasNext(false);
         if (res?.docs) {
           setPhotos((photos) => [...photos, ...res.docs]);

@@ -7,11 +7,11 @@ import getPhotosAction from '@/actions/get-photos.action';
 import { DEFAULT_OPENGRAPH } from '@/constants/content.constants';
 
 export default async function GalleryPage() {
-  const { docs: photos } = await getPhotosAction(1);
+  const { docs: photos, hasNextPage } = await getPhotosAction(1);
 
   return (
     <div>
-      <Gallery photos={photos} />
+      <Gallery photos={photos} hasNextPage={hasNextPage} />
     </div>
   );
 }
