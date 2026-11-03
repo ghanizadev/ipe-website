@@ -44,6 +44,8 @@ export default function UpdateForm(props: {
     }
   }, [formState, refresh]);
 
+  if (!user) return null;
+
   return (
     <form action={formAction} className={'grid gap-1'}>
       <h3 className={'my-4 text-lg leading-none text-[--primary]'}>Geral</h3>

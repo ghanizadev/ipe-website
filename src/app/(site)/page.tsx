@@ -14,9 +14,11 @@ import getTestimonialsAction from '@/actions/get-testimonials.action';
 import { DEFAULT_OPENGRAPH, MOTIVATION } from '@/constants/content.constants';
 
 export default async function Home() {
-  const testimonials = await getTestimonialsAction();
-  const events = await getEventsAction();
-  const partners = await getPartnersAction();
+  const [testimonials, events, partners] = await Promise.all([
+    getTestimonialsAction(),
+    getEventsAction(),
+    getPartnersAction(),
+  ]);
 
   return (
     <div>

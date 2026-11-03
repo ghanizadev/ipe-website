@@ -1,10 +1,10 @@
 import { Event, Media } from '@/payload-types';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import SecondaryButton from '@/components/button/secondary-button';
 import { EventDate } from '@/components/events/event-date';
 import EventStatus from '@/components/events/event-status';
+import PayloadImage from '@/components/payload-image';
 
 import makeEventLink from '@/helpers/make-event-link.helper';
 
@@ -15,9 +15,7 @@ type EventProps = {
 export default function EventItem(props: EventProps) {
   const { title, location, date, standFirst, image } = props.event;
 
-  const imageWidth = (image as Media)?.width ?? 0;
-  const imageHeight = (image as Media)?.height ?? 0;
-  const imageUrl = (image as Media)?.url ?? '';
+  const imageData = image as Media;
 
   const path = makeEventLink(props.event);
 
@@ -27,11 +25,10 @@ export default function EventItem(props: EventProps) {
       data-testid={'event-card'}
     >
       <div className={'col-span-3 flex flex-col items-end lg:col-span-2'}>
-        <Image
-          src={imageUrl}
+        <PayloadImage
+          image={imageData}
+          variant={imageData.sizes?.card}
           alt={'alt'}
-          width={imageWidth}
-          height={imageHeight}
           className={'rounded-lg object-cover h-56'}
         />
       </div>

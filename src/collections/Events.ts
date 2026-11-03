@@ -5,6 +5,7 @@ import { CollectionConfig } from 'payload';
 
 import createSlugHook from '@/hooks/create-slug.hook';
 import createVirtualIdHook from '@/hooks/create-virtual-id.hook';
+import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
 import updateEnrollmentsStatusesHook from '@/hooks/update-enrollment-status.hook';
 
 const Events: CollectionConfig = {
@@ -30,6 +31,8 @@ const Events: CollectionConfig = {
       createVirtualIdHook('virtualId'),
       updateEnrollmentsStatusesHook,
     ],
+    afterChange: [revalidatePublicContentCache],
+    afterDelete: [revalidatePublicContentCache],
     beforeChange: [
       createSlugHook('title'),
       ({ data }) => {

@@ -9,7 +9,7 @@ type EnrollmentButtonProps = {
 };
 
 export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
-  const [user] = useUser();
+  const [user, refresh] = useUser();
   const router = useRouter();
 
   const handleEnrollment = async () => {
@@ -18,7 +18,9 @@ export default function EnrollmentButton({ event }: EnrollmentButtonProps) {
       return;
     }
 
-    if (!user) {
+    const authenticatedUser = user ?? (await refresh());
+
+    if (!authenticatedUser) {
       const url = new URL(window.location.href);
       url.searchParams.set('register', '1');
       router.push(

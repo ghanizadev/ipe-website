@@ -1,21 +1,19 @@
 import { Avatar, Testimonial } from '@/payload-types';
-import Image from 'next/image';
+
+import PayloadImage from '@/components/payload-image';
 
 export default function TestimonialItem(props: Testimonial) {
   const { avatar, occupation, testimonial, name } = props;
 
-  const avatarUrl = (avatar as Avatar)?.sizes?.sm?.url ?? '';
-  const avatarWidth = (avatar as Avatar)?.sizes?.sm?.width ?? 0;
-  const avatarHeight = (avatar as Avatar)?.sizes?.sm?.height ?? 0;
+  const avatarImage = avatar as Avatar;
 
   return (
     <>
       {avatar && (
-        <Image
-          src={avatarUrl}
+        <PayloadImage
+          image={avatarImage}
+          variant={avatarImage.sizes?.sm}
           alt={'testimonial'}
-          width={avatarWidth}
-          height={avatarHeight}
           className={'mb-4 h-16 w-16 rounded-[50%]'}
         />
       )}

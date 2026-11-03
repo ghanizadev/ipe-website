@@ -1,14 +1,42 @@
 'use client';
 
 import { Photo } from '@/payload-types';
-import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import PayloadImage from '@/components/payload-image';
 
 import getPhotosAction from '@/actions/get-photos.action';
 
 type GalleryProps = {
   photos: Photo[];
 };
+
+type GalleryPhotoProps = {
+  photo: Photo & { currentIndex: number };
+  onClick: () => void;
+};
+
+function GalleryPhoto({ photo, onClick }: GalleryPhotoProps) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <PayloadImage
+      data-image
+      image={photo}
+      variant={photo.sizes?.thumbnail}
+      alt={photo.altText ?? ''}
+      className={`mb-1 object-contain transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+        loaded ? 'opacity-100' : 'opacity-0'
+      }`}
+      style={{
+        transitionDelay: `${Math.min(photo.currentIndex % 9, 8) * 40}ms`,
+      }}
+      onLoad={() => setLoaded(true)}
+      onError={() => setLoaded(true)}
+      onClick={onClick}
+    />
+  );
+}
 
 let touchStart = 0;
 let touchEnd = 0;
@@ -142,7 +170,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
 
   useEffect(() => {
     if (loading && hasNext)
-      getPhotosAction(page, 3).then((res) => {
+      getPhotosAction(page).then((res) => {
         if (!res?.hasNextPage) setHasNext(false);
         if (res?.docs) {
           setPhotos((photos) => [...photos, ...res.docs]);
@@ -163,15 +191,9 @@ export default function Gallery({ photos: init }: GalleryProps) {
               <div key={index} className={'col-span-1'}>
                 {ps.map((photo) => {
                   return (
-                    <Image
-                      data-image
+                    <GalleryPhoto
                       key={photo.id}
-                      src={photo.url ?? ''}
-                      alt={photo.altText ?? ''}
-                      blurDataURL={photo.url ?? ''} //TODO check how it works
-                      width={photo.width ?? 0}
-                      height={photo.height ?? 0}
-                      className={'mb-1 object-contain'}
+                      photo={photo}
                       onClick={handlePreview(photo.currentIndex)}
                     />
                   );
@@ -190,11 +212,9 @@ export default function Gallery({ photos: init }: GalleryProps) {
               }
             >
               <div className={'relative'}>
-                <Image
+                <PayloadImage
                   className={'m-auto h-[75vh] object-contain lg:h-[80vh]'}
-                  src={currentPreview.url ?? ''}
-                  width={currentPreview.width ?? 0}
-                  height={currentPreview.height ?? 0}
+                  image={currentPreview}
                   alt={''}
                 />
                 <button
@@ -241,7 +261,7 @@ export default function Gallery({ photos: init }: GalleryProps) {
                   'lg:text:2xl m-auto h-min text-lg font-bold text-white'
                 }
               >
-                <p>{currentPreview.description ?? currentPreview.filename}</p>
+                <p>{currentPreview.description}</p>
               </div>
             </div>
           </div>

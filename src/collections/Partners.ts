@@ -1,5 +1,7 @@
 import { CollectionConfig } from 'payload';
 
+import revalidatePublicContentCache from '@/hooks/revalidate-public-content-cache.hook';
+
 import validateAccess from '../access/validateAccess';
 
 const Partners: CollectionConfig = {
@@ -18,6 +20,10 @@ const Partners: CollectionConfig = {
     readVersions: validateAccess(['admin']),
     unlock: validateAccess(['admin']),
     update: validateAccess(['admin']),
+  },
+  hooks: {
+    afterChange: [revalidatePublicContentCache],
+    afterDelete: [revalidatePublicContentCache],
   },
   fields: [
     {

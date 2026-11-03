@@ -45,6 +45,8 @@ export default function UpdateAndSubmitForm(props: {
     if (pending) setLoading(true);
   }, [pending]);
 
+  if (!user) return null;
+
   return (
     <form action={formAction}>
       <TextInput
