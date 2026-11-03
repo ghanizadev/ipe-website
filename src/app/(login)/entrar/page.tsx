@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import SecondaryButton from '@/components/button/secondary-button';
 import Link from '@/components/link';
@@ -9,13 +9,7 @@ import { H1, P } from '@/components/typography';
 import loginAction from './_actions/login.action';
 import LoginForm from './_components/login-form';
 
-type PageProps = {
-  searchParams: Promise<Record<string, string>>;
-};
-
-export default async function SignInPage({ searchParams }: PageProps) {
-  const { redirect } = await searchParams;
-
+export default function SignInPage() {
   return (
     <div className={'flex h-[100vh] w-[100vw] items-center justify-center'}>
       <div
@@ -26,7 +20,9 @@ export default async function SignInPage({ searchParams }: PageProps) {
         <section className={'m-auto flex flex-col p-16'}>
           <H1>Bem-vindo de volta!</H1>
           <P>Entre com suas credenciais para acessar sua conta</P>
-          <LoginForm redirect={redirect} loginAction={loginAction} />
+          <Suspense fallback={null}>
+            <LoginForm loginAction={loginAction} />
+          </Suspense>
           <div
             className={
               'my-8 flex w-full flex-row items-center justify-center text-center'

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useActionState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import PrimaryButton from '@/components/button/primary-button';
 import { TextInput } from '@/components/input';
@@ -18,10 +19,10 @@ type UpdatePasswordFromProps = {
     success: boolean;
     error?: Record<string, string[] | undefined>;
   }>;
-  token: string;
 };
 
 export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
+  const token = useSearchParams().get('token') ?? '';
   const [formState, formAction] = useActionState(props.updatePasswordAction, {
     success: false,
   });
@@ -41,7 +42,7 @@ export default function UpdatePasswordForm(props: UpdatePasswordFromProps) {
         type={'password'}
         className={'mb-4'}
       />
-      <input type={'hidden'} name={'token'} value={props.token} />
+      <input type={'hidden'} name={'token'} value={token} />
       <RecaptchaInput />
       <PrimaryButton tag={'button'}>Salvar</PrimaryButton>
       <small className={'text-gray-400 my-4'}>

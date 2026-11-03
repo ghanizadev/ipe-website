@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import React from 'react';
 
 import { H1, P } from '@/components/typography';
@@ -6,13 +7,7 @@ import { H1, P } from '@/components/typography';
 import updatePasswordAction from './_actions/update-password.action';
 import UpdatePasswordForm from './_components/update-password-form';
 
-export default async function UpdatePasswordPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string>>;
-}) {
-  const { token } = await searchParams;
-
+export default function UpdatePasswordPage() {
   return (
     <div className={'flex h-[100vh] w-[100vw] items-center justify-center'}>
       <section
@@ -22,10 +17,9 @@ export default async function UpdatePasswordPage({
       >
         <H1>Redefina sua senha</H1>
         <P>Informe o e-mail que você usa para acessar sua conta</P>
-        <UpdatePasswordForm
-          token={token}
-          updatePasswordAction={updatePasswordAction}
-        />
+        <Suspense fallback={null}>
+          <UpdatePasswordForm updatePasswordAction={updatePasswordAction} />
+        </Suspense>
       </section>
     </div>
   );

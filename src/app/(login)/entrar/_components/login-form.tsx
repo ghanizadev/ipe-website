@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useActionState, useEffect, useState } from 'react';
 
 import PrimaryButton from '@/components/button/primary-button';
@@ -11,7 +11,6 @@ import { RecaptchaInput } from '@/components/recaptcha-input';
 import { SERVER_URL } from '@/constants/server';
 
 type LoginFormProps = {
-  redirect?: string;
   loginAction: (
     initialState: {
       success: boolean;
@@ -26,6 +25,7 @@ type LoginFormProps = {
 
 export default function LoginForm(props: LoginFormProps) {
   const router = useRouter();
+  const redirect = useSearchParams().get('redirect') ?? undefined;
   const [formState, formAction, pending] = useActionState(props.loginAction, {
     success: false,
   });
@@ -33,9 +33,9 @@ export default function LoginForm(props: LoginFormProps) {
 
   useEffect(() => {
     if (formState.success) {
-      if (props.redirect) {
+      if (redirect) {
         try {
-          const url = new URL(`${SERVER_URL}${props.redirect}`);
+          const url = new URL(`${SERVER_URL}${redirect}`);
           router.push(url.pathname + url.search);
         } catch {
           router.push('/conta');
@@ -46,7 +46,7 @@ export default function LoginForm(props: LoginFormProps) {
     } else {
       setLoading(false);
     }
-  }, [formState, router, props.redirect]);
+  }, [formState, router, redirect]);
 
   useEffect(() => {
     if (pending) setLoading(true);
