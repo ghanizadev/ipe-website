@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: true,
   },
   env: {
     SERVER_URL: SERVER_URL,
